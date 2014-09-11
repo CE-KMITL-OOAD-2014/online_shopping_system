@@ -34,7 +34,7 @@
 
 ##Use case diagram
 
-![alt text](http://nutsu.kmi.tl/OOAD_resource/usecase.png)
+![alt text](http://nutsu.kmi.tl/OOAD_resource/usecaseNew.png)
 
 ##Use case specification
 ####**1.Use case name:** แสดงข้อมูลผลประกอบการ 
