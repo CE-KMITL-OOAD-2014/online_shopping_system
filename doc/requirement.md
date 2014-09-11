@@ -69,7 +69,10 @@ F.   จบ Use Case
 
 ### Activity diagram
 
+Activity Diagram ด้านล่างกำหนด Assumption ว่าผู้ใช้ต้องเข้าสู่ระบบในสิทธิลูกค้าที่สมัครสมาชิกแล้ว หรือ เจ้าของร้านค้า
+
 ![alt text](http://nutsu.kmi.tl/OOAD_resource/ActivityDiagram1.png)
 
+Activity Diagram ด้านล่างกำหนด Assumption ว่าผู้ใช้ต้องเข้าสู่ระบบในสิทธิ์ของเจ้าของร้านค้า 
 
 ![alt text](http://nutsu.kmi.tl/OOAD_resource/no_ac.jpg)
