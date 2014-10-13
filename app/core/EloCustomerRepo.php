@@ -1,22 +1,28 @@
 <?php
-class EloCustomerRepo implements ICustomerRepo {
+namespace core;
+class EloCustomerRepo implements \core\ICustomerRepo {
 
   protected $eloCustomer;
 
-  public function __construct(Customer $eloCustomer)
+  public function __construct(\Customer $eloCustomer)
   {
      $this->eloCustomer = $eloCustomer;
   }
 
   public function save(\core\Customer $customer)
   {
-    $this->eloCustomer->attributes['username'] = $customer->getUsername();
-    $this->eloCustomer->attributes['password'] = $customer->getPassword();
-    $this->eloCustomer->attributes['permission'] = $customer->getPermission();
-    $this->eloCustomer->attributes['address'] = $customer->getAddress();
-    $this->eloCustomer->attributes['phone'] = $customer->getPhone();
-    $this->eloCustomer->attributes['email'] = $customer->getEmail();
+    $this->eloCustomer->username = $customer->getUsername();
+    $this->eloCustomer->password = $customer->getPassword();
+    $this->eloCustomer->permission = $customer->getPermission();
+    $this->eloCustomer->address =  $customer->getAddress();
+    $this->eloCustomer->phone = $customer->getPhone();
+    $this->eloCustomer->email = $customer->getEmail();
 
     $this->eloCustomer->save();
+  }
+
+  public function find($id)
+  {
+    return Customer::find($id);
   }
 }

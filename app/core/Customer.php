@@ -1,4 +1,5 @@
 <?php
+namespace core;
 class Customer {
   protected $username;
   protected $password;
@@ -42,7 +43,7 @@ class Customer {
   }
 
   public function setPassword($password){
-    $this->password = password;
+    $this->password = $password;
   }
 
   public function setPermission($permission){
