@@ -20,16 +20,16 @@ class CustomerRepoTest extends TestCase {
   public function testSaveUser()
   {
     $this->customer = Mockery::mock('\core\Customer');
-    $this->customer->shouldReceive('getUsername')->once()->andReturn('john');
-    $this->customer->shouldReceive('getPassword')->once()->andReturn('password');
-    $this->customer->shouldReceive('getPermission')->once()->andReturn('permission');
-    $this->customer->shouldReceive('getAddress')->once()->andReturn('address');
-    $this->customer->shouldReceive('getPhone')->once()->andReturn('phone');
-    $this->customer->shouldReceive('getEmail')->once()->andReturn('email');
+    $this->customer->shouldReceive('getUsername')->once();
+    $this->customer->shouldReceive('getPassword')->once();
+    $this->customer->shouldReceive('getPermission')->once();
+    $this->customer->shouldReceive('getAddress')->once();
+    $this->customer->shouldReceive('getPhone')->once();
+    $this->customer->shouldReceive('getEmail')->once();
 
-    $this->mockEloCustomer = Mockery::mock('Customer');
+    $this->mockEloCustomer = Mockery::mock('\Customer[save]');
 
-    $this->customerRepo = new EloCustomerRepo($this->mockEloCustomer);
+    $this->customerRepo = new \core\EloCustomerRepo($this->mockEloCustomer);
     $this->app->instance('Customer', $this->mockEloCustomer);
     $this->mockEloCustomer->shouldReceive('save')->once();
 
