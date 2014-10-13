@@ -3,20 +3,19 @@ class EloCustomerRepo implements ICustomerRepo {
 
   protected $eloCustomer;
 
-  public function __construct()
+  public function __construct(Customer $eloCustomer)
   {
-     $this->eloCustomer = new User();
+     $this->eloCustomer = $eloCustomer;
   }
 
-  public function save(\core\User $user)
+  public function save(\core\Customer $customer)
   {
-    $this->eloCustomer->id = $user->id;
-    $this->eloCustomer->username = $user->username;
-    $this->eloCustomer->password = $user->password;
-    $this->eloCustomer->permission = $user->permission;
-    $this->eloCustomer->address = $user->address;
-    $this->eloCustomer->phone = $user->phone;
-    $this->eloCustomer->email = $user->email;
+    $this->eloCustomer->attributes['username'] = $customer->getUsername();
+    $this->eloCustomer->attributes['password'] = $customer->getPassword();
+    $this->eloCustomer->attributes['permission'] = $customer->getPermission();
+    $this->eloCustomer->attributes['address'] = $customer->getAddress();
+    $this->eloCustomer->attributes['phone'] = $customer->getPhone();
+    $this->eloCustomer->attributes['email'] = $customer->getEmail();
 
     $this->eloCustomer->save();
   }
