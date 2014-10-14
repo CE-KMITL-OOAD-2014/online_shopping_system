@@ -13,12 +13,14 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return View::make('home');
 });
 
 Route::get('/test', function(){
 	$data = "Drnutsu";
 	return View::make('showData')->with('data',$data);
 });
+
+Route::get('/signup', 'CustomerController@form');
 
 Route::post('user', 'CustomerController@create');
