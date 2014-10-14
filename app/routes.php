@@ -20,3 +20,5 @@ Route::get('/test', function(){
 	$data = "Drnutsu";
 	return View::make('showData')->with('data',$data);
 });
+
+Route::post('user', 'CustomerController@create');
