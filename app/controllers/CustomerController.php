@@ -20,12 +20,12 @@ class CustomerController extends BaseController
   public function create()
   {
     $customer = new \core\Customer();
-    $customer->setUsername('john');
-    $customer->setPassword('secret');
+    $customer->setUsername(Input::get('username'));
+    $customer->setPassword(Input::get('password'));
     $customer->setPermission('customer');
-    $customer->setAddress('Thailand');
-    $customer->setemail('testmail@testmail.com');
-    $customer->setPhone('0812345678');
+    $customer->setAddress(Input::get('address'));
+    $customer->setemail(Input::get('email'));
+    $customer->setPhone(Input::get('phone'));
 
     $this->customer->save($customer);
   }
