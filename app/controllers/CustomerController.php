@@ -13,7 +13,7 @@ class CustomerController extends BaseController
   //return form for create new user
   public function form()
   {
-
+    return View::make('user/new');
   }
 
   //create new user
@@ -28,5 +28,7 @@ class CustomerController extends BaseController
     $customer->setPhone(Input::get('phone'));
 
     $this->customer->save($customer);
+
+    return "eiei";
   }
 }
