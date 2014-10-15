@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	return View::make('home');
+	return View::make('home', array('user' => Auth::user()));
 });
 
 Route::get('/test', function(){
@@ -23,21 +23,20 @@ Route::get('/test', function(){
 
 Route::get('/signup', 'CustomerController@form');
 
+Route::post('user', 'CustomerController@create');
+
 Route::get('/login', 'CustomerController@loginForm');
 
 Route::post('/login',function()
 {
   $credentials = Input::only('username', 'password');
-  /*if (Auth::attempt($credentials)){
-    return 'login successful';
+  if(Auth::attempt($credentials)){
+    return Redirect::to('/');
   }
-  return Redirect::to('login');*/
-  if(Hash::check($credentials['password'], Customer::find(3)->password))
-  {
-    return 'match';
-  } else {
-    return 'not match';
-  }
+  return Redirect::to('login');
 });
 
-Route::post('user', 'CustomerController@create');
+Route::get('/logout', function(){
+  Auth::logout();
+  return Redirect::to('/');
+});
