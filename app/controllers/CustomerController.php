@@ -29,6 +29,11 @@ class CustomerController extends BaseController
 
     $this->customer->save($customer);
 
-    return "eiei";
+    return Redirect::to('/');
+  }
+
+  public function loginForm()
+  {
+    return View::make('user/login');
   }
 }

@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="address">Address</label>
                 <div class="col-sm-10">
-                  <textarea id="address" class="form-control" rows="5" placeholder="Enter Address"></textarea>
+                  <textarea id="address" name="address" class="form-control" rows="5" placeholder="Enter Address"></textarea>
                 </div>
             </div>
 
