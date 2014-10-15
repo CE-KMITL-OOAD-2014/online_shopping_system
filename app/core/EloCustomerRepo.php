@@ -23,6 +23,6 @@ class EloCustomerRepo implements \core\ICustomerRepo {
 
   public function find($id)
   {
-    return Customer::find($id);
+    return \Customer::find($id);
   }
 }

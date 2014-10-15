@@ -23,4 +23,21 @@ Route::get('/test', function(){
 
 Route::get('/signup', 'CustomerController@form');
 
+Route::get('/login', 'CustomerController@loginForm');
+
+Route::post('/login',function()
+{
+  $credentials = Input::only('username', 'password');
+  /*if (Auth::attempt($credentials)){
+    return 'login successful';
+  }
+  return Redirect::to('login');*/
+  if(Hash::check($credentials['password'], Customer::find(3)->password))
+  {
+    return 'match';
+  } else {
+    return 'not match';
+  }
+});
+
 Route::post('user', 'CustomerController@create');

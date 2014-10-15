@@ -14,12 +14,13 @@ class CreateUsers extends Migration {
 	{
           Schema::create('customers', function($table){
             $table->increments('id');
-            $table->string('username', 30)->unique();
-            $table->string('password', 30);
-            $table->string('permission', 10);
-            $table->string('address', 200);
-            $table->string('phone', 20)->unique();
-            $table->string('email', 25)->unique();
+            $table->string('username', 30)->unique()->nullable(false);
+            $table->string('password', 30)->nullable(false);
+            $table->string('permission', 10)->nullable(false);
+            $table->string('address', 200)->nullable(false);
+            $table->string('phone', 20)->unique()->nullable(false);
+            $table->string('email', 25)->unique()->nullable(false);
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
           });
 	}
