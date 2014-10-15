@@ -29,7 +29,6 @@ class CustomerSaveIntegrTest extends TestCase {
 
     $customerRepo = new core\EloCustomerRepo(new Customer());
     $this->assertEquals('john', $customerRepo->find(1)->username);
-    $this->assertTrue(Hash::check('secret', $customerRepo->find(1)->password));
     $this->assertTrue(Auth::attempt(array('username' => 'john', 'password' => 'secret')));
   }
 }

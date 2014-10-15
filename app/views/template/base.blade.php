@@ -34,7 +34,12 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ url('signup')}}">Sign Up</a></li>
+
+            @if(isset($user))
+            <li><a href="{{ url('logout') }}">Log out</a></li>
+            @else
             <li><a href="{{ url('login')}}">Log in</a></li>
+            @endif
           </ul>
         </div>
       </div>

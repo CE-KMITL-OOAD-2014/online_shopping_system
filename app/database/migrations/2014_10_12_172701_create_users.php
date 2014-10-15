@@ -15,7 +15,7 @@ class CreateUsers extends Migration {
           Schema::create('customers', function($table){
             $table->increments('id');
             $table->string('username', 30)->unique()->nullable(false);
-            $table->string('password', 30)->nullable(false);
+            $table->string('password', 65)->nullable(false);
             $table->string('permission', 10)->nullable(false);
             $table->string('address', 200)->nullable(false);
             $table->string('phone', 20)->unique()->nullable(false);
