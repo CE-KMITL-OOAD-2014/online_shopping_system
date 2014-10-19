@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'onlineShopping',
-			'username'  => 'your_username',
-			'password'  => 'your_password',
+			'database'  => 'sellon',
+			'username'  => 'root',
+			'password'  => 'LunarDeCaeruleus2182',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
