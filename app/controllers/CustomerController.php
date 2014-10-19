@@ -19,17 +19,30 @@ class CustomerController extends BaseController
   //create new user
   public function create()
   {
-    $customer = new \core\Customer();
-    $customer->setUsername(Input::get('username'));
-    $customer->setPassword(Input::get('password'));
-    $customer->setPermission('customer');
-    $customer->setAddress(Input::get('address'));
-    $customer->setemail(Input::get('email'));
-    $customer->setPhone(Input::get('phone'));
+     $rules = array( 
+      'username' => 'required|alpha_num|unique:customers',
+      'password' => 'required|alpha_num|confirmed',
+      'address' => 'required',
+      'phone' => 'required|numeric',
+      'email' => 'required|email',
+    );
+    $validator = Validator::make(Input::all(), $rules);
 
-    $this->customer->save($customer);
 
-    return Redirect::to('/');
+    if($validator->passes()){
+      $customer = new \core\Customer();
+      $customer->setUsername(Input::get('username'));
+      $customer->setPassword(Input::get('password'));
+      $customer->setPermission('customer');
+      $customer->setAddress(Input::get('address'));
+      $customer->setemail(Input::get('email'));
+      $customer->setPhone(Input::get('phone'));
+
+      $this->customer->save($customer);
+      return Redirect::to('/');
+    }
+
+    return Redirect::to('/signup')->withErrors($validator);
   }
 
   public function loginForm()

@@ -11,6 +11,21 @@ class Customer {
   public function __construct(){
   }
 
+  public static function newFromEloquent($eloquent){
+    if($eloquent != null){
+      $customer = new self();
+      $customer->username = $eloquent->username;
+      $customer->password = $eloquent->password;
+      $customer->permission = $eloquent->permission;
+      $customer->address = $eloquent->address;
+      $customer->phone = $eloquent->phone;
+      $customer->email = $eloquent->email;
+
+      return $customer;
+    }
+    return null;
+  }
+
   public function getUsername(){
     return $this->username;
   }
