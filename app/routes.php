@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	return View::make('home', array('user' => Auth::user()));
+	return View::make('home', array('user' => core\Customer::newFromEloquent(Auth::user())) );
 });
 
 Route::get('/test', function(){

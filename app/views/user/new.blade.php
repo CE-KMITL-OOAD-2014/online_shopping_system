@@ -9,6 +9,11 @@
         </div>
         <div id="signupbox" class="panel-body">
           <form class="form-horizontal" role="form" action="{{ action('CustomerController@create') }}" method="POST">
+            <ul class="errors">
+              @foreach($errors->all() as $message)
+                <li>{{ $message }}</li>
+              @endforeach
+            </ul>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="username">Username</label>
               <div class="col-sm-10">
@@ -27,9 +32,9 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="password-confirm">Password</label>
+              <label class="col-sm-2 control-label" for="password_confirmation">Password</label>
               <div class="col-sm-10">
-              <input type="password" class="form-control" name="password"
+              <input type="password" class="form-control" name="password_confirmation"
                  id="password-confirm" placeholder="Confirm password">
               </div>
             </div>

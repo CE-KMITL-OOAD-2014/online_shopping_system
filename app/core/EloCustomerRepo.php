@@ -23,6 +23,14 @@ class EloCustomerRepo implements \core\ICustomerRepo {
 
   public function find($id)
   {
-    return \Customer::find($id);
+    $eloquent = \Customer::find($id);
+    $customer = new Customer();
+    $customer->setUsername($eloquent->username);
+    $customer->setPassword($eloquent->password);
+    $customer->setPermission($eloquent->permission);
+    $customer->setAddress($eloquent->address);
+    $customer->setPhone($eloquent->phone);
+    $customer->setEmail($eloquent->email);
+    return $customer;
   }
 }
