@@ -30,6 +30,8 @@
               <button type="submit" class="col-sm-offset-5 btn btn-primary">Log In</button>
             </div>
 
+            <hr/>
+            Doesn't have account? Sign up <a href="{{ url('signup')}}" >here</a>
           </form>
         </div>
       </div>

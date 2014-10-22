@@ -33,10 +33,15 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('signup')}}">Sign Up</a></li>
-
             @if(isset($user))
-            <li><a href="{{ url('logout') }}">Log out</a></li>
+            <li class="dropdown">
+              <a href="#", class="dropdown-toggle" data-toggle="dropdown">{{ $user->getUsername(); }}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ url('profile'); }}">Profile</a></li>
+                <li><a href="{{ url('logout'); }}">Log out</a></li>
+              </ul>
+            </li>
+            </a>
             @else
             <li><a href="{{ url('login')}}">Log in</a></li>
             @endif

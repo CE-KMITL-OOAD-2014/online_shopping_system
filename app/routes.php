@@ -31,7 +31,7 @@ Route::post('/login',function()
 {
   $credentials = Input::only('username', 'password');
   if(Auth::attempt($credentials)){
-    return Redirect::to('/');
+    return Redirect::intended('/');
   }
   return Redirect::to('login');
 });
@@ -40,3 +40,13 @@ Route::get('/logout', function(){
   Auth::logout();
   return Redirect::to('/');
 });
+
+Route::get('/profile', array(
+  'before' => 'auth',
+  function()
+  {
+    return View::make('user/profile', array('user' => core\Customer::newFromEloquent(Auth::user())));
+  }
+));
+
+Route::post('/profile', 'CustomerController@editProfile');
