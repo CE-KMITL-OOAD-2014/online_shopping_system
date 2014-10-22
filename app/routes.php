@@ -21,8 +21,10 @@ Route::get('/test', function(){
 	return View::make('showData')->with('data',$data);
 });
 
-Route::get('/product',function() {
-	return View::make('productView');
-});
+Route::get('/product/view', 'productController@index');
+Route::post('/product', 'productController@store');
 
+Route::get('/product/{id}/edit' , 'productController@edit');
+Route::post('/product/{id}/edit', 'productController@update');
+Route::get('/product/{id}/delete', 'productController@destroy');
 

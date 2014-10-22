@@ -21,6 +21,7 @@ class CreateProductTable extends Migration {
 			$table->string('color',10);
 			$table->string('suplier',30);
 			$table->integer('amount');
+			$table->timestamps();
 		});
 	}
 
