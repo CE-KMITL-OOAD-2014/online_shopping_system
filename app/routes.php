@@ -20,3 +20,9 @@ Route::get('/test', function(){
 	$data = "Drnutsu";
 	return View::make('showData')->with('data',$data);
 });
+
+Route::get('/product',function() {
+	return View::make('productView');
+});
+
+
