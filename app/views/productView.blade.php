@@ -1,20 +1,42 @@
-<!-- /var/www/html/onlineShoping/app/views/productView.blade.php -->
-<!DOCTYPE html>
-<html>
-<head>
-	<title>ProductTest</title>
-	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" >
+@extends('template.structure')
+@section('content')
+@foreach($products as $product)
+	{{ $product->price }}
+@endforeach
+	{{-- 
+		
+		protected $price;
+		protected $category;
+		protected $description;
+		protected $size;
+		protected $color;
+		protected $suplier;
+		protected $amount;
+		 
+		--}}
 
-<!-- Optional theme -->
-<link rel="stylesheet" href= "{{asset('css/bootstrap-theme.min.css')}}" >
+	{{ Form::open(array('url' => 'product')) }}
+		{{Form::label('price')}} 
+		{{ Form::text('price','' ,array('class' => 'form-control')) }}<br>
+		
+		{{Form::label('category')}} 
+		{{ Form::text('category','' ,array('class' => 'form-control')) }} <br>	
 
-<!-- Latest compiled and minified JavaScript -->
-<script src= "{{asset('js/bootstrap.min.js')}}" ></script>
-</head>
-<body>
-	<div class = "well">
-		test
-	</div>
-</body>
-</html>
+		{{Form::label('description')}} 
+		{{ Form::text('description','' ,array('class' => 'form-control')) }} <br>
+
+		{{Form::label('size')}} 
+		{{ Form::text('size','' ,array('class' => 'form-control')) }} <br>
+	
+		{{Form::label('color')}} 
+		{{ Form::text('color','' ,array('class' => 'form-control')) }} <br>
+
+		{{Form::label('suplier')}} 
+		{{ Form::text('suplier','' ,array('class' => 'form-control')) }} <br>
+
+		{{Form::label('amount')}} 
+		{{ Form::text('amount','' ,array('class' => 'form-control')) }} <br>
+
+		{{ Form::submit('ยืนยัน',array('class' => 'btn btn-success')) }}
+	{{ Form::close() }}
+@stop
