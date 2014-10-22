@@ -1,6 +1,7 @@
 <?php
 namespace core;
 class Customer {
+  protected $id;
   protected $username;
   protected $password;
   protected $permission;
@@ -14,6 +15,7 @@ class Customer {
   public static function newFromEloquent($eloquent){
     if($eloquent != null){
       $customer = new self();
+      $customer->id = $eloquent->id;
       $customer->username = $eloquent->username;
       $customer->password = $eloquent->password;
       $customer->permission = $eloquent->permission;
@@ -24,6 +26,16 @@ class Customer {
       return $customer;
     }
     return null;
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  public function setId($id)
+  {
+    $this->id = $id;
   }
 
   public function getUsername(){
