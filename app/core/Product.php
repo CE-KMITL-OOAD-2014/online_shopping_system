@@ -10,6 +10,7 @@
 		protected $color;
 		protected $suplier;
 		protected $amount;
+        protected $imgPath = "";
 
 		public function __construct() {
 		}
@@ -179,6 +180,29 @@
     {
         $this->amount = $amount;
 
+        return $this;
+    }
+
+     /**
+     * Gets the value of amount.
+     *
+     * @return mixed
+     */
+    public function getImgPath()
+    {
+        return $this->imgPath;
+    }
+    
+    /**
+     * Sets the value of amount.
+     *
+     * @param mixed $amount the amount 
+     *
+     * @return self
+     */
+    public function setImgPath($imgPath)
+    {
+        $this->imgPath = $imgPath;
         return $this;
     }
 }

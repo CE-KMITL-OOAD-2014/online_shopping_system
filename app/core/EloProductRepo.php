@@ -14,7 +14,8 @@
 			$this->eloProduct->size = $product->getSize();
 			$this->eloProduct->color = $product->getColor();
 			$this->eloProduct->suplier = $product->getSuplier();
-			$this->eloProduct->amount = $product->getAmount();			
+			$this->eloProduct->amount = $product->getAmount();
+			$this->eloProduct->imgPath = $product->getImgPath();			
 			$this->eloProduct->save();
 		}
 
@@ -45,6 +46,7 @@
 			$productObj->setSize($product->size);
 			$productObj->setSuplier($product->suplier);
 			$productObj->setAmount($product->amount);
+			$productObj->setImgPath($product->imgPath);
 			
 			return $productObj;
 		}

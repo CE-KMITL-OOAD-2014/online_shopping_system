@@ -16,7 +16,7 @@ class ProductController extends \BaseController {
 	public function index()
 	{	
 		$products = $this->productHelper->all();
-		return View::make('productView', array('products' =>  $products ));
+		return View::make('productList', array('products' =>  $products ));
 	}
 
 	/**
@@ -27,8 +27,7 @@ class ProductController extends \BaseController {
 	 */
 	public function create()
 	{
-		$products = $this->productHelper->all();
-		return View::make('productView', array('products' =>  $products ));
+		return View::make('productCreate');
 	}
 
 	/**
@@ -38,19 +37,30 @@ class ProductController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{
+	{	
+		$filename = "none"; // File name default.
+		//logic for save File to image folder
 		$formInfo = Input::all();
 
-		$product = new \core\Product();
-		$product->setPrice($formInfo['price']);
-		$product->setCategory($formInfo['category']);
-		$product->setDescription($formInfo['description']);
-		$product->setSize($formInfo['size']);
-		$product->setColor($formInfo['color']);
-		$product->setSuplier($formInfo['suplier']);
-		$product->setAmount($formInfo['amount']);
 
-		$this->productHelper->save($product);		
+		 if (Input::hasFile('img_file')) {
+			  $file            = Input::file('img_file');
+			  $destinationPath = 'img';
+			  $filename        = date('Y-m-d_H-M-S').'_'.$file->getClientOriginalName(); // random number for cope with same image name scenario.
+			  $uploadSuccess   = $file->move($destinationPath, $filename);
+		  }	
+
+		$product = new \core\Product();
+		$product->setPrice($formInfo['price'])
+				->setCategory($formInfo['category'])
+				->setDescription($formInfo['description'])
+				->setSize($formInfo['size'])
+				->setColor($formInfo['color'])
+				->setSuplier($formInfo['suplier'])
+				->setAmount($formInfo['amount'])
+				->setImgPath($filename); 
+
+		$this->productHelper->save($product); 
 
 		return Redirect::to('product');
 	}
@@ -65,7 +75,7 @@ class ProductController extends \BaseController {
 	public function show($id)
 	{
 		$productTarget = $this->productHelper->all();
-		return View::make('productShow',array('project' => , $productTarget););
+		return View::make('productShow',array('project' => $productTarget));
 	}
 
 	/**
@@ -102,7 +112,7 @@ class ProductController extends \BaseController {
 		$productTarget->setAmount($input['amount']);
 		
 		$this->productHelper->saveId($productTarget,$id);
-		return Redirect::to('product/'.$id.'/edit');
+		return Redirect::to('product');
 	}
 
 	/**
@@ -115,7 +125,7 @@ class ProductController extends \BaseController {
 	public function destroy($id)
 	{
 		$this->productHelper->remove($id);
-		return Redirect::to('product/view');
+		return Redirect::to('product');
 	}
 
 }
