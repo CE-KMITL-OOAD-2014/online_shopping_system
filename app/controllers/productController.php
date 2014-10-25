@@ -124,8 +124,10 @@ class ProductController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
+		$del_product = $this->productHelper->find($id);
+		File::delete('img/'.$del_product->getImgPath());
+
 		$this->productHelper->remove($id);
 		return Redirect::to('product');
 	}
-
 }
