@@ -130,4 +130,13 @@ class ProductController extends \BaseController {
 		$this->productHelper->remove($id);
 		return Redirect::to('product');
 	}
+
+	/**
+	*	Search Product 
+	*
+	*/
+	public function search(){
+		$productTarget = $this->productHelper->all();
+		return $productTarget; //return json to angularJs
+	}
 }
