@@ -50,3 +50,15 @@ Route::get('/profile', array(
 ));
 
 Route::post('/profile', 'CustomerController@editProfile');
+Route::get('/product', 'productController@index');
+
+Route::get('/product/create','productController@create');
+Route::post('/product', 'productController@store');
+
+Route::get('/product/{id}/edit' , 'productController@edit');
+Route::post('/product/{id}/edit', 'productController@update');
+Route::get('/product/{id}/delete', 'productController@destroy');
+
+Route::get('/home',	'HomeController@index');
+
+Route::get('/shop/product','ShopControlller@product');
