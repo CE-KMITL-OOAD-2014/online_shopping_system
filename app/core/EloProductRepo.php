@@ -8,6 +8,7 @@
 		}
 
 		public function save(\core\Product $product){
+			$this->eloProduct->product_name = $product->getProductName();
 			$this->eloProduct->price = $product->getPrice();
 			$this->eloProduct->category = $product->getCategory();
 			$this->eloProduct->description = $product->getDescription();
@@ -22,6 +23,7 @@
 		public function saveId(\core\Product $product,$id){
 			$this->eloProduct =	$this->eloProduct->find($id);
 
+			$this->eloProduct->product_name = $product->getProductName();
 			$this->eloProduct->price = $product->getPrice();
 			$this->eloProduct->category = $product->getCategory();
 			$this->eloProduct->description = $product->getDescription();
@@ -38,6 +40,7 @@
 			$product = $this->eloProduct->find($id);
 			
 			$productObj = new \core\Product();
+			$productObj->setProductName($product->product_name);
 			$productObj->setPrice($product->price);
 			$productObj->setCategory($product->category);
 			$productObj->setDescription($product->category);

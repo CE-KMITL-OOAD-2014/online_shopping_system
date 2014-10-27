@@ -3,6 +3,12 @@
 	<img src = "{{ asset('img/'.$product->getImgPath()) }}" />
 	{{ Form::open(array('url' => 'product/'.$id.'/edit' , 'class' => 'form-horizontal' )) }}
 		<div class="form-group">
+			<label for="product_name" class="col-lg-2 control-label">product name</label>
+		    <div class="col-lg-10">
+		      <input type="text" class="form-control" name = "product_name" id="product_name" value="{{ $product->getProductName() }}">
+		    </div>
+		</div>
+		<div class="form-group">
 			<label for="price" class="col-lg-2 control-label">price</label>
 		    <div class="col-lg-10">
 		      <input type="number" class="form-control" name = "price" id="price" value="{{ $product->getPrice() }}">

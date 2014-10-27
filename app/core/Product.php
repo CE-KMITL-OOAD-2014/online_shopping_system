@@ -3,6 +3,7 @@
 
 	class Product {
 
+        protected $product_name;
 		protected $price;
 		protected $category;
 		protected $description;
@@ -14,6 +15,30 @@
 
 		public function __construct() {
 		}
+
+    /**
+     * Gets the value of price.
+     *
+     * @return mixed
+     */
+    public function getProductName()
+    {
+        return $this->product_name;
+    }
+    
+    /**
+     * Sets the value of price.
+     *
+     * @param mixed $price the price 
+     *
+     * @return self
+     */
+    public function setProductName($product_name)
+    {
+        $this->product_name = $product_name;
+
+        return $this;
+    }
 
     /**
      * Gets the value of price.
@@ -69,7 +94,7 @@
      * @return mixed
      */
     public function getDescription()
-    {
+    {   
         return $this->description;
     }
     
