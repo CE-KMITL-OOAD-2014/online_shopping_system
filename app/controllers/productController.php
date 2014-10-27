@@ -51,7 +51,8 @@ class ProductController extends \BaseController {
 		  }	
 
 		$product = new \core\Product();
-		$product->setPrice($formInfo['price'])
+		$product->setProductName($formInfo['product_name'])
+				->setPrice($formInfo['price'])
 				->setCategory($formInfo['category'])
 				->setDescription($formInfo['description'])
 				->setSize($formInfo['size'])
@@ -103,13 +104,14 @@ class ProductController extends \BaseController {
 		$input = Input::all();
 		$productTarget = new \core\Product();
 
-		$productTarget->setPrice($input['price']);
-		$productTarget->setCategory($input['category']);
-		$productTarget->setDescription($input['description']);
-		$productTarget->setSize($input['size']);
-		$productTarget->setColor($input['color']);
-		$productTarget->setSuplier($input['suplier']);
-		$productTarget->setAmount($input['amount']);
+		$productTarget->setProductName($input['product_name'])
+					  ->setPrice($input['price'])
+					  ->setCategory($input['category'])
+					  ->setDescription($input['description'])
+					  ->setSize($input['size'])
+					  ->setColor($input['color'])
+					  ->setSuplier($input['suplier'])
+					  ->setAmount($input['amount']);
 		
 		$this->productHelper->saveId($productTarget,$id);
 		return Redirect::to('product');

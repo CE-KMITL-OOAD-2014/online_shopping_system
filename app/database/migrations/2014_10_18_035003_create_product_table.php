@@ -14,6 +14,7 @@ class CreateProductTable extends Migration {
 	{
 		Schema::create('products',function($table){
 			$table->increments('id');
+			$table->string('product_name',20);
 			$table->double('price');
 			$table->string('category',30);
 			$table->string('description',300);
