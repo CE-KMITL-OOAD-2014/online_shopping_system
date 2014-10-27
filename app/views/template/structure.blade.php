@@ -5,10 +5,6 @@
 	<title>ProductTest</title>
 	<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" >
-
-<script src="{{asset('js/jquery.min.js')}}"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src= "{{asset('js/bootstrap.min.js')}}" ></script>
 </head>
 <body>
 	<div class="navbar navbar-inverse">
@@ -60,5 +56,11 @@
 			@yield('content')
 		</div>
 	</div>
+  <script src="{{asset('js/jquery.min.js')}}"></script>
+  <script src= "{{asset('js/bootstrap.min.js')}}" ></script>
+  <!-- JQUERY -->
+  <script type="text/javascript" src = "{{ asset('js/jquery.hideseek.min.js') }}" ></script>
+  <script type="text/javascript" src = "{{ asset('js/main.js') }}"></script>
+  <!-- END OF JQUERY -->
 </body>
 </html>
