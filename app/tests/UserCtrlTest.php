@@ -1,6 +1,6 @@
 <?php
 
-class CustomerCtrlTest extends TestCase {
+class UserCtrlTest extends TestCase {
 
   public function setUp() 
   {
@@ -9,12 +9,12 @@ class CustomerCtrlTest extends TestCase {
     $this->seed();
   }
 
-  public function testCustomerCreate()
+  public function testUserCreate()
   {
-    $mock = Mockery::mock('core\ICustomerRepo');
+    $mock = Mockery::mock('core\IUserRepo');
     $mock->shouldReceive('save')->once();
 
-    $this->app->instance('core\ICustomerRepo', $mock);
+    $this->app->instance('core\IUserRepo', $mock);
 
     $this->call('POST', 'user');
   }

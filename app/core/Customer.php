@@ -1,6 +1,6 @@
 <?php
 namespace core;
-class Customer {
+class User {
   protected $id;
   protected $username;
   protected $password;

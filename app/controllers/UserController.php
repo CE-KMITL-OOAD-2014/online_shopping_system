@@ -1,13 +1,13 @@
 <?php
 
-class CustomerController extends BaseController
+class UserController extends BaseController
 {
 
-  protected $customer;
+  protected $user;
 
-  public function __construct(core\ICustomerRepo $customer)
+  public function __construct(core\IUserRepo $user)
   {
-    $this->customer = $customer;
+    $this->user = $user;
   }
 
   //return form for create new user
@@ -20,7 +20,7 @@ class CustomerController extends BaseController
   public function create()
   {
      $rules = array( 
-      'username' => 'required|alpha_num|unique:customers',
+      'username' => 'required|alpha_num|unique:users',
       'password' => 'required|alpha_num|confirmed',
       'address' => 'required',
       'phone' => 'required|numeric',
@@ -30,15 +30,15 @@ class CustomerController extends BaseController
 
 
     if($validator->passes()){
-      $customer = new \core\Customer();
-      $customer->setUsername(Input::get('username'));
-      $customer->setPassword(Input::get('password'));
-      $customer->setPermission('customer');
-      $customer->setAddress(Input::get('address'));
-      $customer->setemail(Input::get('email'));
-      $customer->setPhone(Input::get('phone'));
+      $user = new \core\User();
+      $user->setUsername(Input::get('username'));
+      $user->setPassword(Input::get('password'));
+      $user->setPermission('user');
+      $user->setAddress(Input::get('address'));
+      $user->setemail(Input::get('email'));
+      $user->setPhone(Input::get('phone'));
 
-      $this->customer->save($customer);
+      $this->user->save($user);
       return Redirect::to('/');
     }
 
@@ -59,7 +59,7 @@ class CustomerController extends BaseController
     $validator = Validator::make(Input::all(), $rules);
 
     if($validator->passes()){
-      $user = $this->customer->find(Auth::user()->id);
+      $user = $this->user->find(Auth::user()->id);
       $user->setAddress(Input::get('address'));
       $user->setPhone(Input::get('phone'));
       $user->setEmail(Input::get('email'));
@@ -68,7 +68,7 @@ class CustomerController extends BaseController
         $user->setPassword(Input::get('password'));
       }
 
-      $this->customer->save($user);
+      $this->user->save($user);
     }
 
     return Redirect::to('profile')->withErrors($validator);

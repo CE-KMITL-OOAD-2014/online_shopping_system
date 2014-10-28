@@ -17,7 +17,7 @@ class HomeController extends BaseController {
 
 	public function index()
 	{
-		return View::make('shopHome', array('user' => core\Customer::newFromEloquent(Auth::user())));
+		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user())));
 	}
 
 }

@@ -8,7 +8,7 @@
           Sign Up
         </div>
         <div id="signupbox" class="panel-body">
-          <form class="form-horizontal" role="form" action="{{ action('CustomerController@create') }}" method="POST">
+          <form class="form-horizontal" role="form" action="{{ action('UserController@create') }}" method="POST">
             <ul class="errors">
               @foreach($errors->all() as $message)
                 <li>{{ $message }}</li>

@@ -18,9 +18,9 @@
 */
 
 Route::get('/',	'HomeController@index');
-Route::get('/signup', 'CustomerController@form');
-Route::post('user', 'CustomerController@create');
-Route::get('/login', 'CustomerController@loginForm');
+Route::get('/signup', 'UserController@form');
+Route::post('user', 'UserController@create');
+Route::get('/login', 'UserController@loginForm');
 
 Route::post('/login',function()
 {
@@ -40,11 +40,11 @@ Route::get('/profile', array(
   'before' => 'auth',
   function()
   {
-    return View::make('user/profile', array('user' => core\Customer::newFromEloquent(Auth::user())));
+    return View::make('user/profile', array('user' => core\User::newFromEloquent(Auth::user())));
   }
 ));
 
-Route::post('/profile', 'CustomerController@editProfile');
+Route::post('/profile', 'UserController@editProfile');
 
 
 /*
