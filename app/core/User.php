@@ -28,6 +28,11 @@ class User {
     return null;
   }
 
+  public function buy($products, IBuyingAdapter $buying)
+  {
+    $buying->buy($products, $this);
+  }
+
   public function getId()
   {
     return $this->id;
