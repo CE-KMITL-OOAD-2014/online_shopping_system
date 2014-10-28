@@ -13,7 +13,7 @@
           {{ $user->getUsername()."'s " }}Profile
         </div>
         <div id="signupbox" class="panel-body">
-          <form class="form-horizontal" role="form" action="{{ action('CustomerController@editProfile') }}" method="POST">
+          <form class="form-horizontal" role="form" action="{{ action('UserController@editProfile') }}" method="POST">
             <ul class="errors">
               @foreach($errors->all() as $message)
                 <li>{{ $message }}</li>

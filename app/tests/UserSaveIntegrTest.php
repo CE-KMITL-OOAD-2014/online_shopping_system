@@ -1,8 +1,8 @@
 <?php
-class CustomerSaveIntegrTest extends TestCase {
+class UserSaveIntegrTest extends TestCase {
 
-  protected $customerRepo;
-  protected $customer;
+  protected $userRepo;
+  protected $user;
 
   public function setUp()
   {
@@ -23,8 +23,8 @@ class CustomerSaveIntegrTest extends TestCase {
       'phone'    => '0812345678',
     ]);
     
-    $customerRepo = new core\EloCustomerRepo(new Customer());
-    $this->assertEquals('john', $customerRepo->find(1)->getUsername());
+    $userRepo = new core\EloUserRepo(new User());
+    $this->assertEquals('john', $userRepo->find(1)->getUsername());
     $this->assertTrue(Auth::attempt(array('username' => 'john', 'password' => 'secret')));
     $this->assertRedirectedTo('/');
   }

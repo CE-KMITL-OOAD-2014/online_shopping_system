@@ -80,4 +80,4 @@ App::down(function()
 
 require app_path().'/filters.php';
 
-App::bind('core\ICustomerRepo', 'core\EloCustomerRepo');
+App::bind('core\IUserRepo', 'core\EloUserRepo');

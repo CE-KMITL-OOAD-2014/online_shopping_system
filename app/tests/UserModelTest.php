@@ -1,6 +1,6 @@
 <?php
 
-class CustomerModelTest extends TestCase {
+class UserModelTest extends TestCase {
 
   public function setUp()                                            
   {
@@ -13,7 +13,7 @@ class CustomerModelTest extends TestCase {
   {
     Hash::shouldReceive('make')->once()->andReturn('hashed');
 
-    $customer = new Customer;
+    $customer = new User;
     $customer->password = 'passpwd';
 
     $this->assertEquals('hashed', $customer->password);

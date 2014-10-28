@@ -1,5 +1,5 @@
 <?php
 namespace core;
-interface ICustomerRepo {
-  public function save(\core\Customer $customer);
+interface IUserRepo {
+  public function save(\core\User $customer);
 }
