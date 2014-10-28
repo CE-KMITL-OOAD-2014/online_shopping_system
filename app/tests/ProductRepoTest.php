@@ -30,6 +30,8 @@
 			$this->product->shouldReceive('getColor')->once();
 			$this->product->shouldReceive('getSuplier')->once();
 			$this->product->shouldReceive('getAmount')->once();
+			$this->product->shouldReceive('getProductName')->once();
+			$this->product->shouldReceive('getImgPath')->once();
 
 			//Mocking Model Product only call save method.  	
 			$this->mock_product_elo = Mockery::mock('\Product[save]');
