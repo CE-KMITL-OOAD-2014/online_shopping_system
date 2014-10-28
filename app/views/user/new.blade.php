@@ -1,9 +1,9 @@
-@extends('template.base')
+@extends('template.structure')
 
-@section('body')
+@section('content')
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2">
-      <div class="panel panel-info">
+      <div class="panel panel-primary">
         <div class="panel-heading">
           Sign Up
         </div>

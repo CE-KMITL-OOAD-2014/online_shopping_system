@@ -11,20 +11,15 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('home', array('user' => core\Customer::newFromEloquent(Auth::user())) );
-});
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/test', function(){
-	$data = "Drnutsu";
-	return View::make('showData')->with('data',$data);
-});
-
+Route::get('/',	'HomeController@index');
 Route::get('/signup', 'CustomerController@form');
-
 Route::post('user', 'CustomerController@create');
-
 Route::get('/login', 'CustomerController@loginForm');
 
 Route::post('/login',function()
@@ -50,15 +45,18 @@ Route::get('/profile', array(
 ));
 
 Route::post('/profile', 'CustomerController@editProfile');
+
+
+/*
+|--------------------------------------------------------------------------
+| Product Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/product', 'productController@index');
-
-Route::get('/product/create','productController@create');
 Route::post('/product', 'productController@store');
-
+Route::get('/product/create','productController@create');
 Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
-
-Route::get('/home',	'HomeController@index');
 
 Route::get('/shop/product','ShopControlller@product');
