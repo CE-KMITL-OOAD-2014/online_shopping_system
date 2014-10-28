@@ -9,7 +9,8 @@ class UserSaveIntegrTest extends TestCase {
     parent::setUp();
     
     Artisan::call('migrate');
-    $this->seed();
+    //not sure are we really need this code.
+    //$this->seed();
   }
 
   public function testSaveUser()

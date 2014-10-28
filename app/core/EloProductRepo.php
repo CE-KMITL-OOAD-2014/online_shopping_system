@@ -40,13 +40,13 @@
 			$product = $this->eloProduct->find($id);
 			
 			$productObj = new \core\Product();
+                        $productObj->setId($product->id);
 			$productObj->setProductName($product->product_name);
 			$productObj->setPrice($product->price);
 			$productObj->setCategory($product->category);
-			$productObj->setDescription($product->category);
+			$productObj->setDescription($product->description);
 			$productObj->setSize($product->size);
 			$productObj->setColor($product->color);
-			$productObj->setSize($product->size);
 			$productObj->setSuplier($product->suplier);
 			$productObj->setAmount($product->amount);
 			$productObj->setImgPath($product->imgPath);
