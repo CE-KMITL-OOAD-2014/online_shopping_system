@@ -17,7 +17,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::get('/',	'HomeController@index');
+Route::get('/',	'shopController@index');
 Route::get('/signup', 'UserController@form');
 Route::post('user', 'UserController@create');
 Route::get('/login', 'UserController@loginForm');
@@ -59,4 +59,4 @@ Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 
-Route::get('/shop/product','shopController@index');
+Route::get('/shop/{id}/view','shopController@show');

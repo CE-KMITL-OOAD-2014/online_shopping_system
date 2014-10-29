@@ -16,7 +16,10 @@
 				        <p>{{ $product->description }}</p>
 				        <p>เหลืออีก {{ $product->amount }}</p>
 				        <p>  </p>
-				        <p style = "text-align:center" ><a href="#" class="btn btn-primary" role="button">เพิ่มลงในตะกร้า</a></p>
+				        <p style = "text-align:center" >
+				        <a href="#" class="btn btn-primary" role="button">เพิ่มลงในตะกร้า</a>
+				        <a href="{{ URL::to('shop/'.$product->id.'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
+				        </p>
 				      </div>
 				    </div>
 				  </div>
