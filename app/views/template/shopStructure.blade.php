@@ -7,7 +7,7 @@
 		  </div>
 		  <div class="panel-body">
 		    <ul class="nav nav-pills nav-stacked" >
-				<li ><a href = "{{ URL::to('shop/product'); }}" >Product</a></li>
+				<li ><a href = "{{ URL::to('/'); }}" >Home</a></li>
 				<li ><a href = "{{ URL::to('shop/order'); }}">Check Order</a></li>
 				<li ><a href = "{{ URL::to('shop/aboutUs'); }}">Contact Us</a></li>
 			</ul>

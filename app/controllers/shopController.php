@@ -15,7 +15,7 @@ class ShopController extends \BaseController {
 	public function index()
 	{
 		$products = $this->productHelper->all();
-		return View::make('shopHome', array('products' =>  $products ));
+		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products ));
 	}
 
 	/**
@@ -49,7 +49,8 @@ class ShopController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$product = $this->productHelper->find($id);
+		return View::make('productDetail',array('product' => $product,'id' => $id));
 	}
 
 	/**

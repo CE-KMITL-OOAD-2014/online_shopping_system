@@ -1,22 +1,6 @@
 <IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options +FollowSymLinks
-    </IfModule>
-
     RewriteEngine On
-
-    # Redirect Trailing Slashes...
-    #RewriteRule ^(.*)/$ /$1 [L,R=301]
-
-    # Handle Front Controller...
-    #RewriteCond %{REQUEST_FILENAME} !-d
-    #RewriteCond %{REQUEST_FILENAME} !-f
-    #RewriteRule ^ index.php [L]
-    #RewriteRule ^(.*)$ public/$1 [L]
-
-    #rules that i write by myself
-    RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php/$1
+    RewriteRule ^(.*)$ /index.php?/$1 [L]
 </IfModule>
