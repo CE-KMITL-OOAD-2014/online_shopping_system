@@ -60,3 +60,4 @@ Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 
 Route::get('/shop/product','ShopController@product');
+Route::get('/shop/{id}/view','shopController@show');

@@ -1,37 +1,92 @@
 <?php
 
-class ShopController extends BaseController {
+class ShopController extends \BaseController {
 
-  /*
-  |--------------------------------------------------------------------------
-  | Default Home Controller
-  |--------------------------------------------------------------------------
-  |
-  | You may wish to use controllers instead of, or in addition to, Closure
-  | based routes. That's great! Here is an example controller method to
-  | get you started. To route to this controller, just add the route:
-  |
-  |	Route::get('/', 'HomeController@showWelcome');
-  |
-  */
+	public function __construct(){
+		$this->productHelper = new \core\EloProductRepo(new \Product());
+	}
 
-  public function index()
-  {
-          return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user())));
-  }
+	/**
+	 * Display a listing of the resource.
+	 * GET /shop
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		$products = $this->productHelper->all();
+		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products ));
+	}
 
-  public function cart()
-  {
-    //list of product_id
-    $data['product_id'] = array(1,2,3);
-    return View::make('cart/cart');
-  }
+	/**
+	 * Show the form for creating a new resource.
+	 * GET /shop/create
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		//
+	}
 
-  public function buy()
-  {
-    $user = core\User::newFromEloquent(Auth::user());
-    $buying = new \core\DefaultBuyingAdapter(new \core\IOrderRepo(), new\core\ProductRepoInterface());
-    $products = Cookie::get('cart_product');
-    $user->buy($products, $buying);
-  }
+	/**
+	 * Store a newly created resource in storage.
+	 * POST /shop
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		//
+	}
+
+	/**
+	 * Display the specified resource.
+	 * GET /shop/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$product = $this->productHelper->find($id);
+		return View::make('productDetail',array('product' => $product,'id' => $id));
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 * GET /shop/{id}/edit
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 * PUT /shop/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		//
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 * DELETE /shop/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
+
 }
