@@ -1,7 +1,8 @@
 <?php 
 namespace core;
 
-class Order {
+class Order 
+{
   protected $id;
   protected $user_id;
   protected $total_price;

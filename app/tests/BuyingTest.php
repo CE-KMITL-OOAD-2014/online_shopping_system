@@ -1,5 +1,6 @@
 <?php
-class BuyingTest extends TestCase {
+class BuyingTest extends TestCase 
+{
 
   public function setUp()
   {
@@ -21,10 +22,12 @@ class BuyingTest extends TestCase {
     $user->buy($products, $buyingAdapter);
 
     $total_price = 0.0;
+
     foreach($products as $product)
     {
       $total_price = $total_price + $product->getPrice();
     }
+
     $order = $orderRepo->find(1);
     $this->assertEquals($order->getTotal_price(), $total_price);
   }
