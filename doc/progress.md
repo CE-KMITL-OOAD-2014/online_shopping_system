@@ -19,7 +19,7 @@
 - **Product Repository Test**
 
 	การทดสอบระบบในส่วนของ Product ซึ่งเป็นการทดสอบ function ต่างๆใน \core\Product ( class product ที่สร้างเอง ) และลอง Mock \Product ( class product ที่ extend Eloquent ) แล้วส่งเข้าไปทำการเซฟ object \Product 
-	- directory อยู่ที่ online_shopping_system / app / tests / 
+	- directory อยู่ที่ online_shopping_system/app/tests/ 
 	- สามารถเข้าไปดูที่ https://github.com/CE-KMITL-OOAD-2014/online_shopping_system/blob/feature/productManage/app/tests/ProductRepoTest.php
 
 - **Buying Test**
