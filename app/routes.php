@@ -59,4 +59,4 @@ Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 
-Route::get('/shop/product','ShopControlller@product');
+Route::get('/shop/product','shopController@index');
