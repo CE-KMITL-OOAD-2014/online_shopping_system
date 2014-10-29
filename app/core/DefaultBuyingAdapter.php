@@ -15,6 +15,8 @@ class DefaultBuyingAdapter implements IBuyingAdapter
     $total_price = 0.0;
     foreach($products as $product){
       $total_price+= $product->getPrice();
+      $product->setAmount($product->getAmount()-1);
+      $this->product_repo->save($product, $product->getId());
     }
 
     $order = new Order();
