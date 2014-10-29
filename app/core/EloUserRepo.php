@@ -9,6 +9,19 @@ class EloUserRepo implements \core\IUserRepo {
      $this->eloUser = $eloUser;
   }
 
+  public static function first(){
+    $eloquent = \User::first();
+    $user = new User();
+    $user->setId($eloquent->id);
+    $user->setUsername($eloquent->username);
+    $user->setPassword($eloquent->password);
+    $user->setPermission($eloquent->permission);
+    $user->setAddress($eloquent->address);
+    $user->setPhone($eloquent->phone);
+    $user->setEmail($eloquent->email);
+    return $user;
+  }
+
   public function save(\core\User $user)
   {
     $existUser = \User::find($user->getId());

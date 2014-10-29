@@ -32,7 +32,7 @@ class CreateUsers extends Migration {
 	 */
 	public function down()
 	{
-          Schema::drop('User');
+          Schema::drop('users');
 	}
 
 }

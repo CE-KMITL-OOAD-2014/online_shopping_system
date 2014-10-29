@@ -1,20 +1,21 @@
 <?php 
-	namespace core;
+    namespace core;
 
-	class Product {
+    class Product {
 
-        protected $product_name;
-		protected $price;
-		protected $category;
-		protected $description;
-		protected $size;
-		protected $color;
-		protected $suplier;
-		protected $amount;
-        protected $imgPath = "";
+    protected $id;
+    protected $product_name;
+    protected $price;
+    protected $category;
+    protected $description;
+    protected $size;
+    protected $color;
+    protected $suplier;
+    protected $amount;
+    protected $imgPath = "";
 
-		public function __construct() {
-		}
+    public function __construct() {
+    }
 
     /**
      * Gets the value of price.
@@ -229,5 +230,19 @@
     {
         $this->imgPath = $imgPath;
         return $this;
+    }
+
+    public function setId($id){
+      $this->id = $id;
+    }
+    
+    /**
+     * Get id.
+     *
+     * @return id.
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
