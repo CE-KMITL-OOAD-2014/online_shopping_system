@@ -1,5 +1,15 @@
 @extends('template.shopStructure')
 @section('shopContent')
+		
+		<div class="panel panel-primary">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">SlideShow</h3>
+		  </div>
+		  <div class="panel-body">
+		  	
+		  </div>
+		</div>
+
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
 		    <h3 class="panel-title">สินค้าในร้านค้า</h3>

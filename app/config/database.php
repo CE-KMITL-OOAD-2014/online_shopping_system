@@ -55,9 +55,15 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
+<<<<<<< HEAD
 			'database'  => 'onlineShopping',
 			'username'  => 'root',
 			'password'  => 'Nut10882',
+=======
+			'database'  => 'sellon',
+			'username'  => 'root',
+			'password'  => 'eiei1234',
+>>>>>>> d9b9a2670432b84e34cb4fcc7398d115125f7e98
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
