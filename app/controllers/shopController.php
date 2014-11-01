@@ -82,9 +82,13 @@ class ShopController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function shopChat()
 	{
-		//
+		if(null !== core\User::newFromEloquent(Auth::user())) {
+			return View::make('chatPage',array( 'user' => core\User::newFromEloquent(Auth::user()), 'user_all' => User::all() ));
+		}else {
+			return View::make('shopHome');
+		}
 	}
 
 }

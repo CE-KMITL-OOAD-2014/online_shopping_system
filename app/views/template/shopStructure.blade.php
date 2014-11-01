@@ -10,6 +10,7 @@
 				<li ><a href = "{{ URL::to('/'); }}" >Home</a></li>
 				<li ><a href = "{{ URL::to('shop/order'); }}">Check Order</a></li>
 				<li ><a href = "{{ URL::to('shop/contactUs'); }}">Contact Us</a></li>
+				<li ><a href = "{{ URL::to('shop/chat'); }}">Chat with other people</a></li>
 			</ul>
 		  </div>
 		</div>

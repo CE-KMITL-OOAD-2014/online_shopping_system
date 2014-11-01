@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" >
 </head>
 <body>
+  <script src="{{asset('js/jquery.min.js')}}"></script>
   <div class="navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -45,11 +46,12 @@
             @yield('content')
     </div>
   </div>
-  <script src="{{asset('js/jquery.min.js')}}"></script>
+
   <script src= "{{asset('js/bootstrap.min.js')}}" ></script>
   <!-- JQUERY -->
   <script type="text/javascript" src = "{{ asset('js/jquery.hideseek.min.js') }}" ></script>
   <script type="text/javascript" src = "{{ asset('js/main.js') }}"></script>
+  <script type="text/javascript" src = "{{ asset('js/brain-socket.min.js') }}"></script>
   <!-- END OF JQUERY -->
 </body>
 </html>
