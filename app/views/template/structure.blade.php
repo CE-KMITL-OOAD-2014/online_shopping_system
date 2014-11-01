@@ -24,6 +24,7 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
+          <li><a href="{{ url('cart')}}"><span class="glyphicon glyphicon-shopping-cart"></span>cart</a></li>
           @if(isset($user))
           <li class="dropdown">
             <a href="#", class="dropdown-toggle" data-toggle="dropdown">{{ $user->getUsername(); }}<span class="caret"></span></a>
@@ -51,5 +52,7 @@
   <script type="text/javascript" src = "{{ asset('js/jquery.hideseek.min.js') }}" ></script>
   <script type="text/javascript" src = "{{ asset('js/main.js') }}"></script>
   <!-- END OF JQUERY -->
+  @section('script')
+  @show
 </body>
 </html>
