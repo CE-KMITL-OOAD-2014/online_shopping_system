@@ -60,3 +60,13 @@ Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 
 Route::get('/shop/{id}/view','shopController@show');
+
+/*
+|--------------------------------------------------------------------------
+| Order Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('shop/order/','shopController@orderShow');
+
+Route::get('shop/contactUs','shopController@contactUs');

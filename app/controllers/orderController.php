@@ -1,26 +1,21 @@
 <?php
 
-class ShopController extends \BaseController {
-
-	public function __construct(){
-		$this->productHelper = new \core\EloProductRepo(new \Product());
-	}
+class OrderController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /shop
+	 * GET /order
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		$products = $this->productHelper->all();
-		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products ));
+		return View::make('orderList');
 	}
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /shop/create
+	 * GET /order/create
 	 *
 	 * @return Response
 	 */
@@ -31,7 +26,7 @@ class ShopController extends \BaseController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /shop
+	 * POST /order
 	 *
 	 * @return Response
 	 */
@@ -42,42 +37,43 @@ class ShopController extends \BaseController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /shop/{id}
+	 * GET /order/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
-		$product = $this->productHelper->find($id);
-		return View::make('productDetail',array('product' => $product,'id' => $id));
+		//
 	}
 
 	/**
-	 * ContactUs Page
+	 * Show the form for editing the specified resource.
+	 * GET /order/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function contactUs()
+	public function edit($id)
 	{
-		return View::make('contactUs');
+		//
 	}
 
 	/**
-	 * Customer Order List
+	 * Update the specified resource in storage.
+	 * PUT /order/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function orderShow()
+	public function update($id)
 	{
-		return View::make('orderShow');
+		//
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /shop/{id}
+	 * DELETE /order/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response

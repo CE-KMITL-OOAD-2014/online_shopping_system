@@ -9,7 +9,7 @@
 		    <ul class="nav nav-pills nav-stacked" >
 				<li ><a href = "{{ URL::to('/'); }}" >Home</a></li>
 				<li ><a href = "{{ URL::to('shop/order'); }}">Check Order</a></li>
-				<li ><a href = "{{ URL::to('shop/aboutUs'); }}">Contact Us</a></li>
+				<li ><a href = "{{ URL::to('shop/contactUs'); }}">Contact Us</a></li>
 			</ul>
 		  </div>
 		</div>
