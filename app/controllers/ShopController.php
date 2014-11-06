@@ -111,6 +111,7 @@ class ShopController extends \BaseController {
 
           $user->buy($products, new \core\DefaultBuyingAdapter(
             new \core\EloOrderRepo(new Order()), $this->productHelper));
+          setrawcookie("products", "[]");
           return Redirect::to('/');
         }
 }

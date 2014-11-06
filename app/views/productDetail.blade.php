@@ -96,7 +96,7 @@
           cartProductAmount = cookieArr[i].amount;
         }
         else if( cookieArr[i].id == {{ $product->getId() }} ){
-          cookieArr[i].amount+= parseInt(document.getElementById("buy-amount").value);
+          cookieArr[i].amount = parseInt(document.getElementById("buy-amount").value);
           cartProductAmount = cookieArr[i].amount;
           break;
         }
