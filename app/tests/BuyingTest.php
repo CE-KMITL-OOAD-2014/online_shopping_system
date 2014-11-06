@@ -18,7 +18,7 @@ class BuyingTest extends TestCase
     $user = $userRepo->first();
     $buyingAdapter = new core\DefaultBuyingAdapter($orderRepo, $productRepo);
     $products = array();
-    array_push($products, $productRepo->find(1), $productRepo->find(2), $productRepo->find(3));
+    array_push($products, $productRepo->find(1)->setAmount(1), $productRepo->find(2)->setAmount(1), $productRepo->find(3)->setAmount(1));
     $user->buy($products, $buyingAdapter);
 
     $total_price = 0.0;

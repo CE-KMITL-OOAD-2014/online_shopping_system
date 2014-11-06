@@ -150,8 +150,8 @@ class Order
      *
      * @param products the value to set.
      */
-    public function addProduct(Order $product)
+    public function addProduct(Product $product)
     {
-        array_push($this->products, $products);
+        array_push($this->products, $product);
     }
 }

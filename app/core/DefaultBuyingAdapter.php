@@ -12,16 +12,19 @@ class DefaultBuyingAdapter implements IBuyingAdapter
 
   Public function buy($products, $user)
   {
+    $order = new Order();
     $total_price = 0.0;
+    $order->setUser_id($user->getId());
+
     foreach($products as $product){
-      $total_price+= $product->getPrice();
-      $product->setAmount($product->getAmount()-1);
-      $this->product_repo->save($product, $product->getId());
+      $productDB = $this->product_repo->find($product->getId());
+      $total_price+= $productDB->getPrice() * $product->getAmount();
+      $productDB->setAmount($productDB->getAmount() - $product->getAmount());
+      $order->addProduct($productDB);
+      $this->product_repo->saveId($productDB, $productDB->getId());
     }
 
-    $order = new Order();
     $order->setTotal_price($total_price);
-    $order->setUser_id($user->getId());
     $this->order_repo->save($order);
   }
 }

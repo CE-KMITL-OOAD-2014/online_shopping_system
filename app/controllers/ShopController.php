@@ -103,7 +103,10 @@ class ShopController extends \BaseController {
           $cookie = json_decode($_COOKIE['products']);
           foreach($cookie as $cookieProduct)
           {
-            array_push($products, $this->productHelper->find($cookieProduct->id));
+            $productToBuy = new \core\Product();
+            $productToBuy->setId($cookieProduct->id);
+            $productToBuy->setAmount($cookieProduct->amount);
+            array_push($products, $productToBuy);
           }
 
           $user->buy($products, new \core\DefaultBuyingAdapter(
