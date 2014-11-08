@@ -17,7 +17,7 @@ class EloOrderRepo implements IOrderRepo {
       $existOrder->status = $order->getStatus();
 
       foreach($order->getProducts() as $product){
-        $this->eloOrder->products()->save(\Product::find(product.getId()));
+        $this->eloOrder->products()->save(\Product::find($product->getId()));
       }
     } else {
       $this->eloOrder->user_id = $order->getUser_id();
@@ -27,7 +27,7 @@ class EloOrderRepo implements IOrderRepo {
       $this->eloOrder->save();
 
       foreach($order->getProducts() as $product){
-        $this->eloOrder->products()->save(\Product::find(product.getId()));
+        $this->eloOrder->products()->save(\Product::find($product->getId()));
       }
     }
   }
@@ -52,7 +52,7 @@ class EloOrderRepo implements IOrderRepo {
       $product->setSuplier($eloProduct->suplier);
       $product->setAmount($eloProduct->amount);
       $product->setImgPath($eloProduct->imgPath);
-      array_push($order->products, $product);
+      $order->addProduct($product);
     }
     return $order;
   }

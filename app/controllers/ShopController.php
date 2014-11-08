@@ -91,4 +91,29 @@ class ShopController extends \BaseController {
 		}
 	}
 
+        public function cart()
+        {
+          //var_dump($_COOKIE);
+          $data['productRepo'] = $this->productHelper;
+          return View::make('cart', $data);
+        }
+
+        public function buy()
+        {
+          $user = \core\User::newFromEloquent(Auth::user());
+          $products = array();
+          $cookie = json_decode($_COOKIE['products']);
+          foreach($cookie as $cookieProduct)
+          {
+            $productToBuy = new \core\Product();
+            $productToBuy->setId($cookieProduct->id);
+            $productToBuy->setAmount($cookieProduct->amount);
+            array_push($products, $productToBuy);
+          }
+
+          $user->buy($products, new \core\DefaultBuyingAdapter(
+            new \core\EloOrderRepo(new Order()), $this->productHelper));
+          setrawcookie("products", "[]");
+          return Redirect::to('/');
+        }
 }

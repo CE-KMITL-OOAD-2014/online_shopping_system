@@ -17,7 +17,7 @@
 |--------------------------------------------------------------------------
 */
 
-Route::get('/',	'shopController@index');
+Route::get('/',	'ShopController@index');
 Route::get('/signup', 'UserController@form');
 Route::post('user', 'UserController@create');
 Route::get('/login', 'UserController@loginForm');
@@ -59,17 +59,28 @@ Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 
-Route::get('/shop/{id}/view','shopController@show');
 
 /*
 |--------------------------------------------------------------------------
 | Order Routes
 |--------------------------------------------------------------------------
 */
-
-Route::get('shop/order/','shopController@orderShow');
-Route::get('shop/contactUs','shopController@contactUs');
+Route::get('/shop/{id}/view','ShopController@show');
+Route::get('shop/order/','ShopController@orderShow');
+Route::get('shop/contactUs','ShopController@contactUs');
 
 Route::get('shop/chat','chatController@index');
 
 Route::post('shop/chat','chatController@store');
+
+Route::get('/shop/product','ShopController@product');
+Route::get('/shop/{id}/view','ShopController@show');
+
+/*
+|--------------------------------------------------------------------------
+| Cart Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('cart', 'ShopController@cart');
+Route::get('buy', 'ShopController@buy');

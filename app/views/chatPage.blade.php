@@ -13,7 +13,7 @@
             <ul class="chat-messages" style = "overflow:scroll;height:500px;" id="chat-log">
                 @foreach ($messages as $message)
                     <li>
-                        <b>{{ $message->name }}</b> form {{ $message->created_at }} <div> {{ $message->message }} </div>
+                        <b>{{{ $message->name }}}</b> form {{ $message->created_at }} <div> {{{ $message->message }}} </div>
                     </li>
                 @endforeach
             </ul>
