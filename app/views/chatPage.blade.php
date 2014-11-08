@@ -9,22 +9,30 @@
         <b style = "color:white" >Chat With other people</b>
     </div>
     <div class="messenger-body open panel-body">
-        <ul class="chat-messages" style = "overflow:scroll;height:500px;" id="chat-log">
-        </ul>
-        <div class="chat-footer">
-            <div class="p-lr-10">
-                <input type="text" id="chat-message"
-                    class="input-light input-large brad chat-search form-control" placeholder="Your message...">
+        <form action = "#">
+            <ul class="chat-messages" style = "overflow:scroll;height:500px;" id="chat-log">
+            </ul>
+            <div class="chat-footer">
+                <div class="p-lr-10">
+                    <input type="text" id="chat-message"
+                        class="input-light input-large brad chat-search form-control" placeholder="Your message...">
+                </div>
             </div>
-        </div>
+        </form>
     </div>
   </div>
    <!-- REAL TIME CHAT SCRIPT -->
     <script type="text/javascript">
         $(document).ready(function () {
+
                 var user_id = {{ Auth::user()->id }};
+                var msg_tmp;
+
                 //make sure to update the port number if your ws server is running on a different one.
                 window.app = {};
+
+                // Collector for username and message
+                var msg_col = {};
          
                 app.BrainSocket = new BrainSocket(
                         new WebSocket('ws://localhost:8080'),
@@ -33,6 +41,9 @@
 
                 app.BrainSocket.Event.listen('generic.event',function(msg){
                     console.log(msg);
+
+
+
                     if(msg.client.data.user_id == user_id){
                         $('#chat-log').append('<li><b>{{ Auth::user()->username }}</b><div class="message">'+msg.client.data.message+'</div></li>');
                     }else{
@@ -63,12 +74,19 @@
                                     'user_portrait':'{{ Auth::user()->portrait_small}}'
                                 }
                         );
+                        // Colect to Database
+                        $.post( "chat", { name : '{{ Auth::user()->username}}' , message: $(this).val() } , function( data ) {
+                        });
                         $(this).val('');
          
                     }
          
                     return event.keyCode != 13; }
                 );
+        });
+        // change Page
+        $( window ).unload(function() {
+            alert( "Handler for .unload() called." );
         });
     </script>
     @else

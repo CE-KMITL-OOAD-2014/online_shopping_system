@@ -68,9 +68,8 @@ Route::get('/shop/{id}/view','shopController@show');
 */
 
 Route::get('shop/order/','shopController@orderShow');
-
 Route::get('shop/contactUs','shopController@contactUs');
 
-Route::get('shop/chat',function() {
-  return View::make('chatPage',array( 'user' => core\User::newFromEloquent(Auth::user()), 'user_all' => User::all() ));
-});
+Route::get('shop/chat','chatController@index');
+
+Route::post('shop/chat','chatController@store');
