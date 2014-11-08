@@ -4,6 +4,7 @@ class ShopController extends \BaseController {
 
 	public function __construct(){
 		$this->productHelper = new \core\EloProductRepo(new \Product());
+		$this->orderHelper = new \core\EloOrderRepo(new \Order());
 	}
 
 	/**
@@ -70,9 +71,16 @@ class ShopController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function orderShow()
+	public function shopOrder()
 	{
-		return View::make('orderShow');
+		//Grab all Order
+		$orders = $this->orderHelper->where('user_id',Auth::id());
+		if(Auth::check()){
+			return View::make('shopOrder', array('user' => core\User::newFromEloquent(Auth::user()),'orders' => $orders ));
+		}else{
+			return Redirect::to('login');	
+		}
+	
 	}
 
 	/**

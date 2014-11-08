@@ -42,9 +42,17 @@
       </div>
     </div>
   </div> <!-- /navbar -->
+
+    @section('slideshow')
+    @show
+
   <div class = "container" >
     <div class = "col-md-12 well">
             @yield('content')
+    </div>
+    <div class = "col-md-12 well">
+            @section('second-content')
+            @show
     </div>
   </div>
 

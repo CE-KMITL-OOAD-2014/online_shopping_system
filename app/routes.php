@@ -26,7 +26,7 @@ Route::post('/login',function()
 {
   $credentials = Input::only('username', 'password');
   if(Auth::attempt($credentials)){
-    return Redirect::intended('/');
+    return Redirect::intended();
   }
   return Redirect::to('login');
 });
@@ -66,7 +66,7 @@ Route::get('/product/{id}/delete', 'productController@destroy');
 |--------------------------------------------------------------------------
 */
 Route::get('/shop/{id}/view','ShopController@show');
-Route::get('shop/order/','ShopController@orderShow');
+Route::get('shop/order/','ShopController@shopOrder');
 Route::get('shop/contactUs','ShopController@contactUs');
 
 Route::get('shop/chat','chatController@index');

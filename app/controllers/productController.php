@@ -47,6 +47,9 @@ class ProductController extends \BaseController {
 			  $file            = Input::file('img_file');
 			  $destinationPath = 'img';
 			  $filename        = date('Y-m-d_H-M-S').'_'.$file->getClientOriginalName(); // random number for cope with same image name scenario.
+			  if(strlen($filename) > 50){
+			  	$filename = substr($filename, 0 , 50);
+			  }
 			  $uploadSuccess   = $file->move($destinationPath, $filename);
 		  }	
 
