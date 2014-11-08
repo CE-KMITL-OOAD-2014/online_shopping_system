@@ -11,6 +11,11 @@
     <div class="messenger-body open panel-body">
         <form action = "#">
             <ul class="chat-messages" style = "overflow:scroll;height:500px;" id="chat-log">
+                @foreach ($messages as $message)
+                    <li>
+                        <b>{{ $message->name }}</b> form {{ $message->created_at }} <div> {{ $message->message }} </div>
+                    </li>
+                @endforeach
             </ul>
             <div class="chat-footer">
                 <div class="p-lr-10">

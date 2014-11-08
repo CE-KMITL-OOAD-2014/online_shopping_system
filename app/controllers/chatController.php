@@ -10,7 +10,7 @@ class ChatController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('chatPage',array( 'user' => core\User::newFromEloquent(Auth::user()), 'user_all' => User::all() ));
+		return View::make('chatPage',array( 'user' => core\User::newFromEloquent(Auth::user()), 'user_all' => User::all() , 'messages' => Message::all()));
 	}
 
 	/**
