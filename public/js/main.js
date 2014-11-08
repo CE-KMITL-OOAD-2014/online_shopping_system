@@ -3,4 +3,5 @@ $(document).ready(function() {
     	highlight: true,
     	nodata: '`ไม่พบข้อมูล'
     	});
+
 });

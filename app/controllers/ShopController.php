@@ -54,27 +54,25 @@ class ShopController extends \BaseController {
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 * GET /shop/{id}/edit
+	 * ContactUs Page
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function contactUs()
 	{
-		//
+		return View::make('contactUs');
 	}
 
 	/**
-	 * Update the specified resource in storage.
-	 * PUT /shop/{id}
+	 * Customer Order List
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function orderShow()
 	{
-		//
+		return View::make('orderShow');
 	}
 
 	/**
@@ -84,9 +82,13 @@ class ShopController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function shopChat()
 	{
-		//
+		if(null !== core\User::newFromEloquent(Auth::user())) {
+			return View::make('chatPage',array( 'user' => core\User::newFromEloquent(Auth::user()), 'user_all' => User::all() ));
+		}else {
+			return View::make('shopHome');
+		}
 	}
 
         public function cart()

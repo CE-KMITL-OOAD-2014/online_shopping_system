@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'sellon',
+			'database'  => 'onlineShopping',
 			'username'  => 'root',
 			'password'  => 'eiei1234',
 			'charset'   => 'utf8',

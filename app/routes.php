@@ -59,6 +59,20 @@ Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 
+
+/*
+|--------------------------------------------------------------------------
+| Order Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/shop/{id}/view','ShopController@show');
+Route::get('shop/order/','ShopController@orderShow');
+Route::get('shop/contactUs','ShopController@contactUs');
+
+Route::get('shop/chat','chatController@index');
+
+Route::post('shop/chat','chatController@store');
+
 Route::get('/shop/product','ShopController@product');
 Route::get('/shop/{id}/view','ShopController@show');
 

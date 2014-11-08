@@ -72,9 +72,11 @@
 
             <div class="form-group">
               <button type="submit" class="col-sm-offset-5 btn btn-primary">Edit</button>
+              <a class = "btn btn-warning" href="{{ URL::to('/') }}">Back</a>
             </div>
 
           </form>
+
         </div>
       </div>
     </div>

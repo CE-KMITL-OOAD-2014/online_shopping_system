@@ -8,7 +8,9 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "dev-master@dev",
-		"way/generators": "~2.0"
+		"way/generators": "~2.0",
+		"cboden/ratchet":"0.3.*",
+		"brainboxlabs/brain-socket"  : "dev-master"
 	},
 	"autoload": {
 		"classmap": [

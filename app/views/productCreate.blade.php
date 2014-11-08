@@ -2,9 +2,9 @@
 @section('productContent')
 	{{ Form::open(array('url' => 'product' , 'class' => 'form-horizontal','files'=>true )) }}
 		<div class="form-group">
-			<label for="price" class="col-lg-2 control-label">product name</label>
+			<label for="product_name" class="col-lg-2 control-label">product name</label>
 		    <div class="col-lg-10">
-		      <input type="text" class="form-control" name = "text" id="text" placeholder="price">
+		      <input type="text" class="form-control" name = "product_name" id="text" placeholder="product_name">
 		    </div>
 		</div>
 		<div class="form-group">
