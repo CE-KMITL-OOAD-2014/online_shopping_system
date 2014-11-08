@@ -24,12 +24,14 @@
 				        <h3>{{ $product->product_name }}</h3>
 				        <h5> ราคา : {{ $product->price }} บาท </h5>
 				        <p>{{ $product->description }}</p>
-				        <p id="amount">เหลืออีก {{ $product->amount }}</p>
+				        <p id="{{$product->product_Name}}-amount">เหลืออีก {{ $product->amount }}</p>
 				        <p>  </p>
 				        <p style = "text-align:center" >
                                         <input type="hidden" name="" id="{{ $product->product_name }}-max" value="{{ $product->amount }}" />
+                                        <input type="hidden" name="" id="{{ $product->product_name }}-price" value="{{ $product->price }}" />
+                                        <input type="hidden" name="" id="{{ $product->product_name }}-id" value="{{ $product->id }}" />
                                         <button class="btn btn-primary" data-toggle="modal"
-                                           data-target="#add-cart" onclick="addToCart({{ $product->product_name }})">เพิ่มลงในตะกร้า</button>
+                                           data-target="#add-cart" onclick="cartModal('{{ $product->product_name }}')">เพิ่มลงในตะกร้า</button>
                                         <br>
                                         <br>
                                         <a href="{{ URL::to('shop/'.$product->id.'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
@@ -46,7 +48,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
+          <button type="button" class="close" data-dismiss="modal" onclick="clearval()">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
           </button>
@@ -61,7 +63,9 @@
             </tr>
             <tr>
               <td>
-                <span id="product-name"></span>
+                <span id="product-name">
+                  <!-- product name goes here -->
+                </span>
               </td>
               <td>
                 <input type="number" class="col-md-8" name="buy-amount" 
@@ -69,7 +73,7 @@
                   max="1"/>
               </td>
               <td id="total-price">
-                <!-- product name goes here -->
+                <!-- product price goes here -->
               </td>
             </tr>
           </table>
@@ -90,6 +94,13 @@
     var cookieArr;
     var cartProductAmount = 0;
     var currentProductName = "";
+
+    function clearval()
+    {
+      console.log('eiei');
+      console.log($('#buy-amount').val());
+      $('#buy-amount').val(1);
+    }
 
     window.onload = function ()
     {
@@ -117,58 +128,87 @@
      }
      return "";
    } 
-
-    function addToCart(name)
-    {
-      currentProductName = name;
-      $('#product-name').val(name);
-      console.log('currentProduct');
-      console.log(currentProductName);
-      var tmpCookie = getCookie("products");
-      console.log(tmpCookie);
-      var expires = new Date();
-      expires.setFullYear((expires.getFullYear()+5) );
-
-      var length = cookieArr.length;
-      for(var i=0; i<=length ; i++)
-      {
-        if(i == length)
-        {
-          cookieArr.push({id: {{ $product->id }}, name: currentProductName, amount:  parseInt(document.getElementById("buy-amount").value)});
-          cartProductAmount = cookieArr[i].amount;
-        }
-        else if( cookieArr[i].id == {{ $product->id }} ){
-          cookieArr[i].amount = parseInt(document.getElementById("buy-amount").value);
-          cartProductAmount = cookieArr[i].amount;
-          break;
-        }
-      }
   
-      console.log("cartAmount");
-      console.log(cartProductAmount);
+  function cartModal(name)
+  {
+    console.log(name);
+    currentProductName = name;
+    $('#product-name').html(currentProductName);
+    console.log('currentProduct');
+    console.log(currentProductName);
 
-      if(cartProductAmount == {{$product->amount }}){
-        console.log(name + "max-amount");
-        document.getElementById(name + "max-amount").value = 0;
-        document.getElementById(name + "buy-amount").setAttribute("max", 0);
+    console.log($("#" + currentProductName + "-max").val());
+
+    console.log($('#buy-amount').attr('max'));
+
+
+    $('#buy-amount').attr('max', $('#' + currentProductName + "-max").val());
+
+    $('#total-price').html($('#' + currentProductName + "-price").val());
+  }
+
+  function changeAmount(amount)
+  {
+    console.log(amount.value);
+    console.log($('#' + currentProductName + "-price").val());
+    console.log(amount.value);
+    console.log(amount.value * $('#' + currentProductName + "-price").val());
+    $("#total-price").html(amount.value * $('#' + currentProductName + "-price").val());
+    console.log($('#total-price').html);
+    $("#total-price").html = 400;
+  }
+
+  function addToCart(name)
+  {
+    var tmpCookie = getCookie("products");
+    console.log(tmpCookie);
+    var expires = new Date();
+    expires.setFullYear((expires.getFullYear()+5) );
+
+    console.log("pro name add to cart");
+    console.log(currentProductName);
+
+    var length = cookieArr.length;
+    for(var i=0; i<=length ; i++)
+    {
+      if(i == length)
+      {
+        console.log("eieieiei");
+        cookieArr.push({id: $('#'+currentProductName+'-id').val(), name: currentProductName, amount:  parseInt(document.getElementById("buy-amount").value)});
+        cartProductAmount = cookieArr[i].amount;
       }
-
-      document.getElementById("buy-amount").setAttribute("max", 
-        parseInt(document.getElementById("buy-amount").getAttribute("max")) - 
-        parseInt(document.getElementById("buy-amount").value)
-      );
-
-      //if(cartProductAmount == {{$product->amount }}){
-      //  document.getElementById("buy-amount").setAttribute('value', 0);
-      //}
-
-      console.log(JSON.stringify(cookieArr));
-
-      document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
-        + expires.toGMTString() + "; path=/;";
-      console.log(document.cookie);
+      else if( cookieArr[i].id == $('#'+currentProductName+'-id').val() ){
+        cookieArr[i].amount = parseInt(document.getElementById("buy-amount").value);
+        cartProductAmount = cookieArr[i].amount;
+        break;
+      }
     }
 
+    console.log("cartAmount");
+    console.log(cartProductAmount);
+
+    /*if(cartProductAmount == {{$product->amount }}){
+      console.log(name + "max-amount");
+      document.getElementById(name + "max-amount").value = 0;
+      document.getElementById(name + "buy-amount").setAttribute("max", 0);
+    }
+
+    document.getElementById("buy-amount").setAttribute("max", 
+      parseInt(document.getElementById("buy-amount").getAttribute("max")) - 
+      parseInt(document.getElementById("buy-amount").value)
+    );*/
+
+    //if(cartProductAmount == {{$product->amount }}){
+    //  document.getElementById("buy-amount").setAttribute('value', 0);
+    //}
+
+    console.log(JSON.stringify(cookieArr));
+
+    document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
+      + expires.toGMTString() + "; path=/;";
+    console.log(document.cookie);
+    clearval();
+  }
 
   </script>
 @stop

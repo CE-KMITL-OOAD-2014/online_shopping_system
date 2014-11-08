@@ -12,7 +12,7 @@
         <th>จำนวน</th>
         <th>ราคารวม</th>
       </tr>
-      @foreach( json_decode($_COOKIE['products']) as $product)
+      @foreach(json_decode(isset($_COOKIE['products'])?$_COOKIE['products']:'[]') as $product)
       <tr>
         <td>
           {{ $product->name }}
