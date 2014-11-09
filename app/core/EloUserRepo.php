@@ -1,5 +1,8 @@
 <?php
 namespace core;
+// For Error Handler
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class EloUserRepo implements \core\IUserRepo {
 
   protected $eloUser;
@@ -59,5 +62,19 @@ class EloUserRepo implements \core\IUserRepo {
     $user->setPhone($eloquent->phone);
     $user->setEmail($eloquent->email);
     return $user;
+  }
+
+  public function checkAdmin(){
+    $admin = \User::where('permission','admin')->get();
+    return $admin[0]->status;
+  }
+
+  public function where($field,$value) {
+    $user = \User::where($field,$value)->get();
+    return $user;
+  }
+
+  public function updateStatus($status,$username){
+    $user = \User::where('username',$username)->update(array('status' => $status));
   }
 }

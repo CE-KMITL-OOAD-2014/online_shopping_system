@@ -7,6 +7,7 @@
 		"laravel/framework": "4.2.*"
 	},
 	"require-dev": {
+		 "artdarek/pusherer": "1.0.*",
 		"mockery/mockery": "dev-master@dev",
 		"way/generators": "~2.0",
 		"cboden/ratchet":"0.3.*",

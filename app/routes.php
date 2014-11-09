@@ -44,6 +44,10 @@ Route::get('/profile', array(
   }
 ));
 
+
+Route::post('/admin/{username}/online','UserController@userOnline');
+Route::post('/admin/check','UserController@checkAdmin');
+
 Route::post('/profile', 'UserController@editProfile');
 
 
