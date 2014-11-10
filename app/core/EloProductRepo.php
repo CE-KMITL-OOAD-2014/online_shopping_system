@@ -54,6 +54,7 @@
 			$productObj->setColor($product->color);
 			$productObj->setSuplier($product->suplier);
 			$productObj->setImgPath($product->imgPath);
+			$productObj->setAmount($product->amount);
 			// Logic for Load Promotion Info
 			if($product->pro_percent != 0){
 				//get promotion adapter's name from database,then change to adapter object
@@ -82,6 +83,7 @@
 				$productObj->setColor($product->color);
 				$productObj->setSuplier($product->suplier);
 				$productObj->setImgPath($product->imgPath);
+				$productObj->setAmount($product->amount);
 				// Logic for Load Promotion Info
 				if($product->pro_percent != 0){
 					$adapter = "\\core\\".$product->pro_type;

@@ -1,6 +1,14 @@
 @extends('template.managementStructure')
 @section('productContent')
-	<img src = "{{ asset('img/'.$product->getImgPath()) }}" />
+<div class = "col-md-3">
+	<img src = "{{ asset('img/'.$product->getImgPath()) }}" class = "img-responsive" />
+</div>
+<div class = "col-md-5">
+	<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Product Management</h3>
+      </div>
+      <div class="panel-body">	
 	{{ Form::open(array('url' => 'product/'.$id.'/edit' , 'class' => 'form-horizontal' )) }}
 		<div class="form-group">
 			<label for="product_name" class="col-lg-2 control-label">product name</label>
@@ -54,4 +62,7 @@
 		{{ Form::submit('แก้ไข',array('class' => 'btn btn-success')) }}
 		<a href = "{{ URL::to('product') }}" class = "btn btn-primary">กลับ</a>
 	{{ Form::close() }}
+	</div>
+</div>
+</div>
 @stop
