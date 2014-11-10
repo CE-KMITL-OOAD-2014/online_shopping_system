@@ -31,6 +31,11 @@
 			$this->eloProduct->color = $product->getColor();
 			$this->eloProduct->suplier = $product->getSuplier();
 			$this->eloProduct->amount = $product->getAmount();
+			// Logic for Collect Promotion Info
+			if($product->getProPercent() != 0){
+				$this->eloProduct->pro_percent = $product->getProPercent();
+				$this->eloProduct->pro_type = $product->getAdapterType();
+			}
 					
 			$this->eloProduct->save();
 		}
@@ -48,10 +53,45 @@
 			$productObj->setSize($product->size);
 			$productObj->setColor($product->color);
 			$productObj->setSuplier($product->suplier);
-			$productObj->setAmount($product->amount);
 			$productObj->setImgPath($product->imgPath);
+			// Logic for Load Promotion Info
+			if($product->pro_percent != 0){
+				//get promotion adapter's name from database,then change to adapter object
+				$adapter = "\\core\\".$product->pro_type;
+				//$adapter = "Classcore\\PromotionDiscountAdapter";
+				$productObj->setPromotionAdapter(new $adapter());// setAdapter
+				//set promotion detail 
+				$productObj->setPromotion($product->pro_percent,$product->price);
+			}
 			
 			return $productObj;
+		}
+
+		public function where($column,$operator,$value){
+			$value = $this->eloProduct->where($column,$operator,$value)->get();
+			$products = array();
+			foreach ($value as $product) {
+				
+				$productObj = new \core\Product();
+                $productObj->setId($product->id);
+				$productObj->setProductName($product->product_name);
+				$productObj->setPrice($product->price);
+				$productObj->setCategory($product->category);
+				$productObj->setDescription($product->description);
+				$productObj->setSize($product->size);
+				$productObj->setColor($product->color);
+				$productObj->setSuplier($product->suplier);
+				$productObj->setImgPath($product->imgPath);
+				// Logic for Load Promotion Info
+				if($product->pro_percent != 0){
+					$adapter = "\\core\\".$product->pro_type;
+					$productObj->setPromotionAdapter(new $adapter());
+					$productObj->setPromotion($product->pro_percent,$product->price);
+				}
+
+				$products[] = $productObj;
+			}
+			return $products;
 		}
 
 		public function all(){
@@ -62,4 +102,5 @@
 			$product = $this->eloProduct->find($id);
 			$product->delete();
 		}
+
 	}

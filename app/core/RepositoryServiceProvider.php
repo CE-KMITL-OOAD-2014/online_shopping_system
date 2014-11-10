@@ -8,5 +8,6 @@ Class RepositoryServiceProvider extends ServiceProvider {
     $this->app->bind('\core\EloProductRepo','\core\ProductRepoInterface');
     $this->app->bind('\core\EloOrderRepo','\core\IOrderRepo');
     $this->app->bind('\core\IBuyingAdapter', '\core\DefaultBuyingAdapter');
+    $this->app->bind('\core\IPromotionAdapter','\core\PromotionDiscountAdapter');
   }
 }

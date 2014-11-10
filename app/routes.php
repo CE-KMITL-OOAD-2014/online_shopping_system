@@ -62,6 +62,8 @@ Route::get('/product/create','productController@create');
 Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
+Route::get('/product/{id}/promotion','productController@createPromotion');
+Route::post('/product/{id}/promotion','productController@storePromotion');
 
 
 /*
@@ -88,3 +90,10 @@ Route::get('/shop/{id}/view','ShopController@show');
 
 Route::get('cart', 'ShopController@cart');
 Route::get('buy', 'ShopController@buy');
+
+Route::get('test',function() {
+  if(class_exists('core\\PromotionDiscountAdapter')) {
+    return "true";
+  }
+  return "false";
+});

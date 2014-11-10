@@ -140,8 +140,28 @@ class ProductController extends \BaseController {
 	*	Search Product 
 	*
 	*/
-	public function search(){
+	public function search() {
 		$productTarget = $this->productHelper->all();
 		return $productTarget; //return json to angularJs
 	}
-}
+
+	/**
+	*	Promotion assign to Product
+	*	
+	*/
+	public function createPromotion($id) {
+		$product = $this->productHelper->find($id);
+		//for future user can design own promotion in prototype version.They can use only two promotion.
+		$types = ['discount','buyXfreeY'];
+		return View::make('createPromotion',array('product' => $product,'id'=>$id,'types'=> $types));
+	}
+
+	public function storePromotion($id){
+		$pro_product = $this->productHelper->find($id);
+		$adapter_type = Input::get('typeAdapter')."Adapter";
+		$pro_product->setProPercent((int)(Input::get('percent')));
+		$pro_product->setAdapterType($adapter_type);
+		$this->productHelper->saveId($pro_product,$id);
+		return Redirect::to('product');
+	}
+}	
