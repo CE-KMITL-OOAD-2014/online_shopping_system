@@ -69,7 +69,9 @@
 				        <p>{{ $product->getDescription() }}</p>
 				        <p>เหลืออีก {{ $product->getAmount() }}</p>
 				        <p style = "text-align:center" >
-				        <a href="#" class="btn btn-primary" role="button">เพิ่มลงในตะกร้า</a> <br/><br/>
+                                        <button class="btn btn-primary" data-toggle="modal"
+                                           data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
+                                        <br/><br/>
 				        <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
 				        </p>
 				      </div>
@@ -264,7 +266,7 @@
     console.log(document.cookie);
     clearval();
     }
-
+}
 
   </script>
 
