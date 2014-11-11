@@ -42,17 +42,17 @@
            <tbody class = "list">
             @foreach($products as $product)
             <tr>
-              <td>{{ $product->product_name }}</td>
-              <td>{{ $product->price }}</td>
-              <td>{{ $product->category }}</td>
-              <td>{{ substr($product->description, 0,8) }}...</td>
-              <td>{{ $product->size }}</td>
-              <td>{{ $product->color }}</td>
-              <td>{{ substr($product->suplier, 0,6)  }}..</td>
-              <td>{{ $product->amount }}</td>
-              <td><a href = "{{ URL::to('product/'.$product->id.'/edit') }}"><span class = "glyphicon glyphicon-edit" ></span></a></td>
-              <td><a href = "{{ URL::to('product/'.$product->id.'/delete') }}"><span class = "glyphicon glyphicon-trash" ></span></a></td>
-              <td><a  href = "{{ URL::to('product/'.$product->id.'/promotion') }}" class = "btn btn-warning btn-xs"><span class="glyphicon glyphicon-plus"></span></a> </td>
+              <td>{{ $product->getProductName() }}</td>
+              <td>{{ $product->getPrice() }}</td>
+              <td>{{ $product->getCategory() }}</td>
+              <td>{{ substr($product->getDescription(), 0,8) }}...</td>
+              <td>{{ $product->getSize() }}</td>
+              <td>{{ $product->getColor() }}</td>
+              <td>{{ substr($product->getSuplier(), 0,6)  }}..</td>
+              <td>{{ $product->getAmount() }}</td>
+              <td><a href = "{{ URL::to('product/'.$product->getId().'/edit') }}"><span class = "glyphicon glyphicon-edit" ></span></a></td>
+              <td><a href = "{{ URL::to('product/'.$product->getId().'/delete') }}"><span class = "glyphicon glyphicon-trash" ></span></a></td>
+              <td><a  href = "{{ URL::to('product/'.$product->getId().'/promotion') }}" class = "btn btn-warning btn-xs"><span class="glyphicon glyphicon-plus"></span></a> </td>
             </tr>
             @endforeach
            </tbody> 
