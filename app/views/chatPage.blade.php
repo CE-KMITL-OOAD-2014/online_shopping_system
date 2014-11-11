@@ -57,7 +57,7 @@
                 }
          
                 app.BrainSocket = new BrainSocket(
-                        new WebSocket('ws://localhost:8080'),
+                        new WebSocket('ws://sellon.cloudapp.net/:8080'),
                         new BrainSocketPubSub()
                 );
 
