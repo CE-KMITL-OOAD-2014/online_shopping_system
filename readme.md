@@ -1,4 +1,5 @@
-## Online Shopping System 
+## Sellon - Online Shopping System 
+![Build Status](https://travis-ci.org/CE-KMITL-OOAD-2014/online_shopping_system.svg?branch=develop)
 --------
 ระบบร้านค้าออนไลส์ สำหรับธุรกิจค้าปลีก สินค้าชนิดต่างๆ 
 ระบบประกอบด้วย feature ดังนี้ 
