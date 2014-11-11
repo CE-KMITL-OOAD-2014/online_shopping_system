@@ -15,6 +15,7 @@
       @foreach(json_decode(isset($_COOKIE['products'])?$_COOKIE['products']:'[]') as $product)
       <tr>
         <td>
+          <input type="checkbox" value="{{$product->id}}" onchange="productSelect()"/>
           {{ $product->name }}
         </td>
         <td>
@@ -29,6 +30,7 @@
       @endforeach
       </table>
       <button class="btn btn-success" data-toggle="modal" data-target="#confirm" onclick="checkStock()">Buy</button></a>
+      <button id="remove-btn" class="btn btn-danger" style="display:none;" onclick="removeFromCart()"><span class="glyphicon glyphicon-trash"></span>Remove</button>
     </div>
   </div>
 
@@ -71,7 +73,8 @@
           <button type="button" onclick="buy()" class="btn btn-success"
             data-dismiss="modal">
             ยืนยัน
-          </button></div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -172,6 +175,34 @@
 
       document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
         + expires.toGMTString() + "; path=/;";
+    }
+
+    function productSelect()
+    {
+      console.log($('input:checkbox:checked').val());
+      if(typeof $('.table').find('input:checkbox:checked').val() != 'undefined'){
+        $('#remove-btn').attr('style','');
+      } else {
+        $('#remove-btn').attr('style','display:none;');
+      }
+    }
+
+    function removeFromCart()
+    {
+      $("input:checkbox:checked").each( function () {
+        for(var i=0; i<cookieArr.length; i++){
+          if(cookieArr[i].id = $(this).val()){
+            cookieArr.splice(i,1);
+            break;
+          }
+        }
+      });
+      var expires = new Date();
+      expires.setFullYear((expires.getFullYear()+5) );
+
+      document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
+        + expires.toGMTString() + "; path=/;";
+      window.location.reload();
     }
 
     function clearval(){
