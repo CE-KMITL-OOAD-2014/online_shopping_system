@@ -83,4 +83,15 @@ Route::get('/shop/{id}/view','ShopController@show');
 */
 
 Route::get('cart', 'ShopController@cart');
-Route::get('buy', 'ShopController@buy');
+Route::post('buy', 'ShopController@buy');
+
+/*
+|--------------------------------------------------------------------------
+| REST API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::group( array('prefix' => 'api'), function() {
+  Route::get('product/{id}', 'productController@restGet');
+});
+

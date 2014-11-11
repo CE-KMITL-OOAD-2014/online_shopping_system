@@ -141,4 +141,26 @@ class ProductController extends \BaseController {
 		$productTarget = $this->productHelper->all();
 		return $productTarget; //return json to angularJs
 	}
+
+        /**
+         * Rest API to get Product by ID
+         * 
+         */
+
+        public function restGet($id)
+        {
+          $product = $this->productHelper->find($id);
+          return json_encode(array(
+            'id' => $product->getId(),
+            'product_name' => $product->getProductName(),
+            'price' => $product->getPrice(),
+            'category' => $product->getCategory(),
+            'description' => $product->getDescription(),
+            'size' => $product->getSize(),
+            'color' => $product->getColor(),
+            'suplier' => $product->getSuplier(),
+            'amount' => $product->getAmount(),
+            'imgPath' => $product->getImgPath()
+          ));
+        }
 }

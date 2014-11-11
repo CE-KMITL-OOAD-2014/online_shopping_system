@@ -93,8 +93,8 @@ class ShopController extends \BaseController {
 
         public function cart()
         {
-          //var_dump($_COOKIE);
           $data['productRepo'] = $this->productHelper;
+          $data['user'] = core\User::newFromEloquent(Auth::user());
           return View::make('cart', $data);
         }
 
@@ -114,6 +114,6 @@ class ShopController extends \BaseController {
           $user->buy($products, new \core\DefaultBuyingAdapter(
             new \core\EloOrderRepo(new Order()), $this->productHelper));
           setrawcookie("products", "[]");
-          return Redirect::to('/');
+          return "buy successfull";
         }
 }

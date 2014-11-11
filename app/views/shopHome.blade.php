@@ -147,15 +147,13 @@
     $('#total-price').html($('#' + currentProductName + "-price").val());
   }
 
-  function changeAmount(amount)
-  {
+  function changeAmount(amount) {
     console.log(amount.value);
     console.log($('#' + currentProductName + "-price").val());
     console.log(amount.value);
     console.log(amount.value * $('#' + currentProductName + "-price").val());
     $("#total-price").html(amount.value * $('#' + currentProductName + "-price").val());
     console.log($('#total-price').html);
-    $("#total-price").html = 400;
   }
 
   function addToCart(name)
