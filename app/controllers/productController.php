@@ -47,6 +47,9 @@ class ProductController extends \BaseController {
 			  $file            = Input::file('img_file');
 			  $destinationPath = 'img';
 			  $filename        = date('Y-m-d_H-M-S').'_'.$file->getClientOriginalName(); // random number for cope with same image name scenario.
+			  if(strlen($filename) > 50){
+			  	$filename = substr($filename, 0 , 50);
+			  }
 			  $uploadSuccess   = $file->move($destinationPath, $filename);
 		  }	
 
@@ -137,7 +140,7 @@ class ProductController extends \BaseController {
 	*	Search Product 
 	*
 	*/
-	public function search(){
+	public function search() {
 		$productTarget = $this->productHelper->all();
 		return $productTarget; //return json to angularJs
 	}
@@ -164,3 +167,23 @@ class ProductController extends \BaseController {
           ));
         }
 }
+	/**
+	*	Promotion assign to Product
+	*	
+	*/
+	public function createPromotion($id) {
+		$product = $this->productHelper->find($id);
+		//for future user can design own promotion in prototype version.They can use only two promotion.
+		$types = ['discount','buyXfreeY'];
+		return View::make('createPromotion',array('product' => $product,'id'=>$id,'types'=> $types));
+	}
+
+	public function storePromotion($id){
+		$pro_product = $this->productHelper->find($id);
+		$adapter_type = Input::get('typeAdapter')."Adapter";
+		$pro_product->setProPercent((int)(Input::get('percent')));
+		$pro_product->setAdapterType($adapter_type);
+		$this->productHelper->saveId($pro_product,$id);
+		return Redirect::to('product');
+	}
+}	

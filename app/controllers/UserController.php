@@ -79,4 +79,16 @@ class UserController extends BaseController
     return View::make('user/login');
   }
 
+  public function checkAdmin(){
+    $check = $this->user->checkAdmin();
+    return $check;
+  }
+
+  public function userOnline($username){
+    if(Request::ajax()) {
+      $status = Input::get('status');
+      $result = $this->user->updateStatus($status,$username);
+    }
+  }
+
 }

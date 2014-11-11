@@ -56,4 +56,19 @@ class EloOrderRepo implements IOrderRepo {
     }
     return $order;
   }
+
+  public function all(){
+      return $this->eloOrder->all();
+  }
+
+  public function remove($id){
+      $order = $this->eloOrder->find($id);
+      $order->delete();
+  }
+
+
+  public function where($field,$value){
+      return $this->eloOrder->where($field,$value)->get();
+  }
+
 }

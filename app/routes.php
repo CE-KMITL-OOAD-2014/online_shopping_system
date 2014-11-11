@@ -26,7 +26,7 @@ Route::post('/login',function()
 {
   $credentials = Input::only('username', 'password');
   if(Auth::attempt($credentials)){
-    return Redirect::intended('/');
+    return Redirect::intended();
   }
   return Redirect::to('login');
 });
@@ -44,6 +44,10 @@ Route::get('/profile', array(
   }
 ));
 
+
+Route::post('/admin/{username}/online','UserController@userOnline');
+Route::post('/admin/check','UserController@checkAdmin');
+
 Route::post('/profile', 'UserController@editProfile');
 
 
@@ -58,6 +62,8 @@ Route::get('/product/create','productController@create');
 Route::get('/product/{id}/edit' , 'productController@edit');
 Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
+Route::get('/product/{id}/promotion','productController@createPromotion');
+Route::post('/product/{id}/promotion','productController@storePromotion');
 
 
 /*
@@ -66,7 +72,7 @@ Route::get('/product/{id}/delete', 'productController@destroy');
 |--------------------------------------------------------------------------
 */
 Route::get('/shop/{id}/view','ShopController@show');
-Route::get('shop/order/','ShopController@orderShow');
+Route::get('shop/order/','ShopController@shopOrder');
 Route::get('shop/contactUs','ShopController@contactUs');
 
 Route::get('shop/chat','chatController@index');
@@ -83,6 +89,7 @@ Route::get('/shop/{id}/view','ShopController@show');
 */
 
 Route::get('cart', 'ShopController@cart');
+<<<<<<< HEAD
 Route::post('buy', 'ShopController@buy');
 
 /*
@@ -94,4 +101,3 @@ Route::post('buy', 'ShopController@buy');
 Route::group( array('prefix' => 'api'), function() {
   Route::get('product/{id}', 'productController@restGet');
 });
-

@@ -2,6 +2,12 @@
 
 class OrderController extends \BaseController {
 
+	protected $orderHelper;
+
+	public function __construct() {
+		$this->orderHelper = new \core\EloOrderRepo(new \Order());
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /order
@@ -10,7 +16,8 @@ class OrderController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('orderList');
+		$orders = $this->orderHelper->all();
+		return View::make('orderList', array('orders' => $orders ));
 	}
 
 	/**

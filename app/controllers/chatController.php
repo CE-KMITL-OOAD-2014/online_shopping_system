@@ -10,6 +10,9 @@ class ChatController extends \BaseController {
 	 */
 	public function index()
 	{
+		//check Is admin online 
+		
+		
 		return View::make('chatPage',array( 'user' => core\User::newFromEloquent(Auth::user()), 'user_all' => User::all() , 'messages' => Message::all()));
 	}
 
@@ -25,7 +28,7 @@ class ChatController extends \BaseController {
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a Chat 
 	 * POST /chat
 	 *
 	 * @return Response
@@ -42,6 +45,7 @@ class ChatController extends \BaseController {
 		}
 
 	}
+
 
 	/**
 	 * Display the specified resource.

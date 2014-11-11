@@ -13,6 +13,10 @@
     protected $suplier;
     protected $amount;
     protected $imgPath = "";
+    protected $has_promotion = false; //Is this product has promotion.
+    protected $promotion; // Promotion adapter for execute.
+    protected $pro_percent = 0;
+    protected $adapter_type;
 
     public function __construct() {
     }
@@ -244,5 +248,49 @@
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+    *  Promotion Logic 
+    *
+    */
+    public function getProPercent(){
+        return $this->pro_percent;
+    }
+
+    public function setProPercent($percent){
+        $this->pro_percent = $percent;
+    }
+
+    public function setAdapterType($adapter){
+        $this->adapter_type = $adapter;
+    }
+
+    public function getAdapterType() {
+        return $this->adapter_type;
+    }
+
+    //set Adapter ,What promotion for this product
+    public function setPromotionAdapter(\core\IPromotionAdapter $promotion){
+        $this->promotion = $promotion;
+        $this->has_promotion = true;
+    }
+
+    //set information for execute promotion.
+    public function setPromotion($percent,$old_price){
+        $this->promotion->setPromotion($percent,$old_price);
+        $this->pro_percent = $percent;
+    }
+
+    // for checking user's promotion ,are they reached the condition. 
+    public function isGotPromotion(){
+        return $this->promotion->checkCondition()?true:false;
+    }
+
+    // Execute Promotion then return new price.
+    public function executePromotion(){
+        if($this->isGotPromotion()){
+            return $this->promotion->getPromotionPrice();   
+        }
     }
 }

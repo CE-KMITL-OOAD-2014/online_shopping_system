@@ -17,14 +17,5 @@
 		  </div>
 		</div>
 	</div>
-	<div class = "col-md-8 well">
-		<div class="panel panel-primary">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Management</h3>
-		  </div>
-		  <div class="panel-body">
-		  	@yield('productContent')
-		  </div>
-		</div>
-	</div>
+	@yield('productContent')	  
 @stop

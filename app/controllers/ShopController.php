@@ -4,6 +4,7 @@ class ShopController extends \BaseController {
 
 	public function __construct(){
 		$this->productHelper = new \core\EloProductRepo(new \Product());
+		$this->orderHelper = new \core\EloOrderRepo(new \Order());
 	}
 
 	/**
@@ -15,7 +16,8 @@ class ShopController extends \BaseController {
 	public function index()
 	{
 		$products = $this->productHelper->all();
-		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products ));
+		$pro_product = $this->productHelper->where('pro_percent','>',0); //fetch product that have promotion
+		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products,'pro_product' => $pro_product ));
 	}
 
 	/**
@@ -70,9 +72,16 @@ class ShopController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function orderShow()
+	public function shopOrder()
 	{
-		return View::make('orderShow');
+		//Grab all Order
+		$orders = $this->orderHelper->where('user_id',Auth::id());
+		if(Auth::check()){
+			return View::make('shopOrder', array('user' => core\User::newFromEloquent(Auth::user()),'orders' => $orders ));
+		}else{
+			return Redirect::to('login');	
+		}
+	
 	}
 
 	/**

@@ -1,14 +1,55 @@
 @extends('template.shopStructure')
+@section('slideshow')
+ <div class="col-md-14 well">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+ 	<div class="carousel-inner">
+	  <div class="item active"> <img src="http://placehold.it/1000x300" style="width:100%"  alt="First slide">
+	    <div class="container">
+	      <div class="carousel-caption">
+	        <h1> Headling 1 </h1>
+	        <p> Description 1</p>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="item"> <img src="http://placehold.it/1000x300" style="width:100%" data-src="" alt="Second slide">
+	    <div class="container">
+	      <div class="carousel-caption">
+	        <h2>
+	        Headling 2
+	        </h1>
+	        <p> Description 2</p>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="item"> <img src="http://placehold.it/1000x300" style="width:100%" data-src="" alt="Third slide">
+	    <div class="container">
+	      <div class="carousel-caption">
+	        <h2>
+	        Headling 3
+	        </h2>
+	        <p> Description 3</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+	  <span class="glyphicon glyphicon-chevron-left"></span>
+	</a>
+	 
+	<a class="right carousel-control" href="#myCarousel" data-slide="next">
+	  <span class="glyphicon glyphicon-chevron-right"></span>
+	</a>
+
+	<ol class="carousel-indicators">
+  		<li data-target="#myCarousel" data-slide-to="1"></li>
+  		<li data-target="#myCarousel" data-slide-to="2"></li>
+  		<li data-target="#myCarousel" data-slide-to="3"></li>
+	</ol>
+   </div>
+ </div>
+@stop
 @section('shopContent')
-		
-		<div class="panel panel-primary">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">SlideShow</h3>
-		  </div>
-		  <div class="panel-body">
-		  	
-		  </div>
-		</div>
 
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
@@ -16,25 +57,58 @@
 		  </div>
 		  <div class="panel-body">
 		  	<div class="row">
-		    @foreach ($products as $product)
+		     @foreach ($products as $product)
 				  <div class="col-sm-6 col-md-4">
-				    <div class="thumbnail">
-				      <img src="{{ asset('img/'.$product->imgPath) }}" />
+				    <div classId="thumbnail">
+				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;"/>
 				      <div class="caption">
-				        <h3>{{ $product->product_name }}</h3>
-				        <h5> ราคา : {{ $product->price }} บาท </h5>
-				        <p>{{ $product->description }}</p>
-				        <p id="{{$product->product_Name}}-amount">เหลืออีก {{ $product->amount }}</p>
+				        <h3>{{ $product->getProductName() }}</h3>
+				        <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+				        <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6> 
+				        <p>{{ $product->getDescription() }}</p>
+				        <p>เหลืออีก {{ $product->getAmount() }}</p>
+				        <p style = "text-align:center" >
+				        <a href="#" class="btn btn-primary" role="button">เพิ่มลงในตะกร้า</a> <br/><br/>
+				        <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
+				        </p>
+				      </div>
+				    </div>
+				  </div>
+		    @endforeach
+		    	</div>
+		  </div>
+		</div>
+@stop
+
+@section('second-content')
+	<div class="panel panel-primary">
+		  <div class="panel-heading">
+		    <h3 class="panel-title"> สินค้า Promotion</h3>
+		  </div>
+		  <div class="panel-body">
+		    <div class="row">
+		    @foreach ($pro_product as $product)
+				  <div class="col-sm-6 col-md-4">
+				    <div classId="thumbnail">
+				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;"/>
+				      <div class="caption">
+<<<<<<< HEAD
+				        <h3>{{ $product->getProductName() }}</h3>
+				        <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+
+				        <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6> 
+				        <p>{{ $product->getDescription() }}</p>
+				        <p id="{{$product->getProductName()}}-amount">เหลืออีก {{ $product->getAmount() }}</p>
 				        <p>  </p>
 				        <p style = "text-align:center" >
-                                        <input type="hidden" name="" id="{{ $product->product_name }}-max" value="{{ $product->amount }}" />
-                                        <input type="hidden" name="" id="{{ $product->product_name }}-price" value="{{ $product->price }}" />
-                                        <input type="hidden" name="" id="{{ $product->product_name }}-id" value="{{ $product->id }}" />
+                                        <input type="hidden" name="" id="{{ $product->getProductName() }}-max" value="{{ $product->getAmount() }}" />
+                                        <input type="hidden" name="" id="{{ $product->getProductName() }}-price" value="{{ $product->getPrice() }}" />
+                                        <input type="hidden" name="" id="{{ $product->getProductName() }}-id" value="{{ $product->getId() }}" />
                                         <button class="btn btn-primary" data-toggle="modal"
-                                           data-target="#add-cart" onclick="cartModal('{{ $product->product_name }}')">เพิ่มลงในตะกร้า</button>
+                                           data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
                                         <br>
                                         <br>
-                                        <a href="{{ URL::to('shop/'.$product->id.'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
+                                        <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
 				        </p>
 				      </div>
 				    </div>

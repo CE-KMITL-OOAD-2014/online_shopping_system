@@ -9,6 +9,11 @@
         <b style = "color:white" >Chat With other people</b>
     </div>
     <div class="messenger-body open panel-body">
+        <div class="panel panel-default">
+          <div class="panel-body" style = "text-align:center;">
+              <b><h6>ขณะนี้เจ้าของร้านกำลัง <span  class = "admin_status"  ></span></h6></b>
+          </div>
+        </div>
         <form action = "#">
             <ul class="chat-messages" style = "overflow:scroll;height:500px;" id="chat-log">
                 @foreach ($messages as $message)
@@ -16,6 +21,7 @@
                         <b>{{{ $message->name }}}</b> form {{ $message->created_at }} <div> {{{ $message->message }}} </div>
                     </li>
                 @endforeach
+                <hr>
             </ul>
             <div class="chat-footer">
                 <div class="p-lr-10">
@@ -29,15 +35,26 @@
    <!-- REAL TIME CHAT SCRIPT -->
     <script type="text/javascript">
         $(document).ready(function () {
+                
+                //SCROLL CHAT TO BOTTOM
 
+                $(".chat-messages").animate({ scrollTop: $(document).height() }, "slow");
+                //POLLING CALL
+
+                get_status();
                 var user_id = {{ Auth::user()->id }};
                 var msg_tmp;
 
                 //make sure to update the port number if your ws server is running on a different one.
                 window.app = {};
 
-                // Collector for username and message
-                var msg_col = {};
+                //update AdminStatus
+                var user_permission = '{{ Auth::user()->username }}';
+                if(user_permission == 'admin'){
+                    //ajax post to route for update admin status.
+                    $.post( "/admin/admin/online", {status : 1} , function( data ) {
+                        });
+                }
          
                 app.BrainSocket = new BrainSocket(
                         new WebSocket('ws://localhost:8080'),
@@ -46,11 +63,11 @@
 
                 app.BrainSocket.Event.listen('generic.event',function(msg){
                     console.log(msg);
-
-
+                    height = $( ".chat-messages" ).height;
+                    $( ".chat-messages" ).scrollTop( height - 500 );
 
                     if(msg.client.data.user_id == user_id){
-                        $('#chat-log').append('<li><b>{{ Auth::user()->username }}</b><div class="message">'+msg.client.data.message+'</div></li>');
+                        $('#chat-log').append('<li ><b>{{ Auth::user()->username }}</b><div class="message">'+msg.client.data.message+'</div></li>');
                     }else{
                         var str_test='<li class="right"><b>'+msg.client.data.username+'</b><div class="message">'+msg.client.data.message+'</div></li>';
                         $('#chat-log').append(str_test);
@@ -83,16 +100,47 @@
                         $.post( "chat", { name : '{{ Auth::user()->username}}' , message: $(this).val() } , function( data ) {
                         });
                         $(this).val('');
-         
+                         height = $( ".chat-messages" ).height;
+                        $(".chat-messages").animate({ scrollTop: $(document).height() }, "slow");
                     }
          
                     return event.keyCode != 13; }
                 );
+                // POLLING FUNCTION FOR CHECK ADMIN IS ONLINE...
+                function get_status(){
+                var feedback = $.ajax({
+                    type: "POST",
+                    url: "/admin/check",
+                    async: false
+                }).success(function(){
+                    setTimeout(function(){get_status();}, 1000);
+                }).responseText;
+                $('span.admin_status').html(feedback);
+                if(feedback == "1"){
+                    $('span.admin_status').html("<span class='label label-success'>ONLINE</span>");
+                }else{
+                    $('span.admin_status').html("<span class='label label-danger'>OFFLINE</span>");
+                }
+                }
+                    });
+                    // change Page
+                    $(window).unload(function(){
+                        $.ajax({
+                            url: '/admin/admin/online/',
+                            timeout: 300,
+                            global: false,
+                            type: 'POST',
+                            data: { status : 0},
+                            async: false, //blocks window close
+                            success: function() {
+                              
+                            },
+                            error: function() {
+                                console.log("error");
+                            }
+                });
         });
-        // change Page
-        $( window ).unload(function() {
-            alert( "Handler for .unload() called." );
-        });
+
     </script>
     @else
         <div class="alert alert-dismissable alert-warning">
