@@ -64,8 +64,12 @@
 				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;"/>
 				      <div class="caption">
 				        <h3>{{ $product->getProductName() }}</h3>
-				        <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
-				        <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6> 
+				        @if($product->getProPercent() != 0)
+							<h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+				        	<h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
+				        @else
+				        	<h5> ราคา : {{ $product->getPrice() }} บาท </h5>
+				        @endif 
 				        <p>{{ $product->getDescription() }}</p>
 				        <p>เหลืออีก {{ $product->getAmount() }}</p>
 				        <p style = "text-align:center" >
