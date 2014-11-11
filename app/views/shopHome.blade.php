@@ -92,7 +92,6 @@
 				    <div classId="thumbnail">
 				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;"/>
 				      <div class="caption">
-<<<<<<< HEAD
 				        <h3>{{ $product->getProductName() }}</h3>
 				        <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
 

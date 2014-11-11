@@ -89,7 +89,6 @@ Route::get('/shop/{id}/view','ShopController@show');
 */
 
 Route::get('cart', 'ShopController@cart');
-<<<<<<< HEAD
 Route::post('buy', 'ShopController@buy');
 
 /*
@@ -101,3 +100,4 @@ Route::post('buy', 'ShopController@buy');
 Route::group( array('prefix' => 'api'), function() {
   Route::get('product/{id}', 'productController@restGet');
 });
+
