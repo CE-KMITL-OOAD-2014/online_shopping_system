@@ -36,6 +36,7 @@ class EloUserRepo implements \core\IUserRepo {
       $existUser->address = $user->getAddress();
       $existUser->phone = $user->getPhone();
       $existUser->email = $user->getEmail();
+      $existUser->status = false;
 
       $existUser->save();
     } else  {
@@ -45,6 +46,7 @@ class EloUserRepo implements \core\IUserRepo {
       $this->eloUser->address    = $user->getAddress();
       $this->eloUser->phone      = $user->getPhone();
       $this->eloUser->email      = $user->getEmail();
+      $this->eloUser->status     = false;
 
       $this->eloUser->save();
     }

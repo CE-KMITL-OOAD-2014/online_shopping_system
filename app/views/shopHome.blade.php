@@ -57,18 +57,19 @@
 		  </div>
 		  <div class="panel-body">
 		  	<div class="row">
-		    @foreach ($products as $product)
+		     @foreach ($products as $product)
 				  <div class="col-sm-6 col-md-4">
-				    <div class="thumbnail">
-				      	<img src="{{ asset('img/'.$product->imgPath) }}" style="height:200px;"/>
+				    <div classId="thumbnail">
+				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;"/>
 				      <div class="caption">
-				        <h3>{{ $product->product_name }}</h3>
-				        <h5> ราคา : {{ $product->price }} บาท </h5>
-				        <p>{{ $product->description }}</p>
-				        <p>เหลืออีก {{ $product->amount }}</p>
+				        <h3>{{ $product->getProductName() }}</h3>
+				        <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+				        <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6> 
+				        <p>{{ $product->getDescription() }}</p>
+				        <p>เหลืออีก {{ $product->getAmount() }}</p>
 				        <p style = "text-align:center" >
 				        <a href="#" class="btn btn-primary" role="button">เพิ่มลงในตะกร้า</a> <br/><br/>
-				        <a href="{{ URL::to('shop/'.$product->id.'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
+				        <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
 				        </p>
 				      </div>
 				    </div>

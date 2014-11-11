@@ -97,7 +97,31 @@
 		}
 
 		public function all(){
-			return \Product::all();
+			$value = $this->eloProduct->all();
+			$products = array();
+			foreach ($value as $product) {
+				
+				$productObj = new \core\Product();
+                $productObj->setId($product->id);
+				$productObj->setProductName($product->product_name);
+				$productObj->setPrice($product->price);
+				$productObj->setCategory($product->category);
+				$productObj->setDescription($product->description);
+				$productObj->setSize($product->size);
+				$productObj->setColor($product->color);
+				$productObj->setSuplier($product->suplier);
+				$productObj->setImgPath($product->imgPath);
+				$productObj->setAmount($product->amount);
+				// Logic for Load Promotion Info
+				if($product->pro_percent != 0){
+					$adapter = "\\core\\".$product->pro_type;
+					$productObj->setPromotionAdapter(new $adapter());
+					$productObj->setPromotion($product->pro_percent,$product->price);
+				}
+
+				$products[] = $productObj;
+			}
+			return $products;
 		}
 
 		public function remove($id){
