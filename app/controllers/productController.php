@@ -166,7 +166,7 @@ class ProductController extends \BaseController {
             'imgPath' => $product->getImgPath()
           ));
         }
-}
+//}
 	/**
 	*	Promotion assign to Product
 	*	

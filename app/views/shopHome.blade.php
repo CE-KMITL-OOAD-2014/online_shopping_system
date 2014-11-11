@@ -49,6 +49,7 @@
    </div>
  </div>
 @stop
+
 @section('shopContent')
 
 		<div class="panel panel-primary">
@@ -159,8 +160,9 @@
       </div>
     </div>
   </div>
-
 @stop
+
+
 @section('script')
   @parent
   <script type="text/javascript" charset="utf-8">
@@ -190,44 +192,45 @@
       }
     }
 
-   function getCookie(cname) 
-   {
-     var name = cname + "=";
-     var ca = document.cookie.split(';');
-     for(var i=0; i<ca.length; i++) {
-         var c = ca[i];
-         while (c.charAt(0)==' ') c = c.substring(1);
-         if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
-     }
-     return "";
-   } 
-  
-  function cartModal(name)
-  {
-    console.log(name);
-    currentProductName = name;
-    $('#product-name').html(currentProductName);
-    console.log('currentProduct');
-    console.log(currentProductName);
+    function getCookie(cname) 
+    {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1);
+          if (c.indexOf(name) != -1) return c.substring(name.length,c.length);
+      }
+      return "";
+    } 
 
-    console.log($("#" + currentProductName + "-max").val());
+    function cartModal(name)
+    {
+      console.log(name);
+      currentProductName = name;
+      $('#product-name').html(currentProductName);
+      console.log('currentProduct');
+      console.log(currentProductName);
 
-    console.log($('#buy-amount').attr('max'));
+      console.log($("#" + currentProductName + "-max").val());
+
+      console.log($('#buy-amount').attr('max'));
 
 
-    $('#buy-amount').attr('max', $('#' + currentProductName + "-max").val());
+      $('#buy-amount').attr('max', $('#' + currentProductName + "-max").val());
 
-    $('#total-price').html($('#' + currentProductName + "-price").val());
-  }
+      $('#total-price').html($('#' + currentProductName + "-price").val());
+    }
 
-  function changeAmount(amount) {
-    console.log(amount.value);
-    console.log($('#' + currentProductName + "-price").val());
-    console.log(amount.value);
-    console.log(amount.value * $('#' + currentProductName + "-price").val());
-    $("#total-price").html(amount.value * $('#' + currentProductName + "-price").val());
-    console.log($('#total-price').html);
-  }
+    function changeAmount(amount) {
+      console.log(amount.value);
+      console.log($('#' + currentProductName + "-price").val());
+      console.log(amount.value);
+      console.log(amount.value * $('#' + currentProductName + "-price").val());
+      $("#total-price").html(amount.value * $('#' + currentProductName + "-price").val());
+      console.log($('#total-price').html);
+    }
+
 
   function addToCart(name)
   {
@@ -253,25 +256,6 @@
         cartProductAmount = cookieArr[i].amount;
         break;
       }
-    }
-
-    console.log("cartAmount");
-    console.log(cartProductAmount);
-
-    /*if(cartProductAmount == {{$product->amount }}){
-      console.log(name + "max-amount");
-      document.getElementById(name + "max-amount").value = 0;
-      document.getElementById(name + "buy-amount").setAttribute("max", 0);
-    }
-
-    document.getElementById("buy-amount").setAttribute("max", 
-      parseInt(document.getElementById("buy-amount").getAttribute("max")) - 
-      parseInt(document.getElementById("buy-amount").value)
-    );*/
-
-    //if(cartProductAmount == {{$product->amount }}){
-    //  document.getElementById("buy-amount").setAttribute('value', 0);
-    //}
 
     console.log(JSON.stringify(cookieArr));
 
@@ -279,7 +263,9 @@
       + expires.toGMTString() + "; path=/;";
     console.log(document.cookie);
     clearval();
-  }
+    }
+
 
   </script>
+
 @stop
