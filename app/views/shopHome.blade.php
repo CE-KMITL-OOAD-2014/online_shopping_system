@@ -259,8 +259,8 @@
       {
         console.log("eieieiei");
 	console.log("id");
-	console.log($('#'+currentProductName+'-id').val());
-        cookieArr.push({id: $('#'+ currentProductName.replace(/\s+/g,'') + '-id').val(), name: currentProductName, amount:  parseInt(document.getElementById("$('#'+currentProductName+'-id').val()buy-amount").value)});
+	console.log($('#'+ currentProductName.replace(/\s+/g,'') +'-id').val());
+        cookieArr.push({id: $('#'+ currentProductName.replace(/\s+/g,'') + '-id').val(), name: currentProductName, amount:  parseInt(document.getElementById("buy-amount").value)});
         cartProductAmount = cookieArr[i].amount;
       }
       else if( cookieArr[i].id == $('#'+currentProductName+'-id').val() ){
