@@ -5,7 +5,7 @@
 		  <div class="panel-heading">
 		    <h3 class="panel-title">รายการการสั่งซื้อ</h3>
 		  </div>
-		  <div class="panel-body">
+		  <div class="panel-body well">
 		  	<p style = "text-align: center;" >ขอขอบคุณที่เชื่อมั่นในสินค้าของ Sellon <br />
 			สถานะการสั่งซื้อ ของคุณ {{ Auth::user()->username }} <br/>
 

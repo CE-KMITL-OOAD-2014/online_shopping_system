@@ -15,7 +15,7 @@
           </div>
         </div>
         <form action = "#">
-            <ul class="chat-messages media-list" style = "overflow:scroll;height:500px;" id="chat-log">
+            <ul class="chat-messages media-list well" style = "overflow:scroll;height:500px;" id="chat-log">
                 @foreach ($messages as $message)
                     <li class="media">
                         <span class="col-md-2" >
