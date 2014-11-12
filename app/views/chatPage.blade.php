@@ -15,10 +15,17 @@
           </div>
         </div>
         <form action = "#">
-            <ul class="chat-messages" style = "overflow:scroll;height:500px;" id="chat-log">
+            <ul class="chat-messages media-list" style = "overflow:scroll;height:500px;" id="chat-log">
                 @foreach ($messages as $message)
-                    <li>
-                        <b>{{{ $message->name }}}</b> form {{ $message->created_at }} <div> {{{ $message->message }}} </div>
+                    <li class="media">
+                        <span class="col-md-2" >
+                          <img src="http://placehold.it/60x60" alt="...">
+                        </span>
+                        <div class="col-md-9 panel">
+                          <b class="media-heading">{{{ $message->name }}}</b>  form {{ $message->created_at }}
+                          <br/>
+                          <div>{{{ $message->message }}}</div> 
+                        </div>
                     </li>
                 @endforeach
                 <hr>
@@ -38,7 +45,9 @@
                 
                 //SCROLL CHAT TO BOTTOM
 
-                $(".chat-messages").animate({ scrollTop: $(document).height() }, "slow");
+                //$(".chat-messages").animate({ scrollTop($('ul li').last().position().top + $('ul li').last().height()) }, "slow");
+                var height_cal = $('ul li').last().position().top + $('ul li').last().height();
+                $(".chat-messages").animate({ scrollTop : height_cal }, "slow");
                 //POLLING CALL
 
                 get_status();
@@ -63,13 +72,13 @@
 
                 app.BrainSocket.Event.listen('generic.event',function(msg){
                     console.log(msg);
-                    height = $( ".chat-messages" ).height;
-                    $( ".chat-messages" ).scrollTop( height - 500 );
+                   $(".chat-messages").animate({ scrollTop : height_cal }, "slow");
 
                     if(msg.client.data.user_id == user_id){
-                        $('#chat-log').append('<li ><b>{{ Auth::user()->username }}</b><div class="message">'+msg.client.data.message+'</div></li>');
+                       $('#chat-log').append('<li class="media"><span class="col-md-2" ><img src="http://placehold.it/60x60" alt="..."></span><div class="col-md-9 panel"><b class="media-heading">{{{ Auth::user()->username }}}</b> <br/><div>'+msg.client.data.message+'</div></div>');
                     }else{
-                        var str_test='<li class="right"><b>'+msg.client.data.username+'</b><div class="message">'+msg.client.data.message+'</div></li>';
+                       // var str_test='<li class="right"><b>'+msg.client.data.username+'</b><div class="message">'+msg.client.data.message+'</div></li>';
+                        var str_test = '<li class="media"><span class="col-md-2" ><img src="http://placehold.it/60x60" alt="..."></span><div class="col-md-9 panel"><b class="media-heading">'+msg.client.data.username+'</b> <br/><div>'+msg.client.data.message+'</div></div>'
                         $('#chat-log').append(str_test);
                     }
                 });
@@ -100,8 +109,7 @@
                         $.post( "chat", { name : '{{ Auth::user()->username}}' , message: $(this).val() } , function( data ) {
                         });
                         $(this).val('');
-                         height = $( ".chat-messages" ).height;
-                        $(".chat-messages").animate({ scrollTop: $(document).height() }, "slow");
+                        $(".chat-messages").animate({ scrollTop : height_cal }, "slow");
                     }
          
                     return event.keyCode != 13; }
