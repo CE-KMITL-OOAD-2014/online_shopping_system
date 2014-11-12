@@ -6,6 +6,7 @@
 	<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" >
 <link rel="stylesheet" href="{{asset('css/style.css')}}" >
+<link rel="stylesheet" href="{{asset('css/nv.d3.css')}}" >
 </head>
 <body>
   <script src="{{asset('js/jquery.min.js')}}"></script>
