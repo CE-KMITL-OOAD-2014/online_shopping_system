@@ -65,10 +65,16 @@ Route::get('/product/{id}/delete', 'productController@destroy');
 Route::get('/product/{id}/promotion','productController@createPromotion');
 Route::post('/product/{id}/promotion','productController@storePromotion');
 
+/*
+|--------------------------------------------------------------------------
+| Shop Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/order','OrderController@index');
 
 /*
 |--------------------------------------------------------------------------
-| Order Routes
+| Shop Routes
 |--------------------------------------------------------------------------
 */
 Route::get('/shop/{id}/view','ShopController@show');

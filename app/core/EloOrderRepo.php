@@ -2,10 +2,11 @@
 namespace core;
 class EloOrderRepo implements IOrderRepo {
   protected $eloOrder;
-
+  protected $eloOrderProduct;
   public function __construct(\Order $eloOrder)
   {
     $this->eloOrder = $eloOrder;
+    $this->eloOrderProduct = new \OrderProduct();
   }
 
   public function save(Order $order) 
@@ -58,7 +59,27 @@ class EloOrderRepo implements IOrderRepo {
   }
 
   public function all(){
-      return $this->eloOrder->all();
+      $value = $this->eloOrder->all();
+      $orders = array();
+
+      foreach ($value as $order) {
+        $orderObj = new \core\Order();
+        $orderObj->setId($order->id);
+        $orderObj->setUser_id($order->user_id);
+        $orderObj->setTotal_price($order->total_price);
+        $orderObj->setOrder_time($order->order_time);
+        $orderObj->setStatus($order->status);
+        //$products = $this->eloOrderProduct->where('order_id',$order->id);
+        //get product map with each order. 
+        $products = $order->products()->get();
+        foreach($products as $product){
+          $product_obj = Product::newFromEloquent($product);
+          $orderObj->addProduct($product_obj);
+        }
+        //TO DO ***** Array implement for product 
+        $orders[] = $orderObj;
+      }
+      return $orders;
   }
 
   public function remove($id){

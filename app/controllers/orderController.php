@@ -3,9 +3,11 @@
 class OrderController extends \BaseController {
 
 	protected $orderHelper;
+	protected $userHelper;
 
 	public function __construct() {
 		$this->orderHelper = new \core\EloOrderRepo(new \Order());
+		$this->userHelper = new \core\EloUserRepo(new \User());
 	}
 
 	/**

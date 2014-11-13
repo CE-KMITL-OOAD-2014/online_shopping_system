@@ -154,4 +154,14 @@ class Order
     {
         array_push($this->products, $product);
     }
+
+    
+
+    /**
+  * Change User id to user his/her name.
+  */
+  public function getNamefromId(){
+    $user = \User::find($this->user_id);
+    return $user->username;
+  }
 }

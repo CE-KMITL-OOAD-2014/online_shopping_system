@@ -21,6 +21,29 @@
     public function __construct() {
     }
 
+    public static function newFromEloquent($eloquent){
+        if($eloquent != null){
+          $product = new self();
+          $product->id = $eloquent->id;
+          $product->product_name = $eloquent->product_name;
+          $product->price = $eloquent->price;
+          $product->category = $eloquent->category;
+          $product->description = $eloquent->description;
+          $product->size = $eloquent->size;
+          $product->color = $eloquent->color;
+          $product->suplier = $eloquent->suplier;
+          $product->amount = $eloquent->amount;
+          $product->imgPath = $eloquent->imgPath;
+          $product->has_promotion = $eloquent->has_promotion;
+          $product->promotion = $eloquent->promotion;
+          $product->pro_percent = $eloquent->pro_percent;
+          $product->adapter_type = $eloquent->adapter_type;
+
+          return $product;
+        }
+        return null;
+      }
+
     /**
      * Gets the value of price.
      *
