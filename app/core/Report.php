@@ -5,10 +5,10 @@ class Report{
   protected  $time_unit;
   protected  $plotter;
 
-  public function report(\DateTime $from, \DateTime $to)
+  public function report(\DateTime $from, \DateTime $to, $time_unit)
   {
-    $time_unit = TimeUnit::Daily;
-    return $this->plotter->cal($time_unit, $from, $to);
+    $this->time_unit = $time_unit;
+    return $this->plotter->cal($from, $to, $this->time_unit);
   }
 
   public function setPlotter(Plotter $plotter)

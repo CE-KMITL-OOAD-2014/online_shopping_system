@@ -1,11 +1,45 @@
 @extends('template.managementStructure')
 @section('productContent')
+<link href="{{asset('js/jquery-ui.min.css')}}">
+<link href="{{asset('js/jquery-ui.theme.min.css')}}">
 <style>
 #chart svg {
   height: 400px;
 }
+
+.ui-datepicker{  
+    width:18%;  
+    font-family:tahoma;  
+    font-size:11px;  
+    text-align:center;  
+    background-color: white; 
+}  
+
+.ui-datepicker-calendar {
+  width:100%;
+}
+
+.ui-datepicker-prev{
+  padding-right:3%;
+  font-size:1.5em;
+}
+
+.ui-datepicker-next{
+  padding-right:3%;
+  font-size:1.5em;
+}
 </style>
-<div class="col-md-8" id="chart">
+Date: <input type="text" id="first-datepicker">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Date: <input type="text" id="second-datepicker">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Sth: <select id="frequency">
+  <option value="0">รายวัน</option>
+  <option value="1">รายสัปดาห์</option>
+  <option value="2">รายเดือน</option>
+</select>
+<button class="btn-small btn-success" onclick="drawGraph()">submit</button>
+<div id="chart">
   <svg></svg>
 </div>
 @stop
@@ -13,14 +47,22 @@
   @parent
   <script src="{{asset('js/d3.min.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/nv.d3.min.js')}}" charset="utf-8"></script>
-  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+  <script>
+    $(function() {
+      $( "#first-datepicker" ).datepicker();
+    });
+
+    $(function() {
+      $( "#second-datepicker" ).datepicker();
+    });
+  </script>
   <script type="text/javascript" charset="utf-8">
     var responseData;
     var data;
     var chart;
 
     function setReponse(result){
-      console.log("test");
       var responseData = jQuery.parseJSON(result);
       //data[0].values[0] = [responseData[0].x,responseData[0].y];
       //data[0].values[1] = [responseData[1].x,responseData[1].y];
@@ -39,10 +81,18 @@
         .call(chart);
     }
 
-    nv.addGraph(function() {
-      $.get('productSold' ,function (result){
+    function drawGraph(){
+      $.post('productSold?name=test', {from: $('#first-datepicker').val(), 
+        to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()} ,function (result){
+        console.log('frequency');
+        console.log($('#frequency').find(":selected").val());
+        console.log(result);
+        //console.log($('#first-datepicker').val());
         setReponse(result)
       });
+    }
+
+    nv.addGraph(function() {
       data = 
       [
         {
@@ -64,7 +114,7 @@
           });
 
           chart.yAxis
-              .tickFormat(d3.format(',f'))
+              .tickFormat(d3.format('d'))
           //chart.forceY([0])
 
           //chart.y2Axis

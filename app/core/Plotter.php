@@ -3,5 +3,5 @@ namespace core;
 
 interface Plotter 
 {
-  public function cal($timeunit, \DateTime $from, \DateTime $to);
+  public function cal(\DateTime $from, \DateTime $to, $time_unit);
 }
