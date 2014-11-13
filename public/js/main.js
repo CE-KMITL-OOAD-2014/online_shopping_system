@@ -4,7 +4,7 @@ $(document).ready(function() {
     	nodata: '`ไม่พบข้อมูล'
     	});
     //Set Product Thumbnail Equal Height
-    equalHeight($(".thumbnail"));
+    equalHeight($(".equal"));
 });
 
 function equalHeight(group) {    
