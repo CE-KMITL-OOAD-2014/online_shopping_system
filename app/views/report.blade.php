@@ -1,11 +1,9 @@
 @extends('template.managementStructure')
 @section('productContent')
 <style>
-
 #chart svg {
   height: 400px;
 }
-
 </style>
 <div class="col-md-8" id="chart">
   <svg></svg>
@@ -15,64 +13,74 @@
   @parent
   <script src="{{asset('js/d3.min.js')}}" charset="utf-8"></script>
   <script src="{{asset('js/nv.d3.min.js')}}" charset="utf-8"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
   <script type="text/javascript" charset="utf-8">
-    nv.addGraph(function() {
-  var chart = nv.models.lineChart()
-                .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
-                .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
-                .transitionDuration(350)  //how fast do you want the lines to transition?
-                .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
-                .showYAxis(true)        //Show the y-axis
-                .showXAxis(true)        //Show the x-axis
-  ;
+    var responseData;
+    var data;
+    var chart;
 
-  chart.xAxis     //Chart x-axis settings
-      .axisLabel('วันที่')
-      .tickFormat(function(d) { return d3.time.format('%Y-%m-%d')(new Date(d)); });
+    function setReponse(result){
+      console.log("test");
+      var responseData = jQuery.parseJSON(result);
+      //data[0].values[0] = [responseData[0].x,responseData[0].y];
+      //data[0].values[1] = [responseData[1].x,responseData[1].y];
 
-//var minDate = "2014-11-06",
-    //maxDate = "2014-11-07";
+      for(var i=0; i<responseData.length;i++){
+        data[0].values[i] = [responseData[i].x,responseData[i].y]
+      }
+      var max = Math.max.apply(Math,responseData.map(function(o){return o.y;}));
 
-  //chart.xScale(d3.time.scale().domain([minDate, maxDate]).range([0, 450]));
-  //chart.xScale(d3.time.scale());
+      chart.forceY([0,max+1]);
 
-  chart.yAxis     //Chart y-axis settings
-      .axisLabel('จำนวนสินค้า')
-      .tickFormat(d3.format('d'));
-
-  /* Done setting the chart up? Time to render it!*/
-  var myData = sinAndCos();   //You need data...
-
-  d3.select('#chart svg')    //Select the <svg> element you want to render the chart in.   
-      .datum(myData)         //Populate the <svg> element with chart data...
-      .call(chart);          //Finally, render the chart!
-
-  //Update the chart when window resizes.
-  nv.utils.windowResize(function() { chart.update() });
-  return chart;
-});
-/**************************************
- * Simple test data generator
- */
-function sinAndCos() {
-  var sin = [],sin2 = [],
-      cos = [];
-
-  //Data is represented as an array of {x,y} pairs.
-  /*for (var i = 0; i < 100; i++) {
-    sin.push({x: i, y: Math.sin(i/10)});
-    sin2.push({x: i, y: Math.sin(i/10) *0.25 + 0.5});
-    cos.push({x: i, y: .5 * Math.cos(i/10)});
-  }*/
-
-  //Line chart data should be sent as an array of series objects.
-  return [
-    {
-      values: [{x:new Date(),y:15},{x: new Date(2014, 11, 14)  ,y:1}],      //values - represents the array of {x,y} data points
-      key: 'Sine Wave', //key  - the name of the series.
-      color: '#ff7f0e'  //color - optional: choose your own line color.
+      d3.select('#chart svg')
+        .datum(data)
+        .transition()
+        .duration(0)
+        .call(chart);
     }
-  ];
-}
+
+    nv.addGraph(function() {
+      $.get('productSold' ,function (result){
+        setReponse(result)
+      });
+      data = 
+      [
+        {
+          "key" : "Quantity",
+          "bar": true,
+          "values" : []
+        }
+      ]
+          chart = nv.models.multiBarChart()
+                .margin({top: 30, right: 60, bottom: 50, left: 70})
+                //We can set x data accessor to use index. Reason? So the bars all appear evenly spaced.
+                .x(function(d,i) { return i })
+                .y(function(d,i) {return d[1] })
+                ;
+
+          chart.xAxis.tickFormat(function(d) {
+            var dx = data[0].values[d] && data[0].values[d][0] || 0;
+            return d3.time.format('%x')(new Date(dx))
+          });
+
+          chart.yAxis
+              .tickFormat(d3.format(',f'))
+          //chart.forceY([0])
+
+          //chart.y2Axis
+          //    .tickFormat(function(d) { return '$' + d3.format(',f')(d) });
+
+          //chart.bars.forceY([0]);
+
+          /*d3.select('#chart svg')
+            .datum(data)
+            .transition()
+            .duration(0)
+            .call(chart);*/
+
+          nv.utils.windowResize(chart.update);
+
+          return chart;
+      });
   </script>
 @stop
