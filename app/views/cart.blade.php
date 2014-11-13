@@ -141,7 +141,7 @@
 	console.log("result");
         console.log(result);
         clearval();
-        //window.location="{{ url('/')}}";
+        window.location="{{ url('/')}}";
       });
     }
 
