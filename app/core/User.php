@@ -30,7 +30,7 @@ class User {
 
   public function buy($products, IBuyingAdapter $buying)
   {
-    $buying->buy($products, $this);
+    return $buying->buy($products, $this);
   }
 
   public function getId()

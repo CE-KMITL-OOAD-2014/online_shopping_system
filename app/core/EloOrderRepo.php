@@ -25,7 +25,6 @@ class EloOrderRepo implements IOrderRepo {
       $this->eloOrder->order_time = $order->getOrder_time();
       $this->eloOrder->status = $order->getStatus();
       $this->eloOrder->save();
-
       foreach($order->getProducts() as $product){
         $this->eloOrder->products()->save(\Product::find($product->getId()));
       }
