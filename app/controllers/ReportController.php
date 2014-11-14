@@ -36,7 +36,7 @@ class ReportController extends BaseController {
   {
     $report = new \core\Report();
     $report->setPlotter(new \core\ProfitPlot());
-    return $report->report( new DateTime('2014-11-01'), new DateTime('2014-11-08'), 0);
+    //return $report->report( new DateTime('2014-11-01'), new DateTime('2014-11-08'), 0);
 
     $from = Input::get('from');
     $to = Input::get('to');
