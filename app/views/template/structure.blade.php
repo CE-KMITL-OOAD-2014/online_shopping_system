@@ -26,8 +26,13 @@
           <!-- nothing to add now -->
         </ul>
 
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{ url('cart')}}"><span class="glyphicon glyphicon-shopping-cart"></span>cart</a></li>
+        <ul class="nav navbar-nav navbar-right" >
+          <li><a href="{{ url('cart')}}"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+          @if(Auth::check())
+            @if(Auth::user()->username == "admin")
+              <li><a href="{{ url('product')}}"><span class="glyphicon glyphicon-list-alt"></span> Management</a></li>
+            @endif
+          @endif
           @if(isset($user))
           <li class="dropdown">
             <a href="#", class="dropdown-toggle" data-toggle="dropdown">{{ $user->getUsername(); }}<span class="caret"></span></a>

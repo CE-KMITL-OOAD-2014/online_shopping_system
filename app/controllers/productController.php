@@ -15,8 +15,11 @@ class ProductController extends \BaseController {
 	 */
 	public function index()
 	{	
-		$products = $this->productHelper->all();
-		return View::make('productList', array('products' =>  $products ));
+		if(Auth::user()->username == "admin"){
+			$products = $this->productHelper->all();
+		return View::make('productList', array('products' =>  $products, 'user' => core\User::newFromEloquent(Auth::user()) ));
+		}
+		return View::make('permissionDenied');
 	}
 
 	/**

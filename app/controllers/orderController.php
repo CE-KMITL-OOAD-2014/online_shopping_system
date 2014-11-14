@@ -18,8 +18,11 @@ class OrderController extends \BaseController {
 	 */
 	public function index()
 	{
-		$orders = $this->orderHelper->all();
-		return View::make('orderList', array('orders' => $orders ));
+		if(Auth::user()->username == "admin"){
+			$orders = $this->orderHelper->all();
+		return View::make('orderList', array('orders' => $orders ,'user' => core\User::newFromEloquent(Auth::user())));
+		}
+		return View::make('permissionDenied');
 	}
 
 	/**

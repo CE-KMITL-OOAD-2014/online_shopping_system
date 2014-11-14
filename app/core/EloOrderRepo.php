@@ -88,7 +88,27 @@ class EloOrderRepo implements IOrderRepo {
 
 
   public function where($field,$value){
-      return $this->eloOrder->where($field,$value)->get();
+      $value = $this->eloOrder->where($field,$value)->get();
+      $orders = array();
+
+      foreach ($value as $order) {
+        $orderObj = new \core\Order();
+        $orderObj->setId($order->id);
+        $orderObj->setUser_id($order->user_id);
+        $orderObj->setTotal_price($order->total_price);
+        $orderObj->setOrder_time($order->order_time);
+        $orderObj->setStatus($order->status);
+        //$products = $this->eloOrderProduct->where('order_id',$order->id);
+        //get product map with each order. 
+        $products = $order->products()->get();
+        foreach($products as $product){
+          $product_obj = Product::newFromEloquent($product);
+          $orderObj->addProduct($product_obj);
+        }
+        //TO DO ***** Array implement for product 
+        $orders[] = $orderObj;
+      }
+      return $orders;
   }
 
 }
