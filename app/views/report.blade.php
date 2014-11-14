@@ -83,7 +83,7 @@ Sth: <select id="frequency">
     }
 
     function drawGraph(){
-      $.post('productSold?name=test', {from: $('#first-datepicker').val(), 
+      $.post('productSold', {from: $('#first-datepicker').val(), 
         to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()} ,function (result){
         console.log('frequency');
         console.log($('#frequency').find(":selected").val());

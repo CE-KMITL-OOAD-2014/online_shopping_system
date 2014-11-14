@@ -99,6 +99,7 @@ Route::post('buy', 'ShopController@buy');
 
 Route::get('report', 'ReportController@index');
 Route::post('productSold', 'ReportController@soldProduct');
+Route::get('income', 'ReportController@income');
 
 /*
 |--------------------------------------------------------------------------
