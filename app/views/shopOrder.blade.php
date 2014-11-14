@@ -13,20 +13,30 @@
 				@foreach ($orders as $order) 
 				<div class="panel panel-default col-md-4">
 				 <div class="panel-body">
-				  	<b>Order Status</b> 
-				  	@if ($order->status == 1)
+				  	<b>Order Status</b><br/> 
+				  	@if ($order->getStatus() == 1)
 				  		<span class="label label-success">จัดส่งแล้ว</span>
 					@else
 						<span class="label label-warning">อยู๋ระหว่างการจัดส่ง</span>	
 				  	@endif
 				  	<br />
-					<b>Order Id</b> {{ $order->id }} <br />
-					<b>Total</b> {{ $order->total_price }} <br />
-					<b>Order Time</b> {{ $order->created_at }}<br />
+					<b>Order Id</b> {{ $order->getId() }} <br />
+					<b>Total</b> {{ $order->getTotal_price() }} <br />
+					<b>Order Time</b> {{ $order->getOrder_time() }}<br />
 					<b>Products</b> <br />
+					  <ul>
+                    <div style = "height:70px;overflow:scroll;overflow-x:hidden;">
+                      @foreach($order->getProducts() as $product)
+                       <li> {{ $product->getProductName() }} </li>
+                      @endforeach
+                    </div>
+                  </ul>
 				  </div>
 				</div>	
 				@endforeach
 		  </div>
 		</div>
+@stop
+@section('nav/order')
+active
 @stop

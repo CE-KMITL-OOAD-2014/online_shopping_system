@@ -3,9 +3,11 @@
 class OrderController extends \BaseController {
 
 	protected $orderHelper;
+	protected $userHelper;
 
 	public function __construct() {
 		$this->orderHelper = new \core\EloOrderRepo(new \Order());
+		$this->userHelper = new \core\EloUserRepo(new \User());
 	}
 
 	/**
@@ -16,8 +18,11 @@ class OrderController extends \BaseController {
 	 */
 	public function index()
 	{
-		$orders = $this->orderHelper->all();
-		return View::make('orderList', array('orders' => $orders ));
+		if(Auth::user()->username == "admin"){
+			$orders = $this->orderHelper->all();
+		return View::make('orderList', array('orders' => $orders ,'user' => core\User::newFromEloquent(Auth::user())));
+		}
+		return View::make('permissionDenied');
 	}
 
 	/**
@@ -87,7 +92,22 @@ class OrderController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$del_product = Order::find($id);
+		$del_product->products()->detach();
+		$del_product->delete();
+		return Redirect::to('order');
+	}
+
+	public function status($id) {
+		if(Request::ajax()) {
+
+			$order = Order::find($id);
+			$order->status = Input::get('status');
+			$order->save();
+
+		}else{
+			return "You don't have permission";
+		}
 	}
 
 }

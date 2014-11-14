@@ -10,9 +10,7 @@
 		    <ul class="nav nav-pills nav-stacked" >
 				<li ><a href = "{{ URL::to('product'); }}" >Product Management</a></li>
 				<li ><a href = "{{ URL::to('order'); }}">Order Management</a></li>
-				<li ><a href = "{{ URL::to('message'); }}">Inbox Management</a></li>
-				<li ><a href = "{{ URL::to('user'); }}">User Management</a></li>
-				<li ><a href = "{{ URL::to('logout'); }}" >Logout</a></li>
+		
 			</ul>
 		  </div>
 		</div>

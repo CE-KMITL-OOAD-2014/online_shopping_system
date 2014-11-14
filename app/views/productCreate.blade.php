@@ -1,5 +1,11 @@
 @extends('template.managementStructure')
 @section('productContent')
+	<div class = "col-md-8">
+		 <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Product Management</h3>
+      </div>
+      <div class="panel-body">
 	{{ Form::open(array('url' => 'product' , 'class' => 'form-horizontal','files'=>true )) }}
 		<div class="form-group">
 			<label for="product_name" class="col-lg-2 control-label">product name</label>
@@ -60,4 +66,7 @@
 		{{ Form::submit('ยืนยัน',array('class' => 'btn btn-success')) }}
 		<a href = "{{ URL::to('product') }}" class = "btn btn-primary">กลับ</a>
 	{{ Form::close() }}
+	</div>
+	</div>
+	</div>
 @stop

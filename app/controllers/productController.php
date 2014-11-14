@@ -15,8 +15,11 @@ class ProductController extends \BaseController {
 	 */
 	public function index()
 	{	
-		$products = $this->productHelper->all();
-		return View::make('productList', array('products' =>  $products ));
+		if(Auth::user()->username == "admin"){
+			$products = $this->productHelper->all();
+		return View::make('productList', array('products' =>  $products, 'user' => core\User::newFromEloquent(Auth::user()) ));
+		}
+		return View::make('permissionDenied');
 	}
 
 	/**
@@ -185,5 +188,16 @@ class ProductController extends \BaseController {
 		$pro_product->setAdapterType($adapter_type);
 		$this->productHelper->saveId($pro_product,$id);
 		return Redirect::to('product');
+	}
+
+	public function delPromotion($id) {
+		if(Request::ajax()) {
+			$product_target = $this->productHelper->find($id);
+			$product_target->setProPercent(0);
+			$product_target->setAdapterType('');
+			$this->productHelper->saveId($product_target,$id);
+		}else{
+			return "You don't have permission";
+		}
 	}
 }	

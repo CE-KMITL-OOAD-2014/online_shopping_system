@@ -11,3 +11,6 @@
 		  </div>
 		</div>
 @stop
+@section('nav/contact')
+active
+@stop
