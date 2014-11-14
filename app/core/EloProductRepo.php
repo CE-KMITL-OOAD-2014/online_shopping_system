@@ -55,6 +55,8 @@
 			$productObj->setSuplier($product->suplier);
 			$productObj->setImgPath($product->imgPath);
 			$productObj->setAmount($product->amount);
+			$productObj->setAdapterType($product->adapter_type);
+			//$productObj->set
 			// Logic for Load Promotion Info
 			if($product->pro_percent != 0){
 				//get promotion adapter's name from database,then change to adapter object
@@ -84,6 +86,7 @@
 				$productObj->setSuplier($product->suplier);
 				$productObj->setImgPath($product->imgPath);
 				$productObj->setAmount($product->amount);
+				$productObj->setAdapterType($product->adapter_type);
 				// Logic for Load Promotion Info
 				if($product->pro_percent != 0){
 					$adapter = "\\core\\".$product->pro_type;
@@ -112,6 +115,7 @@
 				$productObj->setSuplier($product->suplier);
 				$productObj->setImgPath($product->imgPath);
 				$productObj->setAmount($product->amount);
+				$productObj->setAdapterType($product->adapter_type);
 				// Logic for Load Promotion Info
 				if($product->pro_percent != 0){
 					$adapter = "\\core\\".$product->pro_type;

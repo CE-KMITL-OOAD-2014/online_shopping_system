@@ -70,9 +70,12 @@
 				        @else
 				        	<h5> ราคา : {{ $product->getPrice() }} บาท </h5>
 				        @endif 
+                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
 				        <p>{{ $product->getDescription() }}</p>
 				        <p>เหลืออีก {{ $product->getAmount() }}</p>
 				        <p style = "text-align:center" >
+                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-price" value="{{ $product->getPrice() }}" />
+                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-id" value="{{ $product->getId() }}" />
                                         <button class="btn btn-primary" data-toggle="modal"
                                            data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
                                         <br/><br/>
@@ -105,11 +108,8 @@
 				        <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6> 
 				        <p>{{ $product->getDescription() }}</p>
 				        <p id="{{$product->getProductName()}}-amount">เหลืออีก {{ $product->getAmount() }}</p>
-				        <p>  </p>
+				        <!--<p>  </p> -->
 				        <p style = "text-align:center" >
-                                        <input type="hidden" name="" id="{{ $product->getProductName() }}-max" value="{{ $product->getAmount() }}" />
-                                        <input type="hidden" name="" id="{{ $product->getProductName() }}-price" value="{{ $product->getPrice() }}" />
-                                        <input type="hidden" name="" id="{{ $product->getProductName() }}-id" value="{{ $product->getId() }}" />
                                         <button class="btn btn-primary" data-toggle="modal"
                                            data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
                                         <br>
@@ -218,14 +218,18 @@
       console.log('currentProduct');
       console.log(currentProductName);
 
-      console.log($("#" + currentProductName + "-max").val());
+      console.log(currentProductName.replace(/\s+/g,'') + "-max");
+      console.log($("#" + currentProductName.replace(/\s+/g,'') + "-max"));
+      console.log('bug');
+      console.log($("#" + currentProductName.replace(/\s+/g,'') + "-max").val());
 
+      console.log($('#buy-amount'));
       console.log($('#buy-amount').attr('max'));
 
 
-      $('#buy-amount').attr('max', $('#' + currentProductName + "-max").val());
+      $('#buy-amount').attr('max', $('#' + currentProductName.replace(/\s+/g, "") + "-max").val());
 
-      $('#total-price').html($('#' + currentProductName + "-price").val());
+      $('#total-price').html($('#' + currentProductName.replace(/\s+/g, "") + "-price").val());
     }
 
     function changeAmount(amount) {
@@ -233,7 +237,7 @@
       console.log($('#' + currentProductName + "-price").val());
       console.log(amount.value);
       console.log(amount.value * $('#' + currentProductName + "-price").val());
-      $("#total-price").html(amount.value * $('#' + currentProductName + "-price").val());
+      $("#total-price").html(amount.value * $('#' + currentProductName.replace(/\s+/g, "") + "-price").val());
       console.log($('#total-price').html);
     }
 
@@ -254,10 +258,13 @@
       if(i == length)
       {
         console.log("eieieiei");
-        cookieArr.push({id: $('#'+currentProductName+'-id').val(), name: currentProductName, amount:  parseInt(document.getElementById("buy-amount").value)});
+	console.log("id");
+	console.log($('#'+ currentProductName.replace(/\s+/g,'') +'-id').val());
+        cookieArr.push({id: $('#'+ currentProductName.replace(/\s+/g,'') + '-id').val(), name: currentProductName, amount:  parseInt(document.getElementById("buy-amount").value)});
         cartProductAmount = cookieArr[i].amount;
       }
       else if( cookieArr[i].id == $('#'+currentProductName+'-id').val() ){
+	console.log("exist");
         cookieArr[i].amount = parseInt(document.getElementById("buy-amount").value);
         cartProductAmount = cookieArr[i].amount;
         break;
