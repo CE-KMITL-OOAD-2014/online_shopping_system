@@ -98,7 +98,7 @@ Route::post('buy', 'ShopController@buy');
 */
 
 Route::get('report', 'ReportController@index');
-Route::get('productSold', 'ReportController@soldProduct');
+Route::post('productSold', 'ReportController@soldProduct');
 
 /*
 |--------------------------------------------------------------------------

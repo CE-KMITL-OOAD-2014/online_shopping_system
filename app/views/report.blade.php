@@ -66,6 +66,7 @@ Sth: <select id="frequency">
       var responseData = jQuery.parseJSON(result);
       //data[0].values[0] = [responseData[0].x,responseData[0].y];
       //data[0].values[1] = [responseData[1].x,responseData[1].y];
+      data[0].values = [];
 
       for(var i=0; i<responseData.length;i++){
         data[0].values[i] = [responseData[i].x,responseData[i].y]
