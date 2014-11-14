@@ -67,15 +67,14 @@
 				      <div class="caption equal" style = "text-align:center;">
 				        <h3>{{ $product->getProductName() }}</h3>
 				        @if($product->getProPercent() != 0)
-							<h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+							<h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท <br/> ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
 				        	<h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
 				        @else
 				        	<h5> ราคา : {{ $product->getPrice() }} บาท </h5>
 				        @endif
-				        </p>
-                <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
                 <p>{{ $product->getDescription() }}</p>
 				      </div>
+                <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
               <b>เหลืออีก <span class="badge">{{ $product->getAmount() }}</span></b> 
                 <p style = "text-align:center" >
                                         <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-price" value="{{ $product->getPrice() }}" />
@@ -100,7 +99,7 @@
 		  <div class="panel-body well">
 		    <div class="row">
          @foreach ($pro_product as $product)
-          <div class="col-sm-6 col-md-4" style = "text-align:center;" >
+          <div class="col-sm-6 col-md-3" style = "text-align:center;" >
             <div classId="thumbnail" class ="panel" >
               <div class = "equal" >
                   <img src="{{ asset('img/'.$product->getImgPath()) }}"  class ="img-responsive"/>
@@ -110,9 +109,9 @@
               <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
                   <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
                 </p>
-                <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
                 <p>{{ $product->getDescription() }}</p>
               </div>
+              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
               <b>เหลืออีก <span class="badge">{{ $product->getAmount() }}</span></b> 
                 <p style = "text-align:center" >
                                         <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-price" value="{{ $product->getPrice() }}" />
@@ -171,7 +170,9 @@
     </div>
   </div>
 @stop
-
+@section('nav/home')
+active
+@stop
 
 @section('script')
   @parent

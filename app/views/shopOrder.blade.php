@@ -30,3 +30,6 @@
 		  </div>
 		</div>
 @stop
+@section('nav/order')
+active
+@stop

@@ -158,3 +158,6 @@
 </div>
      @endif
 @stop
+@section('nav/chat')
+active
+@stop

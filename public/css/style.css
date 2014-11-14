@@ -19,3 +19,10 @@
     transform: rotate( 45deg );
     width:  20px;
 }
+
+.footer {
+    position: absolute;
+    background-color:red; 
+    bottom: 0;
+    width: 100%;
+}
