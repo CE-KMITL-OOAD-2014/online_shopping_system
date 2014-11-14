@@ -31,11 +31,8 @@
 			$this->eloProduct->color = $product->getColor();
 			$this->eloProduct->suplier = $product->getSuplier();
 			$this->eloProduct->amount = $product->getAmount();
-			// Logic for Collect Promotion Info
-			if($product->getProPercent() != 0){
-				$this->eloProduct->pro_percent = $product->getProPercent();
-				$this->eloProduct->pro_type = $product->getAdapterType();
-			}
+			$this->eloProduct->pro_percent = $product->getProPercent();
+			$this->eloProduct->pro_type = $product->getAdapterType();
 					
 			$this->eloProduct->save();
 		}

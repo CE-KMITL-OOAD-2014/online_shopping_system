@@ -64,7 +64,7 @@ Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 Route::get('/product/{id}/promotion','productController@createPromotion');
 Route::post('/product/{id}/promotion','productController@storePromotion');
-
+Route::post('/product/{id}/promotion/del','productController@delPromotion');
 /*
 |--------------------------------------------------------------------------
 | Shop Routes

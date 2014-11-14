@@ -21,6 +21,7 @@
     public function __construct() {
     }
 
+    //Create new /core/product object from Eloquent Product
     public static function newFromEloquent($eloquent){
         if($eloquent != null){
           $product = new self();

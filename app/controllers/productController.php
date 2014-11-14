@@ -189,4 +189,15 @@ class ProductController extends \BaseController {
 		$this->productHelper->saveId($pro_product,$id);
 		return Redirect::to('product');
 	}
+
+	public function delPromotion($id) {
+		if(Request::ajax()) {
+			$product_target = $this->productHelper->find($id);
+			$product_target->setProPercent(0);
+			$product_target->setAdapterType('');
+			$this->productHelper->saveId($product_target,$id);
+		}else{
+			return "You don't have permission";
+		}
+	}
 }	
