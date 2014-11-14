@@ -48,10 +48,10 @@
     @show
 
   <div class = "container" >
-    <div class = "col-md-12 well">
+    <div class = "col-md-12 ">
             @yield('content')
     </div>
-    <div class = "col-md-12 well">
+    <div class = "col-md-12 ">
             @section('second-content')
             @show
     </div>

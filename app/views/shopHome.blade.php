@@ -56,32 +56,34 @@
 		  <div class="panel-heading">
 		    <h3 class="panel-title">สินค้าในร้านค้า</h3>
 		  </div>
-		  <div class="panel-body">
+		  <div class="panel-body well">
 		  	<div class="row">
 		     @foreach ($products as $product)
-				  <div class="col-sm-6 col-md-4">
-				    <div classId="thumbnail" >
-				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;" class ="img-responsive"/>
-				      <div class="caption equal">
+				  <div class="col-sm-6 col-md-4 " style = "text-align:center;" >
+				    <div classId="thumbnail" style="padding:8px;margin:-8px;" class ="panel" >
+				      <div class = "equal">
+                  <img src="{{ asset('img/'.$product->getImgPath()) }}"  class ="img-responsive"/>
+              </div>
+				      <div class="caption equal" style = "text-align:center;">
 				        <h3>{{ $product->getProductName() }}</h3>
 				        @if($product->getProPercent() != 0)
 							<h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
 				        	<h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
 				        @else
 				        	<h5> ราคา : {{ $product->getPrice() }} บาท </h5>
-				        @endif 
-                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
-				        <p>{{ $product->getDescription() }}</p>
-				        <p>เหลืออีก {{ $product->getAmount() }}</p>
-				        <p style = "text-align:center" >
+				        @endif
+				        </p>
+                <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
+                <p>{{ $product->getDescription() }}</p>
+				      </div>
+              <b>เหลืออีก <span class="badge">{{ $product->getAmount() }}</span></b> 
+                <p style = "text-align:center" >
                                         <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-price" value="{{ $product->getPrice() }}" />
                                         <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-id" value="{{ $product->getId() }}" />
                                         <button class="btn btn-primary" data-toggle="modal"
                                            data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
                                         <br/><br/>
-				        <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
-				        </p>
-				      </div>
+                <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
 				    </div>
 				  </div>
 		    @endforeach
@@ -95,32 +97,34 @@
 		  <div class="panel-heading">
 		    <h3 class="panel-title"> สินค้า Promotion</h3>
 		  </div>
-		  <div class="panel-body">
+		  <div class="panel-body well">
 		    <div class="row">
-		    @foreach ($pro_product as $product)
-				  <div class="col-sm-6 col-md-4">
-				    <div classId="thumbnail">
-				      	<img src="{{ asset('img/'.$product->getImgPath()) }}" style="height:200px;"/>
-				      <div class="caption">
-				        <h3>{{ $product->getProductName() }}</h3>
-				        <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
-
-				        <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6> 
-				        <p>{{ $product->getDescription() }}</p>
-				        <p id="{{$product->getProductName()}}-amount">เหลืออีก {{ $product->getAmount() }}</p>
-				        <!--<p>  </p> -->
-				        <p style = "text-align:center" >
+         @foreach ($pro_product as $product)
+          <div class="col-sm-6 col-md-4" style = "text-align:center;" >
+            <div classId="thumbnail" class ="panel" >
+              <div class = "equal" >
+                  <img src="{{ asset('img/'.$product->getImgPath()) }}"  class ="img-responsive"/>
+              </div>
+              <div class="caption equal" style = "text-align:center;">
+                <h3>{{ $product->getProductName() }}</h3>
+              <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+                  <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
+                </p>
+                <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-max" value="{{ $product->getAmount() }}" />
+                <p>{{ $product->getDescription() }}</p>
+              </div>
+              <b>เหลืออีก <span class="badge">{{ $product->getAmount() }}</span></b> 
+                <p style = "text-align:center" >
+                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-price" value="{{ $product->getPrice() }}" />
+                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-id" value="{{ $product->getId() }}" />
                                         <button class="btn btn-primary" data-toggle="modal"
                                            data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
-                                        <br>
-                                        <br>
-                                        <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
-				        </p>
-				      </div>
-				    </div>
-				  </div>
-		    @endforeach
-		    	</div>
+                                        <br/><br/>
+                <a href="{{ URL::to('shop/'.$product->getId().'/view') }}" class="btn btn-default" role="button">รายละเอียด</a>
+            </div>
+          </div>
+        @endforeach
+          </div>
 		  </div>
 		</div>
 

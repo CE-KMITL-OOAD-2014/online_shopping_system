@@ -1,6 +1,6 @@
 @extends('template.structure')
 @section('content')
-	<div class = "col-md-4 well">
+	<div class = "col-md-4 ">
 		<div class="panel panel-warning">
 		  <div class="panel-heading">
 		    <h3 class="panel-title">navbar</h3>
@@ -15,7 +15,7 @@
 		  </div>
 		</div>
 	</div>	
-	<div class = "col-md-8 well">
+	<div class = "col-md-8 ">
 		@yield('shopContent')
 	</div>
 @stop
