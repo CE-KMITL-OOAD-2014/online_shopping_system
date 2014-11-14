@@ -89,7 +89,22 @@ class OrderController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$del_product = Order::find($id);
+		$del_product->products()->detach();
+		$del_product->delete();
+		return Redirect::to('order');
+	}
+
+	public function status($id) {
+		if(Request::ajax()) {
+
+			$order = Order::find($id);
+			$order->status = Input::get('status');
+			$order->save();
+
+		}else{
+			return "You don't have permission";
+		}
 	}
 
 }

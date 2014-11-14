@@ -42,10 +42,7 @@
    <!-- REAL TIME CHAT SCRIPT -->
     <script type="text/javascript">
         $(document).ready(function () {
-                
                 //SCROLL CHAT TO BOTTOM
-
-                //$(".chat-messages").animate({ scrollTop($('ul li').last().position().top + $('ul li').last().height()) }, "slow");
                 var height_cal = $('ul li').last().position().top + $('ul li').last().height();
                 $(".chat-messages").animate({ scrollTop : height_cal }, "slow");
                 //POLLING CALL
@@ -77,7 +74,6 @@
                     if(msg.client.data.user_id == user_id){
                        $('#chat-log').append('<li class="media"><span class="col-md-2" ><img src="http://placehold.it/60x60" alt="..."></span><div class="col-md-9 panel"><b class="media-heading">{{{ Auth::user()->username }}}</b> <br/><div>'+msg.client.data.message+'</div></div>');
                     }else{
-                       // var str_test='<li class="right"><b>'+msg.client.data.username+'</b><div class="message">'+msg.client.data.message+'</div></li>';
                         var str_test = '<li class="media"><span class="col-md-2" ><img src="http://placehold.it/60x60" alt="..."></span><div class="col-md-9 panel"><b class="media-heading">'+msg.client.data.username+'</b> <br/><div>'+msg.client.data.message+'</div></div>'
                         $('#chat-log').append(str_test);
                     }
@@ -135,19 +131,23 @@
                     $(window).unload(function(){
                         $.ajax({
                             url: '/admin/admin/online/',
-                            timeout: 300,
+                            timeout: 3000,
                             global: false,
                             type: 'POST',
                             data: { status : 0},
                             async: false, //blocks window close
                             success: function() {
-                              
+
                             },
-                            error: function() {
-                                console.log("error");
+                            error: function(x, t, m) {
+                              if(t==="timeout") {
+                                alert("we have a problem with your internet or our server");
+                            } else {
+                                alert(t);
                             }
-                });
-        });
+                          }
+                        });
+                    });
 
     </script>
     @else

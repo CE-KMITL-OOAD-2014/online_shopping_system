@@ -71,7 +71,8 @@ Route::post('/product/{id}/promotion','productController@storePromotion');
 |--------------------------------------------------------------------------
 */
 Route::get('/order','OrderController@index');
-
+Route::get('/order/{id}/delete','OrderController@destroy');
+Route::post('/order/{id}/status',"OrderController@status");
 /*
 |--------------------------------------------------------------------------
 | Shop Routes
