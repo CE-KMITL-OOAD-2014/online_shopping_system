@@ -71,4 +71,7 @@ class EloOrderRepo implements IOrderRepo {
       return $this->eloOrder->where($field,$value)->get();
   }
 
+  public function whereBetween($field, $firstval, $secondval){
+    return $this->eloOrder->whereBetween($field, array($firstval,$secondval))->get();
+  }
 }

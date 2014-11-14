@@ -14,8 +14,8 @@ class ProductUpdatePromotion extends Migration {
 	{
 		Schema::table('products', function($table)
 		{
-    		$table->integer('pro_percent');
-    		$table->string('pro_type');
+    		$table->integer('pro_percent')->default(0);
+    		$table->string('pro_type')->default("");
 		});
 	}
 

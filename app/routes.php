@@ -93,6 +93,17 @@ Route::post('buy', 'ShopController@buy');
 
 /*
 |--------------------------------------------------------------------------
+| Report Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('report', 'ReportController@index');
+Route::post('productSold', 'ReportController@soldProduct');
+Route::post('income', 'ReportController@income');
+Route::post('profit', 'ReportController@profit');
+
+/*
+|--------------------------------------------------------------------------
 | REST API Routes
 |--------------------------------------------------------------------------
 */

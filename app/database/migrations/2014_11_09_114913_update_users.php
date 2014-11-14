@@ -14,7 +14,7 @@ class UpdateUsers extends Migration {
 	{
 		Schema::table('users', function($table)
 		{
-    		$table->boolean('status');
+                  $table->boolean('status')->default(0);
 		});
 	}
 
