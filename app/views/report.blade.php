@@ -3,8 +3,9 @@
 <link href="{{asset('js/jquery-ui.min.css')}}">
 <link href="{{asset('js/jquery-ui.theme.min.css')}}">
 <style>
-#chart svg {
+.chart {
   height: 400px;
+  clear: both;
 }
 
 .ui-datepicker{  
@@ -29,68 +30,165 @@
   font-size:1.5em;
 }
 </style>
-Date: <input type="text" id="first-datepicker">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Date: <input type="text" id="second-datepicker">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Sth: <select id="frequency">
-  <option value="0">รายวัน</option>
-  <option value="1">รายสัปดาห์</option>
-  <option value="2">รายเดือน</option>
-</select>
-<button class="btn-small btn-success" onclick="drawGraph()">submit</button>
-<div id="chart">
-  <svg></svg>
-</div>
-@stop
-@section('script')
-  @parent
-  <script src="{{asset('js/d3.min.js')}}" charset="utf-8"></script>
-  <script src="{{asset('js/nv.d3.min.js')}}" charset="utf-8"></script>
-  <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-  <script>
-    $(function() {
-      $( "#first-datepicker" ).datepicker();
-    });
+<div class="col-md-8"></div>
+<div style="clear:left;">
+  Date: <input type="text" id="first-datepicker">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  Date: <input type="text" id="second-datepicker">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  Sth: <select id="frequency">
+    <option value="0">รายวัน</option>
+    <option value="1">รายสัปดาห์</option>
+    <option value="2">รายเดือน</option>
+  </select>
+  <button class="btn-small btn-success" onclick="drawGraph()">submit</button>
+  <div role="tabpanel">
 
-    $(function() {
-      $( "#second-datepicker" ).datepicker();
-    });
-  </script>
-  <script type="text/javascript" charset="utf-8">
-    var responseData;
-    var data;
-    var chart;
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active" onclick="drawGraph()">
+        <a href="#product-sold" role="tab" data-toggle="tab">Product Sold</a>
+      </li>
+      <li role="presentation" onclick="drawGraph()">
+        <a href="#income" role="tab" data-toggle="tab">Income</a>
+      </li>
+      <li role="presentation" onclick="drawGraph()">
+        <a href="#profit" role="tab" data-toggle="tab">Profit</a>
+      </li>
+    </ul>
 
-    function setReponse(result){
-      var responseData = jQuery.parseJSON(result);
-      //data[0].values[0] = [responseData[0].x,responseData[0].y];
-      //data[0].values[1] = [responseData[1].x,responseData[1].y];
-      data[0].values = [];
+    <!-- Tab panes -->
+    <div class="tab-content">
 
-      for(var i=0; i<responseData.length;i++){
-        data[0].values[i] = [responseData[i].x,responseData[i].y]
+      <div role="tabpanel" class="tab-pane active" id="product-sold">
+        <div id="product-sold-chart" class="chart">
+          <svg></svg>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="income">
+        <div id="income-chart" class="chart">
+          <svg></svg>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="profit">
+        <div id="profit-chart" class="chart">
+          <svg></svg>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div> <!-- clear left div -->
+  @stop
+  @section('script')
+    @parent
+    <script src="{{asset('js/d3.min.js')}}" charset="utf-8"></script>
+    <script src="{{asset('js/nv.d3.min.js')}}" charset="utf-8"></script>
+    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+    <script>
+      $(function() {
+        $( "#first-datepicker" ).datepicker();
+      });
+
+      $(function() {
+        $( "#second-datepicker" ).datepicker();
+      });
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      var data;
+      var chart;
+
+
+      function drawGraph(){
+        $.post('productSold', {from: $('#first-datepicker').val(), 
+          to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()} ,function (result){
+          console.log('frequency');
+          console.log($('#frequency').find(":selected").val());
+          console.log(result);
+          //console.log($('#first-datepicker').val());
+          setProductSoldData(result)
+        });
       }
-      var max = Math.max.apply(Math,responseData.map(function(o){return o.y;}));
 
-      chart.forceY([0,max+1]);
+      function setProductSoldData(result){
+        var responseDataJson = jQuery.parseJSON(result);
+        //data[0].values[0] = [responseDataJson[0].x,responseDataJson[0].y];
+        //data[0].values[1] = [responseDataJson[1].x,responseDataJson[1].y];
+        data[0].values = [];
 
-      d3.select('#chart svg')
-        .datum(data)
+        for(var i=0; i<responseDataJson.length;i++){
+          data[0].values[i] = [responseDataJson[i].x,responseDataJson[i].y]
+        }
+        var max = Math.max.apply(Math,responseDataJson.map(function(o){return o.y;}));
+
+        chart.forceY([0,max+1]);
+
+        drawProductSoldGraph();
+
+        $.post('income', {from: $('#first-datepicker').val(), 
+          to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()}, function (incomeResult){
+            setIncomeData(incomeResult);
+        });
+      }
+
+      function drawProductSoldGraph(){
+        d3.select('#product-sold-chart svg')
+          .datum(data)
+          .transition()
+          .duration(0)
+          .call(chart);
+      }
+
+      function setIncomeData(incomeResult){
+        var responseDataJson = jQuery.parseJSON(incomeResult);
+        incomeData[0].values = [];
+
+        for(var i=0; i<responseDataJson.length; i++){
+          incomeData[0].values[i] = [responseDataJson[i].x, responseDataJson[i].y];
+        }
+        console.log("responseData");
+        var max = Math.max.apply(Math,responseDataJson.map(function(o){return o.y;}));
+        chart.forceY([0,max+1]);
+
+        drawIncomeGraph();
+
+        $.post('profit', {from: $('#first-datepicker').val(), 
+          to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()}, function (profitResult){
+            setProfitData(profitResult);
+        });
+      }
+
+      function drawIncomeGraph(){
+        d3.select('#income-chart svg')
+        .datum(incomeData)
         .transition()
-        .duration(0)
         .call(chart);
+      }
+
+
+    function setProfitData(profitResult){
+      console.log("profit");
+      console.log(profitResult);
+      var responseDataJson = jQuery.parseJSON(profitResult);
+      profitData[0].values = [];
+
+      for(var i=0; i<responseDataJson.length; i++){
+        profitData[0].values[i] = [responseDataJson[i].x, responseDataJson[i].y] ;
+      }
+      var max = Math.max.apply(Math, responseDataJson.map(function(o){return o.y;}));
+      drawProfitGraph();
+      console.log("profitData");
+      console.log(profitData[0].values);
     }
 
-    function drawGraph(){
-      $.post('productSold', {from: $('#first-datepicker').val(), 
-        to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()} ,function (result){
-        console.log('frequency');
-        console.log($('#frequency').find(":selected").val());
-        console.log(result);
-        //console.log($('#first-datepicker').val());
-        setReponse(result)
-      });
+    function drawProfitGraph(){
+      d3.select('#profit-chart svg')
+        .datum(profitData)
+        .transition()
+        .call(chart);
     }
 
     nv.addGraph(function() {
@@ -101,7 +199,26 @@ Sth: <select id="frequency">
           "bar": true,
           "values" : []
         }
-      ]
+      ];
+
+      incomeData = 
+      [
+        {
+          "key" : "income",
+          "bar": true,
+          "values" : []
+        }
+      ];
+
+
+      profitData = 
+      [
+        {
+          "key" : "profit",
+          "bar": true,
+          "values" : []
+        }
+      ];
           chart = nv.models.multiBarChart()
                 .margin({top: 30, right: 60, bottom: 50, left: 70})
                 //We can set x data accessor to use index. Reason? So the bars all appear evenly spaced.
