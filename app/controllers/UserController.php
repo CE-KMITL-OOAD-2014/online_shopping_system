@@ -28,7 +28,6 @@ class UserController extends BaseController
     );
     $validator = Validator::make(Input::all(), $rules);
 
-
     if($validator->passes()){
       $user = new \core\User();
       $user->setUsername(Input::get('username'));
@@ -67,7 +66,6 @@ class UserController extends BaseController
       if(Input::get('password')!=""){
         $user->setPassword(Input::get('password'));
       }
-
       $this->user->save($user);
     }
 
@@ -79,16 +77,17 @@ class UserController extends BaseController
     return View::make('user/login');
   }
 
-  public function checkAdmin(){
+  public function checkAdmin()
+  {
     $check = $this->user->checkAdmin();
     return $check;
   }
 
-  public function userOnline($username){
+  public function userOnline($username)
+  {
     if(Request::ajax()) {
       $status = Input::get('status');
       $result = $this->user->updateStatus($status,$username);
     }
   }
-
 }
