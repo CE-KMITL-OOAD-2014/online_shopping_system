@@ -33,7 +33,7 @@ class Order
 
   public function getId()
   {
-      return $this->id;
+    return $this->id;
   }
   
   /**
@@ -43,7 +43,7 @@ class Order
    */
   public function getUser_id()
   {
-      return $this->user_id;
+    return $this->user_id;
   }
   
   /**
@@ -53,7 +53,7 @@ class Order
    */
   public function setUser_id($user_id)
   {
-      $this->user_id = $user_id;
+    $this->user_id = $user_id;
   }
   
   /**
@@ -63,7 +63,7 @@ class Order
    */
   public function getTotal_price()
   {
-      return $this->total_price;
+    return $this->total_price;
   }
   
   /**
@@ -73,7 +73,7 @@ class Order
    */
   public function setTotal_price($total_price)
   {
-      $this->total_price = $total_price;
+    $this->total_price = $total_price;
   }
   
   /**
@@ -83,7 +83,7 @@ class Order
    */
   public function getOrder_time()
   {
-      return $this->order_time;
+    return $this->order_time;
   }
   
   /**
@@ -93,7 +93,7 @@ class Order
    */
   public function setOrder_time($order_time)
   {
-      $this->order_time = $order_time;
+    $this->order_time = $order_time;
   }
   
   /**
@@ -103,7 +103,7 @@ class Order
    */
   public function getProduct_id()
   {
-      return $this->product_id;
+    return $this->product_id;
   }
   
   /**
@@ -113,7 +113,7 @@ class Order
    */
   public function setProduct_id($product_id)
   {
-      $this->product_id = $product_id;
+    $this->product_id = $product_id;
   }
   
   /**
@@ -123,7 +123,7 @@ class Order
    */
   public function getStatus()
   {
-      return $this->status;
+    return $this->status;
   }
   
   /**
@@ -133,60 +133,57 @@ class Order
    */
   public function setStatus($status)
   {
-      $this->status = $status;
+    $this->status = $status;
   }
     
-    /**
-     * Get products.
-     *
-     * @return products.
-     */
-    public function getProducts()
-    {
-        return $this->products;
-    }
-    
-    /**
-     * Set products.
-     *
-     * @param products the value to set.
-     */
-    public function addProduct(Product $product)
-    {
-        array_push($this->products, $product);
-    }
+  /**
+   * Get products.
+   *
+   * @return products.
+   */
+  public function getProducts()
+  {
+    return $this->products;
+  }
+  
+  /**
+   * Set products.
+   *
+   * @param products the value to set.
+   */
+  public function addProduct(Product $product)
+  {
+    array_push($this->products, $product);
+  }
 
-    
-
-    /**
-  * Change User id to user his/her name.
-  */
+  /**
+   * Change User id to user his/her name.
+   */
   public function getNamefromId(){
     $user = \User::find($this->user_id);
     return $user->username;
   }
 
-    /**
-     * Gets the value of ems.
-     *
-     * @return mixed
-     */
-    public function getEms()
-    {
-        return $this->ems;
-    }
+  /**
+   * Gets the value of ems.
+   *
+   * @return mixed
+   */
+  public function getEms()
+  {
+    return $this->ems;
+  }
 
-    /**
-     * Sets the value of ems.
-     *
-     * @param mixed $ems the ems
-     *
-     * @return self
-     */
-    public function setEms($ems)
-    {
-        $this->ems = $ems;
-
-        return $this;
-    }
+  /**
+   * Sets the value of ems.
+   *
+   * @param mixed $ems the ems
+   *
+   * @return self
+   */
+  public function setEms($ems)
+  {
+    $this->ems = $ems;
+    return $this;
+  }
 }

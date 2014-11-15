@@ -1,6 +1,7 @@
 <?php
 namespace core;
-class EloOrderRepo implements IOrderRepo {
+class EloOrderRepo implements IOrderRepo 
+{
   protected $eloOrder;
   protected $eloOrderProduct;
   public function __construct(\Order $eloOrder)
@@ -33,7 +34,8 @@ class EloOrderRepo implements IOrderRepo {
     }
   }
 
-  public function find($id){
+  public function find($id)
+  {
     $eloquent = \Order::find($id);
     $order = new Order();
     $order->setId($eloquent->id);
@@ -59,63 +61,64 @@ class EloOrderRepo implements IOrderRepo {
     return $order;
   }
 
-  public function all(){
-      $value = $this->eloOrder->all();
-      $orders = array();
+  public function all()
+  {
+    $value = $this->eloOrder->all();
+    $orders = array();
 
-      foreach ($value as $order) {
-        $orderObj = new \core\Order();
-        $orderObj->setId($order->id);
-        $orderObj->setUser_id($order->user_id);
-        $orderObj->setTotal_price($order->total_price);
-        $orderObj->setOrder_time($order->order_time);
-        $orderObj->setStatus($order->status);
-        $orderObj->setEms($order->ems);
-        //$products = $this->eloOrderProduct->where('order_id',$order->id);
-        //get product map with each order. 
-        $products = $order->products()->get();
-        foreach($products as $product){
-          $product_obj = Product::newFromEloquent($product);
-          $orderObj->addProduct($product_obj);
-        }
-        //TO DO ***** Array implement for product 
-        $orders[] = $orderObj;
+    foreach ($value as $order) {
+      $orderObj = new \core\Order();
+      $orderObj->setId($order->id);
+      $orderObj->setUser_id($order->user_id);
+      $orderObj->setTotal_price($order->total_price);
+      $orderObj->setOrder_time($order->order_time);
+      $orderObj->setStatus($order->status);
+      $orderObj->setEms($order->ems);
+      $products = $order->products()->get();
+
+      foreach($products as $product){
+        $product_obj = Product::newFromEloquent($product);
+        $orderObj->addProduct($product_obj);
       }
-      return $orders;
+      //TO DO ***** Array implement for product 
+      $orders[] = $orderObj;
+    }
+    return $orders;
   }
 
-  public function remove($id){
-      $order = $this->eloOrder->find($id);
-      $order->delete();
+  public function remove($id)
+  {
+    $order = $this->eloOrder->find($id);
+    $order->delete();
   }
 
+  public function where($field,$value)
+  {
+    $value = $this->eloOrder->where($field,$value)->get();
+    $orders = array();
 
-  public function where($field,$value){
-      $value = $this->eloOrder->where($field,$value)->get();
-      $orders = array();
+    foreach ($value as $order) {
+      $orderObj = new \core\Order();
+      $orderObj->setId($order->id);
+      $orderObj->setUser_id($order->user_id);
+      $orderObj->setTotal_price($order->total_price);
+      $orderObj->setOrder_time($order->order_time);
+      $orderObj->setStatus($order->status);
+      $orderObj->setEms($order->ems);
+      $products = $order->products()->get();
 
-      foreach ($value as $order) {
-        $orderObj = new \core\Order();
-        $orderObj->setId($order->id);
-        $orderObj->setUser_id($order->user_id);
-        $orderObj->setTotal_price($order->total_price);
-        $orderObj->setOrder_time($order->order_time);
-        $orderObj->setStatus($order->status);
-        $orderObj->setEms($order->ems);
-        //$products = $this->eloOrderProduct->where('order_id',$order->id);
-        //get product map with each order. 
-        $products = $order->products()->get();
-        foreach($products as $product){
-          $product_obj = Product::newFromEloquent($product);
-          $orderObj->addProduct($product_obj);
-        }
-        //TO DO ***** Array implement for product 
-        $orders[] = $orderObj;
+      foreach($products as $product){
+        $product_obj = Product::newFromEloquent($product);
+        $orderObj->addProduct($product_obj);
       }
-      return $orders;
+      //TO DO ***** Array implement for product 
+      $orders[] = $orderObj;
+    }
+    return $orders;
   }
 
-  public function whereBetween($field, $firstval, $secondval){
+  public function whereBetween($field, $firstval, $secondval)
+  {
     return $this->eloOrder->whereBetween($field, array($firstval,$secondval))->get();
   }
 }

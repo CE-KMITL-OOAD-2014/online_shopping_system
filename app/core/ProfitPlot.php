@@ -10,6 +10,7 @@ class ProfitPlot implements Plotter
     $result = array();
     switch ($time_unit){
       case TimeUnit::Daily:
+        //get array of all day between date from and date to inclusively.
         $days = DateHelper::createDateRangeArray($from->format('Y-m-d'),$to->format('Y-m-d'));
         $index=0;
         foreach($days as $day){
@@ -18,15 +19,14 @@ class ProfitPlot implements Plotter
           $p->y = 0;
           array_push($result, $p);
           if($index<sizeof($orders)){
+            //sum all profit of same day
             while(preg_split('/\s+/',$orders[$index]->order_time)[0] == $day){
-              //array_push($result, 'day'.$day.'**'.preg_split('/\s+/',$orders[$index]->order_time)[0].'index'.$index.'bool'
-              //.(preg_split('/\s+/',$orders[$index]->order_time)[0] == $day));
-              //$result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $orders[$index]->total_price;
               $products = $orders[$index]->products()->get();
 
               for($i=0; $i<sizeof($products); $i++){
-                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $products[$i]->cost;
+                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price $products[$i]->cost);
               }
+
               $index = $index+1;
               if($index==sizeof($orders)) break;
             }
@@ -35,6 +35,7 @@ class ProfitPlot implements Plotter
         break;
 
       case TimeUnit::Weekly:
+        //get array of every seventh day between date from and date to inclusively.
         $weeks = DateHelper::createWeekRangeArray($from->format('Y-m-d'), $to->format('Y-m-d'));
         $index=0;
         foreach($weeks as $week){
@@ -49,12 +50,12 @@ class ProfitPlot implements Plotter
             if($d1==-1 || $d2 ==-1){
               die("error creating timestamp");
             }
+            //loop to sum profit if the difference less than 7 days
             $diff = floor(abs($d1-$d2)/(60*60*24));
             while($diff< 7){
-              //$result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $orders[$index]->total_price;
               $products = $orders[$index]->products()->get();
               for($i=0; $i<sizeof($products); $i++){
-                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $products[$i]->cost;
+                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price $products[$i]->cost);
               }
 
               $index = $index+1;
@@ -67,10 +68,10 @@ class ProfitPlot implements Plotter
         break;
 
       case TimeUnit::Monthly:
+        //get array of every 30th day between date to and date from inclusively.
         $months = DateHelper::createMonthRangeArray($from->format('Y-m-d'), $to->format('Y-m-d'));
         $index=0;
         foreach($months as $month){
-          //array_push($result, $month);
           $p = new Point();
           $p->x = $month;
           $p->y = 0;
@@ -83,8 +84,8 @@ class ProfitPlot implements Plotter
             }
 
             $diff = floor(abs($d1-$d2)/(60*60*24));
+            //sum all profit if difference less than 30 days
             while($diff < 30){
-              //$result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $orders[$index]->total_price;
               $products = $orders[$index]->products()->get();
               for($i=0; $i<sizeof($products); $i++){
                 $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $products[$i]->cost;
