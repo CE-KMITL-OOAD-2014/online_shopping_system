@@ -28,13 +28,27 @@
                 <!-- ^ user select amount, so using value from cookie instead of DB-->
             </td>
 
-            <td id="{{ $product->name }}-total-price">
-              {{ ($productFromDB->getAdapterType()!="")?$productFromDB->executePromotion():
-                $productFromDB->getPrice() * $product->amount; }}
+            <td id="{{ str_replace(' ','',$product->name) }}-total-price">
+              @if($productFromDB->getAdapterType()=="PromotionDiscountAdapter")
+                {{ $productFromDB->executePromotion() * $product->amount }}
+              @elseif($productFromDB->getAdapterType()=="PromotionBuyXFreeYAdapter")
+                {{ (($productFromDB->isGotPromotion())?$productFromDB->executePromotion():$productFromDB->getPrice()) * $product->amount }}
+              @else
+                {{ $productFromDB->getPrice() * $product->amount }}
+              @endif
             </td>
           </tr>
-          <input type="hidden" id="{{ $product->name }}-price"
-            value="{{ $productFromDB->getAdapterType()!=''?$productFromDB->executePromotion():$productFromDB->getPrice()}}">
+
+          @if(isset($productFromDB))
+            @if($productFromDB->getAdapterType()=="PromotionDiscountAdapter")
+              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-price" value="{{$productFromDB->executePromotion()}}" />
+            @elseif($productFromDB->getAdapterType()=="PromotionBuyXFreeYAdapter")
+              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-xy" 
+                  value="{{$productFromDB->getXYparams()}}" />
+            @endif
+            <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-price" value="{{ $productFromDB->getPrice() }}" />
+          @endif
+
         @endforeach
       </table>
 
@@ -94,6 +108,8 @@
     </div> <!-- model dialog -->
   </div>
   
+
+
 @stop
 @section('script')
   @parent

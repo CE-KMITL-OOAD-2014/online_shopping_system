@@ -295,7 +295,7 @@
     }
 
     public function getXYparams(){
-        return $this->XYparams;
+        return $this->XY_params;
     }
 
     public function setAdapterType($adapter){

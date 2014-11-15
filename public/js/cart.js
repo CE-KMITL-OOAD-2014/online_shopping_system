@@ -72,11 +72,23 @@ function getCookie(cname)
 } 
 
 function changeAmount(amount, productname, id) {
-  $("#"+ productname +"-total-price").html(amount.value * $('#' + productname + "-price").val());
-  $("#"+ productname +"-total-price-modal").html(amount.value * $('#' + productname + "-price").val());
-  $("#"+ productname +"-amount-modal").html(amount.value);
+  var realPrice=0;
+  if(typeof $('#'+productname.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
+    realPrice = $('#'+productname.replace(/\s+/g, "")+'-promotion-price').val();
+    $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
+  } else if(typeof $('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val() != 'undefined'){
+    var x = parseInt($('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[0]);
+    var y = parseInt($('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[1]);
+    realPrice = $('#' +productname.replace(/\s+/g, "") + "-price").val() * x * Math.floor(amount.value/(x+y));
+    realPrice += $('#' +productname.replace(/\s+/g, "") + "-price").val() * (amount.value%(x+y));
+    realPrice=realPrice/amount.value;
+    $("#"+productname.replace(/\s+/g, "")+"-total-price").html(Math.round(realPrice*amount.value));
+  } else {
+    console.log('case 3');
+    realPrice = $('#' + productname.replace(/\s+/g, "") + "-price").val();
+    $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
+  }
 
-  //console.log(cookieArr);
   for(var i=0; i<cookieArr.length; i++){
     if(cookieArr[i].id == id){
       console.log(cookieArr[i].amount);

@@ -6,6 +6,7 @@ class PromotionBuyXFreeYAdapter implements IPromotionAdapter
   protected $free = 0;
   protected $old_price = 0;
   protected $pro_id;
+  protected $new_price;
 
   public function setPromotion($XY_params,$old_price) {
     $XY_arr = explode(',',$XY_params);
@@ -16,16 +17,29 @@ class PromotionBuyXFreeYAdapter implements IPromotionAdapter
 
   public function checkCondition() {
     $id = $this->pro_id;
-    // Neno you should doing here ####################################
-    // Check number of Product from $id << This is promotion product's id
-    //  return true if match promotion ....
+    $cookie = json_decode($_COOKIE['products']);
+
+    foreach($cookie as $cookieProduct) {
+      if($cookieProduct->id == $id){
+        if($cookieProduct->amount >= $this->buy){
+          $x = $this->buy;
+          $y = $this->free;
+          $this->new_price = $this->old_price * $x * floor($cookieProduct->amount/($x+$y));
+          $this->new_price += $this->old_price * ($cookieProduct->amount%($x+$y));
+          $this->new_price = $this->new_price/$cookieProduct->amount;
+          return true;
+        }
+      }
+    }
     return false;
   } 
 
   public function getPromotionPrice() {
     //check Is this product catch a promotion.
-    if(checkCondition())return 0; //God!! it's free XD
+    if($this->checkCondition())return $this->new_price; //God!! it's free XD
     else return $this->old_price; 
+    //return $this->old_price;
+    //return 1;
   }
 
   public function setProductId($id){

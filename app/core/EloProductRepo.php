@@ -59,15 +59,16 @@
 			$productObj->setAdapterType($product->pro_type);
 			//$productObj->set
 			// Logic for Load Promotion Info
-			if($product->pro_percent != 0){
-				//get promotion adapter's name from database,then change to adapter object
-				$adapter = "\\core\\".$product->pro_type;
-			
-				$productObj->setPromotionAdapter(new $adapter());// setAdapter
-				//set promotion detail 
-				$productObj->setPromotion($product->pro_percent,$product->price);
-			}
-			
+                        if($product->pro_type != ""){
+                                $adapter = "\\core\\".$product->pro_type;
+                                $productObj->setPromotionAdapter(new $adapter());
+                                if($product->pro_type == "PromotionDiscountAdapter"){
+                                  $productObj->setPromotion($product->pro_percent,$product->price);
+                                } else if($product->pro_type == "PromotionBuyXFreeYAdapter"){
+                                  $productObj->setPromotion($product->promotionXY,$product->price);
+                                  $productObj->setXYparams($product->promotionXY);
+                                }
+                        }
 			return $productObj;
 		}
 
@@ -87,12 +88,17 @@
 				$productObj->setSuplier($product->suplier);
 				$productObj->setImgPath($product->imgPath);
 				$productObj->setAmount($product->amount);
-				$productObj->setAdapterType($product->adapter_type);
+				$productObj->setAdapterType($product->pro_type);
 				// Logic for Load Promotion Info
-				if($product->pro_percent != 0){
+				if($product->pro_type != ""){
 					$adapter = "\\core\\".$product->pro_type;
 					$productObj->setPromotionAdapter(new $adapter());
-					$productObj->setPromotion($product->pro_percent,$product->price);
+                                        if($product->pro_type == "PromotionDiscountAdapter"){
+                                          $productObj->setPromotion($product->pro_percent,$product->price);
+                                        } else if ($product->pro_type == "PromotionBuyXFreeYAdapter"){
+                                          $productObj->setPromotion($product->promotionXY,$product->price);
+                                          $productObj->setXYparams($product->promotionXY);
+                                        }
 				}
 
 				$products[] = $productObj;
@@ -116,14 +122,18 @@
 				$productObj->setSuplier($product->suplier);
 				$productObj->setImgPath($product->imgPath);
 				$productObj->setAmount($product->amount);
-				$productObj->setAdapterType($product->adapter_type);
+				$productObj->setAdapterType($product->pro_type);
 				// Logic for Load Promotion Info
-				if($product->pro_percent != 0){
+				if($product->pro_type != ""){
 					$adapter = "\\core\\".$product->pro_type;
 					$productObj->setPromotionAdapter(new $adapter());
-					$productObj->setPromotion($product->pro_percent,$product->price);
+                                        if($product->pro_type == "PromotionDiscountAdapter"){
+                                          $productObj->setPromotion($product->pro_percent,$product->price);
+                                        } else if ($product->pro_type == "PromotionBuyXFreeYAdapter"){
+                                          $productObj->setPromotion($product->promotionXY,$product->price);
+                                          $productObj->setXYparams($product->promotionXY);
+                                        }
 				}
-
 				$products[] = $productObj;
 			}
 			return $products;

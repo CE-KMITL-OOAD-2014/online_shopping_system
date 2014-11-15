@@ -14,7 +14,7 @@ class UpdateOrderTable extends Migration {
 	{
 		Schema::table('orders', function($table)
 		{
-                  $table->string('ems',14);
+                  $table->string('ems',14)->nullable();
 		});
 	}
 

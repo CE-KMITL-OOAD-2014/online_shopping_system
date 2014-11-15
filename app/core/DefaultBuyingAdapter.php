@@ -19,7 +19,15 @@ class DefaultBuyingAdapter implements IBuyingAdapter
     foreach($products as $product){
       $productDB = $this->product_repo->find($product->getId());
       //use promotion price if exist. Otherwise, use normal price.
-      $total_price += ($productDB->getAdapterType()!="")?$productDB->executePromotion():$productDB->getPrice() * $product->getAmount();
+      //have to use flooring function, 'cuase the function return floating point sometime.
+      
+      if($productDB->getAdapterType()=="PromotionDiscountAdapter"){
+        $total_price += $productDB->executePromotion() * $product->getAmount();
+      } elseif ($productDB->getAdapterType()=="PromotionBuyXFreeYAdapter"){
+        $total_price += floor($productDB->executePromotion() * $product->getAmount());
+      } else {
+        $total_price += $productDB->getPrice() * $product->getAmount();
+      }
 
       $productDB->setAmount($productDB->getAmount() - $product->getAmount());
       $order->addProduct($productDB);
