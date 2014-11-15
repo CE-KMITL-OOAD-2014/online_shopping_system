@@ -1,9 +1,10 @@
 <?php
-	namespace core;
-	Class EloProductRepo implements \core\ProductRepoInterface {
-		protected $eloProduct;
+  namespace core;
+  Class EloProductRepo implements \core\ProductRepoInterface {
+    protected $eloProduct;
 
-		public function __construct(\Product $eloProduct){
+    public function __construct(\Product $eloProduct)
+    {
 			$this->eloProduct = $eloProduct;
 		}
 
