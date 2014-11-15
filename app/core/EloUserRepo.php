@@ -28,6 +28,7 @@ class EloUserRepo implements \core\IUserRepo {
   public function save(\core\User $user)
   {
     $existUser = \User::find($user->getId());
+    //if this user already exist in Database
     if($existUser != null){
       if($user->getPassword() != ""){
         $existUser->password = $user->getPassword();
@@ -66,17 +67,20 @@ class EloUserRepo implements \core\IUserRepo {
     return $user;
   }
 
+  //check if current user is admin, only admin can access management page
   public function checkAdmin(){
     $admin = \User::where('permission','admin')->get();
     return $admin[0]->status;
   }
 
-  public function where($field,$value) {
+  public function where($field,$value)
+  {
     $user = \User::where($field,$value)->get();
     return $user;
   }
 
-  public function updateStatus($status,$username){
+  public function updateStatus($status,$username)
+  {
     $user = \User::where('username',$username)->update(array('status' => $status));
   }
 }

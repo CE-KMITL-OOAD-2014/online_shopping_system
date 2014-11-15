@@ -1,6 +1,7 @@
 <?php
 namespace core;
-class User {
+class User 
+{
   protected $id;
   protected $username;
   protected $password;
@@ -9,9 +10,11 @@ class User {
   protected $phone;
   protected $email;
 
-  public function __construct(){
+  public function __construct()
+  {
   }
 
+  //create an \core\User from \User
   public static function newFromEloquent($eloquent){
     if($eloquent != null){
       $customer = new self();
@@ -43,34 +46,38 @@ class User {
     $this->id = $id;
   }
 
-  public function getUsername(){
+  public function getUsername()
+  {
     return $this->username;
   }
 
-
-  public function getPassword(){
+  public function getPassword()
+  {
     return $this->password;
   }
 
-
-  public function getPermission(){
+  public function getPermission()
+  {
     return $this->permission;
   }
-
   
-  public function getAddress(){
+  public function getAddress()
+  {
     return $this->address;
   }
 
-  public function getPhone(){
+  public function getPhone()
+  {
     return $this->phone;
   }
 
-  public function getEmail(){
+  public function getEmail()
+  {
     return $this->email;
   }
 
-  public function setUsername($username){
+  public function setUsername($username)
+  {
     $this->username = $username;
   }
 
@@ -78,19 +85,23 @@ class User {
     $this->password = $password;
   }
 
-  public function setPermission($permission){
+  public function setPermission($permission)
+  {
     $this->permission = $permission;
   }
 
-  public function setAddress($address){
+  public function setAddress($address)
+  {
     $this->address = $address;
   }
 
-  public function setPhone($phone){
+  public function setPhone($phone)
+  {
     $this->phone = $phone;
   }
 
-  public function setEmail($email){
+  public function setEmail($email)
+  {
     $this->email = $email;
   }
 }

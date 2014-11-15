@@ -1,7 +1,8 @@
 <?php
 namespace core;
 
-class Report{
+class Report
+{
   protected  $time_unit;
   protected  $plotter;
 
