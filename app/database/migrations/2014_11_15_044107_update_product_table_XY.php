@@ -14,7 +14,7 @@ class UpdateProductTableXY extends Migration {
 	{
 		Schema::table('products', function($table)
 		{
-                  $table->string('promotionXY');
+                  $table->string('promotionXY')->nullable();
 		});
 	}
 
