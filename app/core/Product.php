@@ -317,6 +317,7 @@
     // On buyXFreeY : first = "buy,free" , second = old_price
     public function setPromotion($first,$second){
         $this->promotion->setPromotion($first,$second);
+        //product Id for identify products
         $this->promotion->setProductId($this->id);
     }
 
