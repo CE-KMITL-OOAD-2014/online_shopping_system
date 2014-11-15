@@ -16,10 +16,35 @@
     protected $has_promotion = false; //Is this product has promotion.
     protected $promotion; // Promotion adapter for execute.
     protected $pro_percent = 0;
+    protected $XY_params;
     protected $adapter_type;
 
     public function __construct() {
     }
+
+    //Create new /core/product object from Eloquent Product
+    public static function newFromEloquent($eloquent){
+        if($eloquent != null){
+          $product = new self();
+          $product->id = $eloquent->id;
+          $product->product_name = $eloquent->product_name;
+          $product->price = $eloquent->price;
+          $product->category = $eloquent->category;
+          $product->description = $eloquent->description;
+          $product->size = $eloquent->size;
+          $product->color = $eloquent->color;
+          $product->suplier = $eloquent->suplier;
+          $product->amount = $eloquent->amount;
+          $product->imgPath = $eloquent->imgPath;
+          $product->has_promotion = $eloquent->has_promotion;
+          $product->promotion = $eloquent->promotion;
+          $product->pro_percent = $eloquent->pro_percent;
+          $product->adapter_type = $eloquent->adapter_type;
+
+          return $product;
+        }
+        return null;
+      }
 
     /**
      * Gets the value of price.
@@ -255,11 +280,22 @@
     *
     */
     public function getProPercent(){
-        return $this->pro_percent;
+        // Check Is promotion adapter instantiate.
+        if($this->promotion instanceof \core\IPromotionAdapter){
+            return $this->promotion->getPro_percent();
+        }else return 0;
     }
 
     public function setProPercent($percent){
-        $this->pro_percent = $percent;
+        $this->promotion->setPro_percent($percent);
+    }
+
+    public function setXYparams($str_xy){
+        $this->XY_params = $str_xy;
+    }
+
+    public function getXYparams(){
+        return $this->XYparams;
     }
 
     public function setAdapterType($adapter){
@@ -277,10 +313,14 @@
     }
 
     //set information for execute promotion.
-    public function setPromotion($percent,$old_price){
-        $this->promotion->setPromotion($percent,$old_price);
-        $this->pro_percent = $percent;
+    // On Discount  : first = percent , second = old_price 
+    // On buyXFreeY : first = "buy,free" , second = old_price
+    public function setPromotion($first,$second){
+        $this->promotion->setPromotion($first,$second);
+        //product Id for identify products
+        $this->promotion->setProductId($this->id);
     }
+
 
     // for checking user's promotion ,are they reached the condition. 
     public function isGotPromotion(){

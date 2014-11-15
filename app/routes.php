@@ -64,11 +64,19 @@ Route::post('/product/{id}/edit', 'productController@update');
 Route::get('/product/{id}/delete', 'productController@destroy');
 Route::get('/product/{id}/promotion','productController@createPromotion');
 Route::post('/product/{id}/promotion','productController@storePromotion');
-
-
+Route::post('/product/{id}/promotion/del','productController@delPromotion');
 /*
 |--------------------------------------------------------------------------
-| Order Routes
+| Shop Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/order','OrderController@index');
+Route::get('/order/{id}/delete','OrderController@destroy');
+Route::post('/order/{id}/status',"OrderController@status");
+Route::post('/order/{id}/update',"OrderController@update");
+/*
+|--------------------------------------------------------------------------
+| Shop Routes
 |--------------------------------------------------------------------------
 */
 Route::get('/shop/{id}/view','ShopController@show');

@@ -42,6 +42,8 @@ class ChatController extends \BaseController {
 			$message->message = Input::get('message');
 			$message->save(); 
 
+		}else{
+			return "You don't have permission";
 		}
 
 	}

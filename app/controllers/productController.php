@@ -15,8 +15,11 @@ class ProductController extends \BaseController {
 	 */
 	public function index()
 	{	
-		$products = $this->productHelper->all();
-		return View::make('productList', array('products' =>  $products ));
+		if(Auth::user()->username == "admin"){
+			$products = $this->productHelper->all();
+		return View::make('productList', array('products' =>  $products, 'user' => core\User::newFromEloquent(Auth::user()) ));
+		}
+		return View::make('permissionDenied');
 	}
 
 	/**
@@ -181,9 +184,34 @@ class ProductController extends \BaseController {
 	public function storePromotion($id){
 		$pro_product = $this->productHelper->find($id);
 		$adapter_type = Input::get('typeAdapter')."Adapter";
-		$pro_product->setProPercent((int)(Input::get('percent')));
+
+		//set Adapter for do promotion ,because now Adaptertype on database is empty(We did't ever create it.)
+		if($pro_product->getAdapterType() == ""){ 
+			$adapter = "\\core\\".$adapter_type;
+			$pro_product->setPromotionAdapter(new $adapter());
+		}
+		// check adapter for pass difference parameter;
+		if($adapter_type == "PromotionDiscountAdapter"){
+			$pro_product->setProPercent((int)(Input::get('percent')));
+		}else if($adapter_type == "PromotionBuyXFreeYAdapter"){
+			$pro_product->setXYparams(Input::get('buy').",".Input::get('free'));
+		}
+
 		$pro_product->setAdapterType($adapter_type);
+
 		$this->productHelper->saveId($pro_product,$id);
 		return Redirect::to('product');
+	}
+
+	public function delPromotion($id) {
+		if(Request::ajax()) {
+			$product_target = $this->productHelper->find($id);
+			$product_target->setProPercent(0);
+			$product_target->setXYparams("");
+			$product_target->setAdapterType('');
+			$this->productHelper->saveId($product_target,$id);
+		}else{
+			return "You don't have permission";
+		}
 	}
 }	

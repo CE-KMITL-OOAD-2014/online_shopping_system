@@ -39,6 +39,15 @@
             <td>Amount</td>
             <td>{{ $product->getAmount() }}</td>
           </tr>
+          @if($product->getProPercent() >= 0)
+            <tr>
+            <td>Promotion</td> 
+            <td><span class="label label-warning" >
+            <span id = "percent_show">{{ $product->getProPercent() }}</span> %</span>
+            <a onclick="deletePromotion({{ $product->getId() }})" ><span class = "glyphicon glyphicon-trash btn btn-danger pull-right" ></span></a>
+            </td>
+            </tr>
+          @endif
         </table>
        </div>
     </div>
@@ -103,10 +112,30 @@
    $(document).ready(function () {
       var ans = 0;
      $('#percent').on('input',function() {
-        console.log("in in in ");
         ans =  parseInt("{{ $product->getPrice() }}") * (100 - $('#percent').val())/100
         $('#total').html(ans);
       });
+
     });
+   function deletePromotion(id) {
+        $.ajax({
+                                url: '/product/'+id+'/promotion/del',
+                                timeout: 3000,
+                                global: false,
+                                type: 'POST',
+                                data: {},
+                                success: function() {
+                                  $('#percent_show').html("0");
+                                },
+                                error: function(x, t, m) {
+                                  if(t==="timeout") {
+                                    alert("we have a problem with your internet or our server");
+                                } else {
+                                    alert(t);
+                                }
+                              }
+                    });
+     }
   </script>
 @stop 
+

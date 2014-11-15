@@ -9,6 +9,10 @@
 		</div>
 	</div>	
 	<div class = "col-md-8 ">
-		@yield('shopContent')
+		<div class="alert alert-dismissable alert-warning">
+  		<button type="button" class="close" data-dismiss="alert">×</button>
+  		<h4>คำเตือน !</h4>
+  		<p> คุณไม่มีสิทธิ์เข้าถึงข้อมูลส่วนนี้</p>
+</div>
 	</div>
 @stop
