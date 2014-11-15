@@ -55,7 +55,7 @@
 			$productObj->setSuplier($product->suplier);
 			$productObj->setImgPath($product->imgPath);
 			$productObj->setAmount($product->amount);
-			$productObj->setAdapterType($product->adapter_type);
+			$productObj->setAdapterType($product->pro_type);
 			//$productObj->set
 			// Logic for Load Promotion Info
 			if($product->pro_percent != 0){

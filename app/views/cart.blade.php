@@ -22,11 +22,12 @@
           <input type="number" class="col-md-8" name="buy-amount" min="1" max="{{$productRepo->find($product->id)->getAmount()}}" id="{{$productRepo->find($product->id)->getProductName()}}-buy-amount" onchange="changeAmount(this, '{{$product->name}}', {{$product->id}})" value="{{ $product->amount }}">
         </td>
         <td id="{{ $product->name }}-total-price">
-          {{ $productRepo->find($product->id)->getPrice() * 
-              $product->amount; }}
+          {{ ($productRepo->find($product->id)->getAdapterType()!="")?$productRepo->find($product->id)->executePromotion():
+            $productRepo->find($product->id)->getPrice() * $product->amount; }}
         </td>
       </tr>
-          <input type="hidden" id="{{ $product->name }}-price" value="{{ $productRepo->find($product->id)->getPrice()}}">
+          <input type="hidden" id="{{ $product->name }}-price"
+            value="{{ $productRepo->find($product->id)->getAdapterType()=='PromotionDiscountAdapter'?$productRepo->find($product->id)->executePromotion():$productRepo->find($product->id)->getPrice()}}">
       @endforeach
       </table>
       <button class="btn btn-success" data-toggle="modal" data-target="#confirm" onclick="checkStock()">Buy</button></a>
@@ -62,8 +63,8 @@
                 {{ $product->amount }}
               </td>
               <td id="{{$product->name}}-total-price-modal">
-                {{ $productRepo->find($product->id)->getPrice() * 
-                    $product->amount; }}
+                {{ ($productRepo->find($product->id)->getAdapterType()!="")?$productRepo->find($product->id)->executePromotion():
+                  $productRepo->find($product->id)->getPrice() * $product->amount; }}
               </td>
             </tr>
             @endforeach

@@ -18,7 +18,9 @@ class DefaultBuyingAdapter implements IBuyingAdapter
 
     foreach($products as $product){
       $productDB = $this->product_repo->find($product->getId());
-      $total_price+= $productDB->getPrice() * $product->getAmount();
+      //use promotion price if exist. Otherwise, use normal price.
+      $total_price += ($productDB->getAdapterType()!="")?$productDB->executePromotion():$productDB->getPrice() * $product->getAmount();
+
       $productDB->setAmount($productDB->getAmount() - $product->getAmount());
       $order->addProduct($productDB);
       $this->product_repo->saveId($productDB, $productDB->getId());

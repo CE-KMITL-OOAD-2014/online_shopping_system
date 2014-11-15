@@ -109,6 +109,7 @@
 				        <p>{{ $product->getDescription() }}</p>
 				        <p id="{{$product->getProductName()}}-amount">เหลืออีก {{ $product->getAmount() }}</p>
 				        <!--<p>  </p> -->
+                                        <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-promotion-price" value="{{$product->executePromotion()}}" />
 				        <p style = "text-align:center" >
                                         <button class="btn btn-primary" data-toggle="modal"
                                            data-target="#add-cart" onclick="cartModal('{{ $product->getProductName() }}')">เพิ่มลงในตะกร้า</button>
@@ -226,10 +227,20 @@
       console.log($('#buy-amount'));
       console.log($('#buy-amount').attr('max'));
 
+      console.log('find promo price');
+      console.log($('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val());
 
       $('#buy-amount').attr('max', $('#' + currentProductName.replace(/\s+/g, "") + "-max").val());
+      var realPrice;
+      if(typeof $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
+        realPrice = $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val();
+      } else {
+        realPrice = $('#' + currentProductName.replace(/\s+/g, "") + "-price").val();
+      }
+      console.log("realPrice");
+      console.log(realPrice);
 
-      $('#total-price').html($('#' + currentProductName.replace(/\s+/g, "") + "-price").val());
+      $('#total-price').html(realPrice);
     }
 
     function changeAmount(amount) {
@@ -237,7 +248,14 @@
       console.log($('#' + currentProductName + "-price").val());
       console.log(amount.value);
       console.log(amount.value * $('#' + currentProductName + "-price").val());
-      $("#total-price").html(amount.value * $('#' + currentProductName.replace(/\s+/g, "") + "-price").val());
+
+      var realPrice;
+      if(typeof $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
+        realPrice = $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val();
+      } else {
+        realPrice = $('#' + currentProductName.replace(/\s+/g, "") + "-price").val();
+      }
+      $("#total-price").html(amount.value * realPrice);
       console.log($('#total-price').html);
     }
 
