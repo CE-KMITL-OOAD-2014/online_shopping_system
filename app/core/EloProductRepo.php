@@ -31,9 +31,12 @@
 			$this->eloProduct->color = $product->getColor();
 			$this->eloProduct->suplier = $product->getSuplier();
 			$this->eloProduct->amount = $product->getAmount();
-			$this->eloProduct->pro_percent = $product->getProPercent();
 			$this->eloProduct->pro_type = $product->getAdapterType();
-					
+			if($product->getAdapterType() == "PromotionDiscountAdapter"){
+				$this->eloProduct->pro_percent = $product->getProPercent();
+			}else if($product->getAdapterType() == "PromotionBuyXFreeYAdapter"){
+				$this->eloProduct->promotionXY = $product->getXYparams(); 
+			}						
 			$this->eloProduct->save();
 		}
 
@@ -52,13 +55,13 @@
 			$productObj->setSuplier($product->suplier);
 			$productObj->setImgPath($product->imgPath);
 			$productObj->setAmount($product->amount);
-			$productObj->setAdapterType($product->adapter_type);
+			$productObj->setAdapterType($product->pro_type);
 			//$productObj->set
 			// Logic for Load Promotion Info
 			if($product->pro_percent != 0){
 				//get promotion adapter's name from database,then change to adapter object
 				$adapter = "\\core\\".$product->pro_type;
-				//$adapter = "Classcore\\PromotionDiscountAdapter";
+			
 				$productObj->setPromotionAdapter(new $adapter());// setAdapter
 				//set promotion detail 
 				$productObj->setPromotion($product->pro_percent,$product->price);

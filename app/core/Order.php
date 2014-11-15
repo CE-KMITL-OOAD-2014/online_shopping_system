@@ -9,6 +9,7 @@ class Order
   protected $order_time;
   protected $status;
   protected $products;
+  protected $ems;
 
   public function __construct()
   {
@@ -164,4 +165,28 @@ class Order
     $user = \User::find($this->user_id);
     return $user->username;
   }
+
+    /**
+     * Gets the value of ems.
+     *
+     * @return mixed
+     */
+    public function getEms()
+    {
+        return $this->ems;
+    }
+
+    /**
+     * Sets the value of ems.
+     *
+     * @param mixed $ems the ems
+     *
+     * @return self
+     */
+    public function setEms($ems)
+    {
+        $this->ems = $ems;
+
+        return $this;
+    }
 }

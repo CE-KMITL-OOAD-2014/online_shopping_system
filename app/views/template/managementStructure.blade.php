@@ -10,6 +10,7 @@
 		    <ul class="nav nav-pills nav-stacked" >
 				<li ><a href = "{{ URL::to('product'); }}" >Product Management</a></li>
 				<li ><a href = "{{ URL::to('order'); }}">Order Management</a></li>
+				<li ><a href = "{{ URL::to('report'); }}">Report Operating Result</a></li>
 		
 			</ul>
 		  </div>

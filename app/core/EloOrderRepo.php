@@ -16,7 +16,7 @@ class EloOrderRepo implements IOrderRepo {
       $existOrder->total_price = $order->getTotal_price();
       $existOrder->order_time = $order->getOrder_time();
       $existOrder->status = $order->getStatus();
-
+      $existOrder->ems = $order->getEms();
       foreach($order->getProducts() as $product){
         $this->eloOrder->products()->save(\Product::find($product->getId()));
       }
@@ -25,6 +25,7 @@ class EloOrderRepo implements IOrderRepo {
       $this->eloOrder->total_price = $order->getTotal_price();
       $this->eloOrder->order_time = $order->getOrder_time();
       $this->eloOrder->status = $order->getStatus();
+      $this->eloOrder->ems = $order->getEms();
       $this->eloOrder->save();
       foreach($order->getProducts() as $product){
         $this->eloOrder->products()->save(\Product::find($product->getId()));
@@ -40,6 +41,7 @@ class EloOrderRepo implements IOrderRepo {
     $order->setTotal_price($eloquent->total_price);
     $order->setOrder_time($eloquent->order_time);
     $order->setStatus($eloquent->status);
+    $order->setEms($eloquent->ems);
     foreach($eloquent->products as $eloProduct){
       $product = new Product();
       $product->setId($eloProduct->id);
@@ -68,6 +70,7 @@ class EloOrderRepo implements IOrderRepo {
         $orderObj->setTotal_price($order->total_price);
         $orderObj->setOrder_time($order->order_time);
         $orderObj->setStatus($order->status);
+        $orderObj->setEms($order->ems);
         //$products = $this->eloOrderProduct->where('order_id',$order->id);
         //get product map with each order. 
         $products = $order->products()->get();
@@ -98,6 +101,7 @@ class EloOrderRepo implements IOrderRepo {
         $orderObj->setTotal_price($order->total_price);
         $orderObj->setOrder_time($order->order_time);
         $orderObj->setStatus($order->status);
+        $orderObj->setEms($order->ems);
         //$products = $this->eloOrderProduct->where('order_id',$order->id);
         //get product map with each order. 
         $products = $order->products()->get();
