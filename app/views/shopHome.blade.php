@@ -66,11 +66,13 @@
               </div>
 				      <div class="caption equal" style = "text-align:center;">
 				        <h3>{{ $product->getProductName() }}</h3>
-				        @if($product->getProPercent() != 0)
-							<h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท <br/> ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
+				        @if($product->getAdapterType() == "PromotionDiscountAdapter")
+                                            <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท <br/> 
+                                          ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
 				        	<h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
-				        @else
+				        @elseif($product->getAdapterType() == "PromotionBuyXFreeYAdapter")
 				        	<h5> ราคา : {{ $product->getPrice() }} บาท </h5>
+                                                ซื้อ {{explode(',',$product->getXYParams())[0]}} แถม {{explode(',',$product->getXYParams())[1]}}
 				        @endif
                 <p>{{ $product->getDescription() }}</p>
 				      </div>
@@ -106,8 +108,17 @@
               </div>
               <div class="caption equal" style = "text-align:center;">
                 <h3>{{ $product->getProductName() }}</h3>
-              <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท ลด <span class="label label-warning">{{ $product->getProPercent() }} % </span> </h5>
-                  <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
+                  @if($product->getAdapterType()=="PromotionDiscountAdapter")
+                    <h5> ราคา : <del>{{ $product->getPrice() }}</del> บาท 
+                    ลด <span class="label label-warning">{{$product->getProPercent()}}%</span> </h5>
+                    <h6>เหลือ {{ $product->executePromotion() }} เท่านั้น</h6>
+                    <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-promotion-price" value="{{$product->executePromotion()}}" />
+                  @elseif($product->getAdapterType()=="PromotionBuyXFreeYAdapter")
+                    <h5> ราคา : {{ $product->getPrice() }} บาท </h5>
+                    <h6>ซื้อ {{explode(',',$product->getXYParams())[0]}} แถม {{explode(',',$product->getXYParams())[1]}}</h6>
+                    <input type="hidden" name="" id="{{ str_replace(' ', '', $product->getProductName()) }}-promotion-xy" 
+                      value="{{$product->getXYparams()}}" />
+                  @endif
                 </p>
                 <p>{{ $product->getDescription() }}</p>
               </div>
@@ -183,7 +194,7 @@ active
 
     function clearval()
     {
-      console.log('eiei');
+      console.log('clearval');
       console.log($('#buy-amount').val());
       $('#buy-amount').val(1);
     }
@@ -231,19 +242,39 @@ active
       console.log($('#buy-amount'));
       console.log($('#buy-amount').attr('max'));
 
+      console.log('find promo price');
+      console.log($('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val());
 
       $('#buy-amount').attr('max', $('#' + currentProductName.replace(/\s+/g, "") + "-max").val());
+      var realPrice;
+      if(typeof $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
+        realPrice = $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val();
+      } else {
+        realPrice = $('#' + currentProductName.replace(/\s+/g, "") + "-price").val();
+      }
+      console.log("realPrice");
+      console.log(realPrice);
 
-      $('#total-price').html($('#' + currentProductName.replace(/\s+/g, "") + "-price").val());
+      $('#total-price').html(realPrice);
     }
 
     function changeAmount(amount) {
-      console.log(amount.value);
-      console.log($('#' + currentProductName + "-price").val());
-      console.log(amount.value);
-      console.log(amount.value * $('#' + currentProductName + "-price").val());
-      $("#total-price").html(amount.value * $('#' + currentProductName.replace(/\s+/g, "") + "-price").val());
-      console.log($('#total-price').html);
+
+      var realPrice=0;
+      if(typeof $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
+        realPrice = $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-price').val();
+        $("#total-price").html(realPrice*amount.value);
+      } else if(typeof $('#'+currentProductName.replace(/\s+/g, "")+'-promotion-xy').val() != 'undefined'){
+        var x = parseInt($('#'+currentProductName.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[0]);
+        var y = parseInt($('#'+currentProductName.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[1]);
+        realPrice = $('#' + currentProductName.replace(/\s+/g, "") + "-price").val() * x * Math.floor(amount.value/(x+y));
+        realPrice += $('#' + currentProductName.replace(/\s+/g, "") + "-price").val() * (amount.value%(x+y));
+        realPrice=realPrice/amount.value;
+        $("#total-price").html(Math.round(realPrice*amount.value));
+      } else {
+        realPrice = $('#' + currentProductName.replace(/\s+/g, "") + "-price").val();
+        $("#total-price").html(realPrice*amount.value);
+      }
     }
 
 
@@ -254,22 +285,31 @@ active
     var expires = new Date();
     expires.setFullYear((expires.getFullYear()+5) );
 
+    console.log("add to cart amount");
+    console.log(document.getElementById("buy-amount").value);
+
+    console.log("pro name add to cart");
     console.log("pro name add to cart");
     console.log(currentProductName);
 
     var length = cookieArr.length;
+    console.log('before loop');
     for(var i=0; i<=length ; i++)
     {
+      console.log('before if');
       if(i == length)
       {
-        console.log("eieieiei");
-	console.log("id");
 	console.log($('#'+ currentProductName.replace(/\s+/g,'') +'-id').val());
+        console.log("add to cart amount 2");
+        console.log(document.getElementById("buy-amount").value);
         cookieArr.push({id: $('#'+ currentProductName.replace(/\s+/g,'') + '-id').val(), name: currentProductName, amount:  parseInt(document.getElementById("buy-amount").value)});
         cartProductAmount = cookieArr[i].amount;
       }
       else if( cookieArr[i].id == $('#'+currentProductName+'-id').val() ){
 	console.log("exist");
+
+        console.log("add to cart amount 3");
+        console.log(document.getElementById("buy-amount").value);
         cookieArr[i].amount = parseInt(document.getElementById("buy-amount").value);
         cartProductAmount = cookieArr[i].amount;
         break;
@@ -280,8 +320,9 @@ active
     document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
       + expires.toGMTString() + "; path=/;";
     console.log(document.cookie);
-    clearval();
+
     }
+    clearval();
 }
 
   </script>

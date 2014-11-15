@@ -16,7 +16,7 @@ class ShopController extends \BaseController {
 	public function index()
 	{
 		$products = $this->productHelper->all();
-		$pro_product = $this->productHelper->where('pro_percent','>',0); //fetch product that have promotion
+		$pro_product = $this->productHelper->where('pro_type','!=', ""); //fetch product that have promotion
 		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products,'pro_product' => $pro_product ));
 	}
 

@@ -15,7 +15,11 @@
           </tr>
           <tr>
             <td>price</td>
-            <td>{{ $product->getPrice() }} </td>
+            @if($product->getAdapterType()=="PromotionDiscountAdapter")
+              <td>{{ $product->executePromotion() }}</td>
+            @else
+              <td>{{ $product->getPrice() }} </td>
+            @endif
           </tr>
           <tr>
             <td>category</td>
@@ -78,11 +82,22 @@
                   max="1"/>
               </td>
               <td id="total-price">
-                {{ $product->getPrice() }}
+                @if($product->getAdapterType()=="PromotionDiscountAdapter")
+                  {{ $product->executePromotion() }}
+                @else
+                  {{ $product->getPrice() }}
+                @endif
               </td>
             </tr>
           </table>
         </div>
+
+        @if($product->getAdapterType()=="PromotionDiscountAdapter")
+          <input type="hidden" name="" id="promotion-price" value="{{$product->executePromotion()}}" />
+        @elseif($product->getAdapterType()=="PromotionBuyXFreeYAdapter")
+            <input type="hidden" name="" id="promotion-xy" 
+              value="{{$product->getXYparams()}}" />
+        @endif
         <div class="modal-footer">
           <button type="button" onclick="addToCart()" class="btn btn-warning"
             data-dismiss="modal">
@@ -186,8 +201,29 @@
 
   function changeAmount(amount)
   {
-    console.log(amount.value);
-    document.getElementById("total-price").innerHTML = amount.value * {{$product->getPrice()}};
+    var realPrice = 0;
+    console.log($('#promotion-price').val());
+    if(typeof $('#promotion-price').val() != 'undefined'){
+      realPrice = $('#promotion-price').val();
+      console.log('eiei');
+      console.log($('#promotion-price').val());
+      $("#total-price").html(realPrice*amount.value);
+      console.log('haha');
+      console.log($('#promotion-price').val());
+    } else if(typeof $('#promotion-xy').val() != 'undefined'){
+      console.log('eiei2');
+      var x = parseInt($('#promotion-xy').val().split(',')[0]);
+      var y = parseInt($('#promotion-xy').val().split(',')[1]);
+      realPrice = {{$product->getPrice()}} * x * Math.floor(amount.value/(x+y));
+      realPrice += {{$product->getPrice()}} * (amount.value%(x+y));
+      realPrice = realPrice/amount.value;
+      $("#total-price").html(Math.round(realPrice*amount.value));
+    } else {
+      console.log('eiei3');
+      realPrice = {{$product->getPrice()}};
+      $("#total-price").html(realPrice*amount.value);
+    }
+    console.log($('#promotion-price').val());
   }
   </script>
 @stop

@@ -10,8 +10,6 @@ class ReportController extends BaseController {
   {
     $report = new \core\Report();
     $report->setPlotter(new \core\SoldProductPlot());
-    //var_dump($report->report( new DateTime('2014-11-01'), new DateTime('2014-11-08')));
-    //return $report->report( new DateTime('2014-10-08'), new DateTime('2014-11-08'), 2);
     $from = Input::get('from');
     $to = Input::get('to');
     $frequency = Input::get('frequency');
@@ -23,7 +21,6 @@ class ReportController extends BaseController {
   {
     $report = new \core\Report();
     $report->setPlotter(new \core\IncomePlot());
-    //return $report->report( new DateTime('2014-11-01'), new DateTime('2014-11-08'), 0);
 
     $from = Input::get('from');
     $to = Input::get('to');
@@ -36,7 +33,6 @@ class ReportController extends BaseController {
   {
     $report = new \core\Report();
     $report->setPlotter(new \core\ProfitPlot());
-    //return $report->report( new DateTime('2014-11-01'), new DateTime('2014-11-08'), 0);
 
     $from = Input::get('from');
     $to = Input::get('to');

@@ -8,6 +8,7 @@
 		  <div class="panel-body well">
 		  	<p style = "text-align: center;" >ขอขอบคุณที่เชื่อมั่นในสินค้าของ Sellon <br />
 			สถานะการสั่งซื้อ ของคุณ {{ Auth::user()->username }} <br/>
+			หมายเหตุ ** ท่านสามารถติดตามพัสดุ EMS ได้ผ่านทาง <a href="http://track.thailandpost.co.th/tracking/default.aspx" >ที่นี่</a>
 
 		  	</p>
 				@foreach ($orders as $order) 
@@ -31,6 +32,8 @@
                       @endforeach
                     </div>
                   </ul>
+                  	<b>EMS</b>
+                  	{{ $order->getEms() }}
 				  </div>
 				</div>	
 				@endforeach

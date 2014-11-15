@@ -16,6 +16,7 @@
     protected $has_promotion = false; //Is this product has promotion.
     protected $promotion; // Promotion adapter for execute.
     protected $pro_percent = 0;
+    protected $XY_params;
     protected $adapter_type;
 
     public function __construct() {
@@ -279,11 +280,22 @@
     *
     */
     public function getProPercent(){
-        return $this->pro_percent;
+        // Check Is promotion adapter instantiate.
+        if($this->promotion instanceof \core\IPromotionAdapter){
+            return $this->promotion->getPro_percent();
+        }else return 0;
     }
 
     public function setProPercent($percent){
-        $this->pro_percent = $percent;
+        $this->promotion->setPro_percent($percent);
+    }
+
+    public function setXYparams($str_xy){
+        $this->XY_params = $str_xy;
+    }
+
+    public function getXYparams(){
+        return $this->XY_params;
     }
 
     public function setAdapterType($adapter){
@@ -301,10 +313,14 @@
     }
 
     //set information for execute promotion.
-    public function setPromotion($percent,$old_price){
-        $this->promotion->setPromotion($percent,$old_price);
-        $this->pro_percent = $percent;
+    // On Discount  : first = percent , second = old_price 
+    // On buyXFreeY : first = "buy,free" , second = old_price
+    public function setPromotion($first,$second){
+        $this->promotion->setPromotion($first,$second);
+        //product Id for identify products
+        $this->promotion->setProductId($this->id);
     }
+
 
     // for checking user's promotion ,are they reached the condition. 
     public function isGotPromotion(){

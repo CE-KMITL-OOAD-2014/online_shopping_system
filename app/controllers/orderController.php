@@ -73,14 +73,20 @@ class OrderController extends \BaseController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /order/{id}
+	 * POST /order/{id}/update
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function update($id)
 	{
-		//
+		if(Request::ajax()) {
+			$update_order = Order::find($id);
+			$update_order->ems = Input::get('ems');
+			$update_order->save();
+		}else{
+			return "You don't have permission";
+		}	
 	}
 
 	/**
