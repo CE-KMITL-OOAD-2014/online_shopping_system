@@ -124,6 +124,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'core\RepositoryServiceProvider',
 		'BrainSocket\BrainSocketServiceProvider',
+                'Dingo\Api\ApiServiceProvider',
 	),
 
 	/*
@@ -153,13 +154,14 @@ return array(
 	'aliases' => array(
 
 		'App'             => 'Illuminate\Support\Facades\App',
+                'API'             => 'Dingo\Api\Facades\API',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
 		'Blade'           => 'Illuminate\Support\Facades\Blade',
 		'Cache'           => 'Illuminate\Support\Facades\Cache',
 		'ClassLoader'     => 'Illuminate\Support\ClassLoader',
 		'Config'          => 'Illuminate\Support\Facades\Config',
-		'Controller'      => 'Illuminate\Routing\Controller',
+		'Controller'      => 'Dingo\Api\Routing\Controller',
 		'Cookie'          => 'Illuminate\Support\Facades\Cookie',
 		'Crypt'           => 'Illuminate\Support\Facades\Crypt',
 		'DB'              => 'Illuminate\Support\Facades\DB',

@@ -120,3 +120,27 @@ Route::group( array('prefix' => 'api'), function() {
   Route::get('product/{id}', 'productController@restGet');
 });
 
+Route::api(['version' => 'v1', 'prefix' => 'restapi'], function(){
+  Route::get('products', function()
+  {
+    return Product::all();
+  });
+
+  Route::get('orders', function()
+  {
+    return Order::all();
+  });
+
+  Route::get('users', function()
+  {
+    return User::all();
+  });
+
+  
+  Route::get('order_product', function()
+  {
+    return OrderProduct::all();
+  });
+
+});
+
