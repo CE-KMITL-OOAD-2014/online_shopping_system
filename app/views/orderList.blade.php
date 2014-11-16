@@ -41,21 +41,21 @@
                     <b>Status :</b>
                     @if( $order->getStatus() )
                       <div class="btn-group " role="group" aria-label="...">
-                        <button type="button" onclick = "changeToSent({{{ $order->getId(); }}})" id = "sent_btn{{{ $order->getId() }}}" class="btn btn-default active">ส่งแล้ว</button>
-                        <button type="button" id = "unsent_btn{{{ $order->getId() }}}"  class="btn btn-default" onclick = "changeToUnSent({{{ $order->getId(); }}})">ยังไม่ส่ง</button>
+                        <button type="button" onclick = "changeToSent({{{ $order->getId() }}})" id = "sent_btn{{{ $order->getId() }}}" class="btn btn-default active">ส่งแล้ว</button>
+                        <button type="button" id = "unsent_btn{{{ $order->getId() }}}"  class="btn btn-default" onclick = "changeToUnSent({{{ $order->getId() }}})">ยังไม่ส่ง</button>
                       </div>
                     @else
                       <div class="btn-group " role="group" aria-label="...">
-                        <button onclick = "changeToSent({{{ $order->getId(); }}})" type="button" id = "sent_btn{{{ $order->getId() }}}"  class="btn btn-default">ส่งแล้ว</button>
+                        <button onclick = "changeToSent({{{ $order->getId() }}})" type="button" id = "sent_btn{{{ $order->getId() }}}"  class="btn btn-default">ส่งแล้ว</button>
                         <button type="button" id = "unsent_btn{{{ $order->getId() }}}" onclick = "changeToUnSent({{{ $order->getId()}}})" class="btn btn-default active">ยังไม่ส่ง</button>
                       </div>
                     @endif 
                     <b>EMS :</b>
                     <div class = "row">
                       <div class = "col-md-8">
-                        <input type="text" class = "form-control" value=" {{{ $order->getEms() }}}" id = "ems_text{{{ $order->getId(); }}}">
+                        <input type="text" class = "form-control" value=" {{{ $order->getEms() }}}" id = "ems_text{{{ $order->getId() }}}">
                       </div>
-                      <button onclick = "updateEms({{{ $order->getId(); }}},'ems_text{{{ $order->getId(); }}}')" class = "btn btn-sm col-md-2"><span class = "glyphicon glyphicon-ok"></span></button>
+                      <button onclick = "updateEms({{{ $order->getId() }}},'ems_text{{{ $order->getId() }}}')" class = "btn btn-sm col-md-2"><span class = "glyphicon glyphicon-ok"></span></button>
                     </div>
                     <br/>
                   </div>

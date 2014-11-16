@@ -3,33 +3,23 @@
  <div class="col-md-14 well">
   <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
     <div class="carousel-inner">
-      <div class="item active"> <img src="http://placehold.it/1000x300" style="width:100%"  alt="First slide">
+      <div class="item active"> <img src="{{ asset('img/cover1.png') }}" style="width:100%"  alt="First slide">
         <div class="container">
           <div class="carousel-caption">
-            <h1> Headling 1 </h1>
-            <p> Description 1</p>
           </div>
         </div>
       </div>
 
-      <div class="item"> <img src="http://placehold.it/1000x300" style="width:100%" data-src="" alt="Second slide">
+      <div class="item"> <img src="{{ asset('img/cover2.png') }}" style="width:100%" data-src="" alt="Second slide">
         <div class="container">
 	  <div class="carousel-caption">
-	    <h2>
-	      Headling 2
-	    </h1>
-	    <p> Description 2</p>
 	  </div>
 	</div>
       </div>
       
-      <div class="item"> <img src="http://placehold.it/1000x300" style="width:100%" data-src="" alt="Third slide">
+      <div class="item"> <img src="{{ asset('img/cover3.png') }}" style="width:100%" data-src="" alt="Third slide">
         <div class="container">
           <div class="carousel-caption">
-            <h2>
-	      Headling 3
-	    </h2>
-	    <p> Description 3</p>
 	  </div>
 	</div>
       </div>
