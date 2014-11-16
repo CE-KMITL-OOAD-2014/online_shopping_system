@@ -187,70 +187,70 @@
       return "";
     } 
 
-function changeAmount(amount, productname, id) {
-  var realPrice=0;
-  if(typeof $('#'+productname.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
-    realPrice = $('#'+productname.replace(/\s+/g, "")+'-promotion-price').val();
-    $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
-  } else if(typeof $('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val() != 'undefined'){
-    var x = parseInt($('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[0]);
-    var y = parseInt($('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[1]);
-    realPrice = $('#' +productname.replace(/\s+/g, "") + "-price").val() * x * Math.floor(amount.value/(x+y));
-    realPrice += $('#' +productname.replace(/\s+/g, "") + "-price").val() * (amount.value%(x+y));
-    realPrice=realPrice/amount.value;
-    $("#"+productname.replace(/\s+/g, "")+"-total-price").html(Math.round(realPrice*amount.value));
-  } else {
-    realPrice = $('#' + productname.replace(/\s+/g, "") + "-price").val();
-    $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
-  }
-
-  for(var i=0; i<cookieArr.length; i++){
-    if(cookieArr[i].id == id){
-      cookieArr[i].amount = parseInt(amount.value);
-      break;
+    function changeAmount(amount, productname, id) {
+      var realPrice=0;
+      if(typeof $('#'+productname.replace(/\s+/g, "")+'-promotion-price').val() != 'undefined'){
+        realPrice = $('#'+productname.replace(/\s+/g, "")+'-promotion-price').val();
+        $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
+      } else if(typeof $('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val() != 'undefined'){
+        var x = parseInt($('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[0]);
+        var y = parseInt($('#'+productname.replace(/\s+/g, "")+'-promotion-xy').val().split(',')[1]);
+        realPrice = $('#' +productname.replace(/\s+/g, "") + "-price").val() * x * Math.floor(amount.value/(x+y));
+        realPrice += $('#' +productname.replace(/\s+/g, "") + "-price").val() * (amount.value%(x+y));
+        realPrice=realPrice/amount.value;
+        $("#"+productname.replace(/\s+/g, "")+"-total-price").html(Math.round(realPrice*amount.value));
+      } else {
+        realPrice = $('#' + productname.replace(/\s+/g, "") + "-price").val();
+        $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
+      }
+    
+      for(var i=0; i<cookieArr.length; i++){
+        if(cookieArr[i].id == id){
+          cookieArr[i].amount = parseInt(amount.value);
+          break;
+        }
+      }
+      setCartToCookie();
     }
-  }
-  setCartToCookie();
-}
-
-function productSelect()
-{
-  if(typeof $('.table').find('input:checkbox:checked').val() != 'undefined'){
-    $('#remove-btn').attr('style','');
-  } else {
-    $('#remove-btn').attr('style','display:none;');
-  }
-}
-
-function removeFromCart()
-{
-  $("input:checkbox:checked").each( function () {
-    //sequential search for selected product
-    for(var i=0; i<cookieArr.length; i++){
-      if(cookieArr[i].id == $(this).val()){
-	cookieArr.splice(i,1);
-	break;
+    
+    function productSelect()
+    {
+      if(typeof $('.table').find('input:checkbox:checked').val() != 'undefined'){
+        $('#remove-btn').attr('style','');
+      } else {
+        $('#remove-btn').attr('style','display:none;');
       }
     }
-  });
-  setCartToCookie();
-  window.location.reload();
-}
-
-
-function setCartToCookie()
-{
-  var expires = new Date();
-  expires.setFullYear((expires.getFullYear()+5) );
-
-  document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
-    + expires.toGMTString() + "; path=/;";
-}
-
-function clearval()
-{
- $('#warning-msg').html('');
- $('#warning-msg').attr('style','display:none;');
-}
+    
+    function removeFromCart()
+    {
+      $("input:checkbox:checked").each( function () {
+        //sequential search for selected product
+        for(var i=0; i<cookieArr.length; i++){
+          if(cookieArr[i].id == $(this).val()){
+    	cookieArr.splice(i,1);
+    	break;
+          }
+        }
+      });
+      setCartToCookie();
+      window.location.reload();
+    }
+    
+    
+    function setCartToCookie()
+    {
+      var expires = new Date();
+      expires.setFullYear((expires.getFullYear()+5) );
+    
+      document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
+        + expires.toGMTString() + "; path=/;";
+    }
+    
+    function clearval()
+    {
+     $('#warning-msg').html('');
+     $('#warning-msg').attr('style','display:none;');
+    }
   </script>
 @stop
