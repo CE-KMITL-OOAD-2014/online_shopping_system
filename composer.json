@@ -6,6 +6,13 @@
 	"require": {
 		"laravel/framework": "4.2.*"
 	},
+	"require-dev": {
+		 "artdarek/pusherer": "1.0.*",
+		"mockery/mockery": "dev-master@dev",
+		"way/generators": "~2.0",
+		"cboden/ratchet":"0.3.*",
+		"brainboxlabs/brain-socket"  : "dev-master"
+	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
@@ -13,7 +20,8 @@
 			"app/models",
 			"app/database/migrations",
 			"app/database/seeds",
-			"app/tests/TestCase.php"
+			"app/tests/TestCase.php",
+			"app/core"
 		]
 	},
 	"scripts": {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+  <title></title>
 </head>
 <body>
-	<h1> Hi This Data is {{ $data }}</h1>
+  <h1> Hi This Data is {{ $data }}</h1>
 </body>
 </html>
