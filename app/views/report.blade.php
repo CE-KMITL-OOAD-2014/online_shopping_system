@@ -30,19 +30,31 @@
   font-size:1.5em;
 }
 </style>
-<div class="col-md-8"></div>
+<div class ="col-md-8">
+  <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Order Management</h3>
+      </div>
+      <div style = "text-align:center;" class="panel-body well">
+          กรุณาเลือกช่วงเวลาที่ต้องการแสดง และ ความละเอียดในการแสเงด้านล่างหลังจากนั้น SUBMIT เพื่อประมวลผลกราฟ<br/>
+     
+      </div>
+    </div>
+</div>
+
 <div style="clear:left;">
+
   Date: <input type="text" id="first-datepicker">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   Date: <input type="text" id="second-datepicker">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  Sth: <select id="frequency">
+  <select id="frequency ">
     <option value="0">รายวัน</option>
     <option value="1">รายสัปดาห์</option>
     <option value="2">รายเดือน</option>
   </select>
-  <button class="btn-small btn-success" onclick="drawGraph()">submit</button>
-  <div role="tabpanel">
+  <button class="btn btn-small btn-success" onclick="drawGraph()">submit</button>
+  <div role="tabpanel" class ="panel">
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -58,7 +70,7 @@
     </ul>
 
     <!-- Tab panes -->
-    <div class="tab-content">
+    <div class="tab-content" id = "printdiv">
 
       <div role="tabpanel" class="tab-pane active" id="product-sold">
         <div id="product-sold-chart" class="chart">
@@ -227,5 +239,6 @@
 
           return chart;
       });
+     
   </script>
 @stop
