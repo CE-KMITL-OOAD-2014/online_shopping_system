@@ -19,7 +19,7 @@ class CreateUsers extends Migration {
             $table->string('permission', 10)->nullable(false);
             $table->string('address', 200)->nullable(false);
             $table->string('phone', 20)->unique()->nullable(false);
-            $table->string('email', 25)->unique()->nullable(false);
+            $table->string('email', 25)->nullable(false);
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
           });

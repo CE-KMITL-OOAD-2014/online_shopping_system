@@ -7,4 +7,10 @@ class Product extends \Eloquent {
   {
     return $this->belongsToMany('Order');
   }
+
+  public function delete()
+  {
+    OrderProduct::where('product_id', '=', $this->id)->delete();
+    return parent::delete();
+  }
 }
