@@ -79,3 +79,8 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+App::bind('core\IUserRepo', 'core\EloUserRepo');
+/* Live chat  */
+require app_path().'/filters.php';
+require app_path().'/events.php';

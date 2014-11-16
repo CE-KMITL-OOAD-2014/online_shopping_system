@@ -14,10 +14,14 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+	public function __construct(){
+		$this->productHelper = new \core\EloProductRepo(new \Product());
+	}
 
-	public function showWelcome()
+	public function index()
 	{
-		return View::make('hello');
+		$products = $this->productHelper->all();
+		return View::make('shopHome', array('user' => core\User::newFromEloquent(Auth::user()),'products' => $products ));
 	}
 
 }
