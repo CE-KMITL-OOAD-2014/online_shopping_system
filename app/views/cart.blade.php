@@ -29,6 +29,7 @@
             </td>
 
             <td id="{{ str_replace(' ','',$product->name) }}-total-price">
+              <!-- different price for different promotion type -->
               @if($productFromDB->getAdapterType()=="PromotionDiscountAdapter")
                 {{ $productFromDB->executePromotion() * $product->amount }}
               @elseif($productFromDB->getAdapterType()=="PromotionBuyXFreeYAdapter")
@@ -39,14 +40,17 @@
             </td>
           </tr>
 
+          <!-- hidden input to keep track of some data for price calculation -->
           @if(isset($productFromDB))
             @if($productFromDB->getAdapterType()=="PromotionDiscountAdapter")
-              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-price" value="{{$productFromDB->executePromotion()}}" />
+              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-price" 
+               value="{{$productFromDB->executePromotion()}}" />
             @elseif($productFromDB->getAdapterType()=="PromotionBuyXFreeYAdapter")
               <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-xy" 
-                  value="{{$productFromDB->getXYparams()}}" />
+                value="{{$productFromDB->getXYparams()}}" />
             @endif
-            <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-price" value="{{ $productFromDB->getPrice() }}" />
+              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-price" 
+                value="{{ $productFromDB->getPrice() }}" />
           @endif
 
         @endforeach
@@ -89,6 +93,7 @@
                 {{ $product->amount }}
               </td>
               <td id="{{$product->name}}-total-price-modal">
+                <!-- use discounted price if exist -->
                 {{ ($productRepo->find($product->id)->getAdapterType()!="")?$productRepo->find($product->id)->executePromotion():
                   $productRepo->find($product->id)->getPrice() * $product->amount; }}
               </td>
@@ -107,10 +112,8 @@
       </div> <!-- modal content -->
     </div> <!-- model dialog -->
   </div>
-  
-
-
 @stop
+
 @section('script')
   @parent
   <script type="text/javascript" charset="utf-8" src="{{url('js/cart.js')}}"></script>
