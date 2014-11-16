@@ -10,11 +10,12 @@ class ReportController extends BaseController {
   {
     $report = new \core\Report();
     $report->setPlotter(new \core\SoldProductPlot());
+
     $from = Input::get('from');
     $to = Input::get('to');
     $frequency = Input::get('frequency');
-    return $report->report( new DateTime(explode('/', $from)[2].'-'.explode('/', $from)[0].'-'.explode('/', $from)[1])
-      , (new DateTime(explode('/', $to)[2].'-'.explode('/', $to)[0].'-'.explode('/', $to)[1])), $frequency);
+    return $report->report( new DateTime($this->formatDate($from))
+      , (new DateTime($this->formatDate($to))), $frequency);
   }
 
   public function income()
@@ -25,8 +26,8 @@ class ReportController extends BaseController {
     $from = Input::get('from');
     $to = Input::get('to');
     $frequency = Input::get('frequency');
-    return $report->report( new DateTime(explode('/', $from)[2].'-'.explode('/', $from)[0].'-'.explode('/', $from)[1])
-      , (new DateTime(explode('/', $to)[2].'-'.explode('/', $to)[0].'-'.explode('/', $to)[1])), $frequency);
+    return $report->report( new DateTime($this->formatDate($from))
+      , new DateTime($this->formatDate($to)), $frequency);
   }
 
   public function profit()
@@ -37,7 +38,12 @@ class ReportController extends BaseController {
     $from = Input::get('from');
     $to = Input::get('to');
     $frequency = Input::get('frequency');
-    return $report->report( new DateTime(explode('/', $from)[2].'-'.explode('/', $from)[0].'-'.explode('/', $from)[1])
-      , (new DateTime(explode('/', $to)[2].'-'.explode('/', $to)[0].'-'.explode('/', $to)[1])), $frequency);
+    return $report->report( new DateTime($this->formatDate($from))
+      , new DateTime($to), $frequency);
+  }
+
+  private function formatDate($dateString)
+  {
+    return explode('/', $dateString)[2].'-'.explode('/', $dateString)[0].'-'.explode('/', $dateString)[1];
   }
 }

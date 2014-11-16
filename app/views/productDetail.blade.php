@@ -2,57 +2,57 @@
 @section('shopContent')
  <div class = "row" >
   <div class ="col-md-6">
-          <img src = "{{ asset('img/'.$product->getImgPath()) }}" class = "img-responsive" />
+     <img src = "{{ asset('img/'.$product->getImgPath()) }}" class = "img-responsive" />
   </div>
 
   <div class ="col-md-6">
-      <div class = "panel panel-default">
-        <div class= "panel-body">
-          <table class = "table  table-striped table-hover" >
-          <tr>
-            <td>name</td>
-            <td>{{ $product->getProductName() }} </td>
-          </tr>
-          <tr>
-            <td>price</td>
-            @if($product->getAdapterType()=="PromotionDiscountAdapter")
-              <td>{{ $product->executePromotion() }}</td>
-            @else
-              <td>{{ $product->getPrice() }} </td>
-            @endif
-          </tr>
-          <tr>
-            <td>category</td>
-            <td>{{ $product->getCategory() }}</td>
-          </tr>
-          <tr>
-            <td>description</td>
-            <td>{{ $product->getDescription() }}</td>
-          </tr>
-          <tr>
-            <td>size</td>
-            <td>{{ $product->getSize() }}</td>
-          </tr>
-          <tr>
-            <td>color</td>
-            <td>{{ $product->getColor() }}</td>
-          </tr>
-          <tr>
-            <td>Suplier</td>
-            <td>{{ $product->getSuplier() }}</td>
-          </tr>
-          <tr>
-            <td>Amount</td>
-            <td>{{ $product->getAmount() }}</td>
-          </tr>
-        </table>  
-        </div>
+    <div class = "panel panel-default">
+      <div class= "panel-body">
+        <table class = "table  table-striped table-hover" >
+        <tr>
+          <td>name</td>
+          <td>{{ $product->getProductName() }} </td>
+        </tr>
+        <tr>
+          <td>price</td>
+          @if($product->getAdapterType()=="PromotionDiscountAdapter")
+            <td>{{ $product->executePromotion() }}</td>
+          @else
+            <td>{{ $product->getPrice() }} </td>
+          @endif
+        </tr>
+        <tr>
+          <td>category</td>
+          <td>{{ $product->getCategory() }}</td>
+        </tr>
+        <tr>
+          <td>description</td>
+          <td>{{ $product->getDescription() }}</td>
+        </tr>
+        <tr>
+          <td>size</td>
+          <td>{{ $product->getSize() }}</td>
+        </tr>
+        <tr>
+          <td>color</td>
+          <td>{{ $product->getColor() }}</td>
+        </tr>
+        <tr>
+          <td>Suplier</td>
+          <td>{{ $product->getSuplier() }}</td>
+        </tr>
+        <tr>
+          <td>Amount</td>
+          <td>{{ $product->getAmount() }}</td>
+        </tr>
+      </table>  
       </div>
+    </div>
     <a href="{{ URL::to('/') }}" class="btn btn-success" role="button">กลับ</a>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-cart">
       เพิ่มลงในตะกร้า
     </button>
-    </div> 
+  </div> 
 </div>
 
   <div class="modal fade" id="add-cart">
@@ -143,7 +143,6 @@
     function addToCart()
     {
       var tmpCookie = getCookie("products");
-      console.log(tmpCookie);
       var expires = new Date();
       expires.setFullYear((expires.getFullYear()+5) );
 
@@ -162,11 +161,8 @@
         }
       }
   
-      console.log("cartAmount");
-      console.log(cartProductAmount);
 
       if(cartProductAmount == {{$product->getAmount()}}){
-        console.log('eiei');
         document.getElementById("buy-amount").value = 0;
         document.getElementById("buy-amount").setAttribute("max", 0);
       }
@@ -176,15 +172,8 @@
         parseInt(document.getElementById("buy-amount").value)
       );
 
-      //if(cartProductAmount == {{$product->getAmount()}}){
-      //  document.getElementById("buy-amount").setAttribute('value', 0);
-      //}
-
-      console.log(JSON.stringify(cookieArr));
-
       document.cookie = "products=" + JSON.stringify(cookieArr) + "; expires="
         + expires.toGMTString() + "; path=/;";
-      console.log(document.cookie);
     }
 
    function getCookie(cname) 
@@ -202,16 +191,10 @@
   function changeAmount(amount)
   {
     var realPrice = 0;
-    console.log($('#promotion-price').val());
     if(typeof $('#promotion-price').val() != 'undefined'){
       realPrice = $('#promotion-price').val();
-      console.log('eiei');
-      console.log($('#promotion-price').val());
       $("#total-price").html(realPrice*amount.value);
-      console.log('haha');
-      console.log($('#promotion-price').val());
     } else if(typeof $('#promotion-xy').val() != 'undefined'){
-      console.log('eiei2');
       var x = parseInt($('#promotion-xy').val().split(',')[0]);
       var y = parseInt($('#promotion-xy').val().split(',')[1]);
       realPrice = {{$product->getPrice()}} * x * Math.floor(amount.value/(x+y));
@@ -219,11 +202,9 @@
       realPrice = realPrice/amount.value;
       $("#total-price").html(Math.round(realPrice*amount.value));
     } else {
-      console.log('eiei3');
       realPrice = {{$product->getPrice()}};
       $("#total-price").html(realPrice*amount.value);
     }
-    console.log($('#promotion-price').val());
   }
   </script>
 @stop

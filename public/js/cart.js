@@ -20,7 +20,6 @@ window.onload = function ()
 function checkStock()
 {
   for(var i=0; i<cookieArr.length; i++) {
-    console.log(cookieArr[i]);
     $.get('api/product/'+cookieArr[i].id, function(result){
       checkStockCallback(JSON.parse(result));
     });
@@ -51,8 +50,6 @@ function checkStockCallback(json)
 function buy()
 {
   $.post('buy',function(result){
-    console.log("result");
-    console.log(result);
     clearval();
     window.location="{{ url('/')}}";
   });
@@ -84,15 +81,12 @@ function changeAmount(amount, productname, id) {
     realPrice=realPrice/amount.value;
     $("#"+productname.replace(/\s+/g, "")+"-total-price").html(Math.round(realPrice*amount.value));
   } else {
-    console.log('case 3');
     realPrice = $('#' + productname.replace(/\s+/g, "") + "-price").val();
     $("#"+productname.replace(/\s+/g, "")+"-total-price").html(realPrice*amount.value);
   }
 
   for(var i=0; i<cookieArr.length; i++){
     if(cookieArr[i].id == id){
-      console.log(cookieArr[i].amount);
-      console.log(amount.value);
       cookieArr[i].amount = parseInt(amount.value);
       break;
     }
@@ -102,7 +96,6 @@ function changeAmount(amount, productname, id) {
 
 function productSelect()
 {
-  console.log($('input:checkbox:checked').val());
   if(typeof $('.table').find('input:checkbox:checked').val() != 'undefined'){
     $('#remove-btn').attr('style','');
   } else {

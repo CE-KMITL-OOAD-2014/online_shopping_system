@@ -9,11 +9,11 @@
 }
 
 .ui-datepicker{  
-    width:18%;  
-    font-family:tahoma;  
-    font-size:11px;  
-    text-align:center;  
-    background-color: white; 
+  width:18%;  
+  font-family:tahoma;  
+  font-size:11px;  
+  text-align:center;  
+  background-color: white; 
 }  
 
 .ui-datepicker-calendar {
@@ -105,18 +105,12 @@
       function drawGraph(){
         $.post('productSold', {from: $('#first-datepicker').val(), 
           to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()} ,function (result){
-          console.log('frequency');
-          console.log($('#frequency').find(":selected").val());
-          console.log(result);
-          //console.log($('#first-datepicker').val());
           setProductSoldData(result)
         });
       }
 
       function setProductSoldData(result){
         var responseDataJson = jQuery.parseJSON(result);
-        //data[0].values[0] = [responseDataJson[0].x,responseDataJson[0].y];
-        //data[0].values[1] = [responseDataJson[1].x,responseDataJson[1].y];
         data[0].values = [];
 
         for(var i=0; i<responseDataJson.length;i++){
@@ -149,7 +143,6 @@
         for(var i=0; i<responseDataJson.length; i++){
           incomeData[0].values[i] = [responseDataJson[i].x, responseDataJson[i].y];
         }
-        console.log("responseData");
         var max = Math.max.apply(Math,responseDataJson.map(function(o){return o.y;}));
         chart.forceY([0,max+1]);
 
@@ -170,8 +163,6 @@
 
 
     function setProfitData(profitResult){
-      console.log("profit");
-      console.log(profitResult);
       var responseDataJson = jQuery.parseJSON(profitResult);
       profitData[0].values = [];
 
@@ -180,8 +171,6 @@
       }
       var max = Math.max.apply(Math, responseDataJson.map(function(o){return o.y;}));
       drawProfitGraph();
-      console.log("profitData");
-      console.log(profitData[0].values);
     }
 
     function drawProfitGraph(){
@@ -233,18 +222,6 @@
 
           chart.yAxis
               .tickFormat(d3.format('d'))
-          //chart.forceY([0])
-
-          //chart.y2Axis
-          //    .tickFormat(function(d) { return '$' + d3.format(',f')(d) });
-
-          //chart.bars.forceY([0]);
-
-          /*d3.select('#chart svg')
-            .datum(data)
-            .transition()
-            .duration(0)
-            .call(chart);*/
 
           nv.utils.windowResize(chart.update);
 

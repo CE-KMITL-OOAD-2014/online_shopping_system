@@ -24,7 +24,7 @@ class ProfitPlot implements Plotter
               $products = $orders[$index]->products()->get();
 
               for($i=0; $i<sizeof($products); $i++){
-                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price $products[$i]->cost);
+                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price - $products[$i]->cost);
               }
 
               $index = $index+1;
@@ -55,7 +55,7 @@ class ProfitPlot implements Plotter
             while($diff< 7){
               $products = $orders[$index]->products()->get();
               for($i=0; $i<sizeof($products); $i++){
-                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price $products[$i]->cost);
+                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price - $products[$i]->cost);
               }
 
               $index = $index+1;
@@ -88,7 +88,7 @@ class ProfitPlot implements Plotter
             while($diff < 30){
               $products = $orders[$index]->products()->get();
               for($i=0; $i<sizeof($products); $i++){
-                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + $products[$i]->cost;
+                $result[sizeof($result)-1]->y = $result[sizeof($result)-1]->y + ($products[$i]->price - $products[$i]->cost);
               }
 
               $index = $index+1;
