@@ -9,42 +9,43 @@
         <table class = "table  table-striped table-hover" >
         <tr>
           <td>name</td>
-          <td>{{ $product->getProductName() }} </td>
+          <td>{{{ $product->getProductName() }}} </td>
         </tr>
         <tr>
           <td>price</td>
-          <td>{{ $product->getPrice() }} </td>
+          <td>{{{ $product->getPrice() }}} </td>
         </tr>
         <tr>
           <td>category</td>
-          <td>{{ $product->getCategory() }}</td>
+          <td>{{{ $product->getCategory() }}}</td>
         </tr>
         <tr>
           <td>description</td>
-          <td>{{ $product->getDescription() }}</td>
+          <td>{{{ $product->getDescription() }}}</td>
         </tr>
         <tr>
           <td>size</td>
-          <td>{{ $product->getSize() }}</td>
+          <td>{{{ $product->getSize() }}}</td>
         </tr>
         <tr>
           <td>color</td>
-          <td>{{ $product->getColor() }}</td>
+          <td>{{{ $product->getColor() }}}</td>
         </tr>
         <tr>
           <td>Suplier</td>
-          <td>{{ $product->getSuplier() }}</td>
+          <td>{{{ $product->getSuplier() }}}</td>
         </tr>
         <tr>
           <td>Amount</td>
-          <td>{{ $product->getAmount() }}</td>
+          <td>{{{ $product->getAmount() }}}</td>
         </tr>
-        @if($product->getProPercent() >= 0)
+
+        @if($product->getAdapterType() == "PromotionDiscountAdapter")
           <tr>
           <td>Promotion</td> 
           <td><span class="label label-warning" >
-          <span id = "percent_show">{{ $product->getProPercent() }}</span> %</span>
-          <a onclick="deletePromotion({{ $product->getId() }})" ><span class = "glyphicon glyphicon-trash btn btn-danger pull-right" ></span></a>
+            <span id = "percent_show">{{{ $product->getProPercent() }}}</span> %</span>
+          <a onclick="deletePromotion({{{ $product->getId() }}})" ><span class = "glyphicon glyphicon-trash btn btn-danger pull-right" ></span></a>
             </td>
             </tr>
           @endif
@@ -61,7 +62,7 @@
           กรุณาระบุชนิดของโปรโมชั่น และ ข้อมูลของการทำโปรโมชั่นลงในฟอร์มด้านล่าง 
          <ul class="nav nav-tabs">
             @foreach ($types as $type)
-              <li class=""><a href="#{{ $type }}" data-toggle="tab" aria-expanded="false">{{ $type }}</a></li>
+              <li class=""><a href="#{{{ $type }}}" data-toggle="tab" aria-expanded="false">{{{ $type }}}</a></li>
             @endforeach
           </ul>
         <div id="myTabContent" class="tab-content">
@@ -77,7 +78,7 @@
                  </div>
                  <h6> จะลดเหลือ <span class="label label-warning" id = "total" ></span> บาท</h6>
                  {{ Form::submit('ยืนยัน',array('class' => 'btn btn-success')) }}
-                 <a href = "{{ URL::to('product') }}" class = "btn btn-primary">กลับ</a>
+                 <a href = "{{{ URL::to('product') }}}" class = "btn btn-primary">กลับ</a>
               </fieldset>
             {{ Form::close() }}
           </div>
@@ -98,7 +99,7 @@
                         </div>
                       </div>
                       {{ Form::submit('ยืนยัน',array('class' => 'btn btn-success')) }}
-                  <a href = "{{ URL::to('product') }}" class = "btn btn-primary">กลับ</a>
+                  <a href = "{{{ URL::to('product') }}}" class = "btn btn-primary">กลับ</a>
                   </fieldset>
               {{ Form::close() }}
               </div>
@@ -112,7 +113,7 @@
    $(document).ready(function () {
       var ans = 0;
      $('#percent').on('input',function() {
-        ans =  parseInt("{{ $product->getPrice() }}") * (100 - $('#percent').val())/100
+        ans =  parseInt("{{{ $product->getPrice() }}}") * (100 - $('#percent').val())/100
         $('#total').html(ans);
       });
 
