@@ -48,7 +48,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   Date: <input type="text" id="second-datepicker">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <select id="frequency ">
+  <select id="frequency">
     <option value="0">รายวัน</option>
     <option value="1">รายสัปดาห์</option>
     <option value="2">รายเดือน</option>
@@ -117,6 +117,9 @@
       function drawGraph(){
         $.post('productSold', {from: $('#first-datepicker').val(), 
           to: $('#second-datepicker').val(), frequency: $('#frequency').find(":selected").val()} ,function (result){
+	  console.log($('#frequency').find(":selected").val());
+	  console.log("result");
+	  console.log(result);
           setProductSoldData(result)
         });
       }

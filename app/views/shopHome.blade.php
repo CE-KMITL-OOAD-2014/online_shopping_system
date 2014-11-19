@@ -66,6 +66,8 @@
 	      @elseif($product->getAdapterType() == "PromotionBuyXFreeYAdapter")
 	        <h5> ราคา : {{{ $product->getPrice() }}} บาท </h5>
                 ซื้อ {{{explode(',',$product->getXYParams())[0]}}} แถม {{{explode(',',$product->getXYParams())[1]}}}
+	      @else
+	        <h5> ราคา : {{{ $product->getPrice() }}} บาท </h5>
 	      @endif
               <p>{{{ $product->getDescription() }}}</p>
 	    </div>
