@@ -16,26 +16,26 @@
           <?php $productFromDB = $productRepo->find($product->id)?>
           <tr>
             <td>
-              <input type="checkbox" value="{{$productFromDB->getId()}}" onchange="productSelect()"/>
-              {{ $productFromDB->getProductName() }}
+              <input type="checkbox" value="{{{$productFromDB->getId()}}}" onchange="productSelect()"/>
+              {{{ $productFromDB->getProductName() }}}
             </td>
 
             <td>
-              <input type="number" class="col-md-8" name="buy-amount" min="1" max="{{$productFromDB->getAmount()}}" 
-                id="{{ $productFromDB->getProductName()}}-buy-amount" 
-                onchange="changeAmount(this, '{{$productFromDB->getProductName()}}', {{$productFromDB->getId()}})" 
-                value="{{ $product->amount }}">
+              <input type="number" class="col-md-8" name="buy-amount" min="1" max="{{{$productFromDB->getAmount()}}}" 
+                id="{{{ $productFromDB->getProductName()}}}-buy-amount" 
+                onchange="changeAmount(this, '{{{$productFromDB->getProductName()}}}', {{{$productFromDB->getId()}}})" 
+                value="{{{ $product->amount }}}">
                 <!-- ^ user select amount, so using value from cookie instead of DB-->
             </td>
 
-            <td id="{{ str_replace(' ','',$product->name) }}-total-price">
+            <td id="{{{ str_replace(' ','',$product->name) }}}-total-price">
               <!-- different price for different promotion type -->
               @if($productFromDB->getAdapterType()=="PromotionDiscountAdapter")
-                {{ $productFromDB->executePromotion() * $product->amount }}
+                {{{ $productFromDB->executePromotion() * $product->amount }}}
               @elseif($productFromDB->getAdapterType()=="PromotionBuyXFreeYAdapter")
-                {{ (($productFromDB->isGotPromotion())?$productFromDB->executePromotion():$productFromDB->getPrice()) * $product->amount }}
+                {{{ (($productFromDB->isGotPromotion())?$productFromDB->executePromotion():$productFromDB->getPrice()) * $product->amount }}}
               @else
-                {{ $productFromDB->getPrice() * $product->amount }}
+                {{{ $productFromDB->getPrice() * $product->amount }}}
               @endif
             </td>
           </tr>
@@ -43,21 +43,21 @@
           <!-- hidden input to keep track of some data for price calculation -->
           @if(isset($productFromDB))
             @if($productFromDB->getAdapterType()=="PromotionDiscountAdapter")
-              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-price" 
-               value="{{$productFromDB->executePromotion()}}" />
+              <input type="hidden" name="" id="{{{ str_replace(' ', '', $product->name) }}}-promotion-price" 
+               value="{{{$productFromDB->executePromotion()}}}" />
             @elseif($productFromDB->getAdapterType()=="PromotionBuyXFreeYAdapter")
-              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-promotion-xy" 
-                value="{{$productFromDB->getXYparams()}}" />
+              <input type="hidden" name="" id="{{{ str_replace(' ', '', $product->name) }}}-promotion-xy" 
+                value="{{{$productFromDB->getXYparams()}}}" />
             @endif
-              <input type="hidden" name="" id="{{ str_replace(' ', '', $product->name) }}-price" 
-                value="{{ $productFromDB->getPrice() }}" />
+              <input type="hidden" name="" id="{{{ str_replace(' ', '', $product->name) }}}-price" 
+                value="{{{ $productFromDB->getPrice() }}}" />
           @endif
 
         @endforeach
       </table>
 
       <button class="btn btn-success" data-toggle="modal" data-target="#confirm" 
-        onclick="{{isset($user)?'checkStock()':'location.href=\'/login\''}}">Buy</button></a>
+        onclick="{{{isset($user)?'checkStock()':'location.href=\'/login\''}}}">Buy</button></a>
       <button id="remove-btn" class="btn btn-danger" style="display:none;" onclick="removeFromCart()">
         <span class="glyphicon glyphicon-trash"></span>Remove</button>
     </div> <!-- panel body -->
@@ -87,15 +87,15 @@
             @foreach(json_decode(isset($_COOKIE['products'])?$_COOKIE['products']:'[]') as $product)
             <tr>
               <td>
-                {{ $product->name }}
+                {{{ $product->name }}}
               </td>
-              <td id="{{$product->name}}-amount-modal">
-                {{ $product->amount }}
+              <td id="{{{$product->name}}}-amount-modal">
+                {{{ $product->amount }}}
               </td>
-              <td id="{{$product->name}}-total-price-modal">
+              <td id="{{{$product->name}}}-total-price-modal">
                 <!-- use discounted price if exist -->
-                {{ ($productRepo->find($product->id)->getAdapterType()!="")?$productRepo->find($product->id)->executePromotion():
-                  $productRepo->find($product->id)->getPrice() * $product->amount; }}
+                {{{ ($productRepo->find($product->id)->getAdapterType()!="")?$productRepo->find($product->id)->executePromotion():
+                  $productRepo->find($product->id)->getPrice() * $product->amount }}}
               </td>
             </tr>
             @endforeach
@@ -170,7 +170,7 @@
     {
       $.post('buy',function(result){
         clearval();
-        window.location="{{ url('/')}}";
+        window.location="{{{ url('/')}}}";
       });
     }
 
