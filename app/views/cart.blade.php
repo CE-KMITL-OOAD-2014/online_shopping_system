@@ -93,9 +93,16 @@
                 {{{ $product->amount }}}
               </td>
               <td id="{{{$product->name}}}-total-price-modal">
+
+              @if($productRepo->find($product->id)->getAdapterType()=="PromotionDiscountAdapter")
+                {{{ $productRepo->find($product-id)->executePromotion() * $product->amount }}}
+              @elseif($productRepo->find($product->id)->getAdapterType()=="PromotionBuyXFreeYAdapter")
+                {{{ (($productRepo->find($product->id)->isGotPromotion())?$productRepo->find($product->id)->executePromotion():$productRepo->find($product->id)->getPrice()) * $product->amount }}}
+              @else
+                {{{ $productRepo->find($product->id)->getPrice() * $product->amount}}}
+              @endif
+
                 <!-- use discounted price if exist -->
-                {{{ ($productRepo->find($product->id)->getAdapterType()!="")?$productRepo->find($product->id)->executePromotion():
-                  $productRepo->find($product->id)->getPrice() * $product->amount }}}
               </td>
             </tr>
             @endforeach
@@ -134,6 +141,12 @@
           break;
       }
     }
+    
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     
     //check if product still available.
     function checkStock()

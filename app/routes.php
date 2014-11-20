@@ -97,7 +97,7 @@ Route::get('/shop/{id}/view','ShopController@show');
 */
 
 Route::get('cart', 'ShopController@cart');
-Route::post('buy', 'ShopController@buy');
+Route::post('buy', array('before' => 'csrf', 'uses'=>'ShopController@buy'));
 
 /*
 |--------------------------------------------------------------------------
